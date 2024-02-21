@@ -35,7 +35,16 @@ library(preprocessCore)
 library(vsn)
 library(ggtree)
 
-about_page <- tabPanel(
+#############################################################################################
+#############################################################################################
+# User interface
+#############################################################################################
+#############################################################################################
+
+#Constants
+not_sel = "Not Selected"
+
+about_page = tabPanel(
   title = "Help",
   titlePanel("Help Page"),
   navlistPanel(
@@ -146,50 +155,8 @@ about_page <- tabPanel(
   tags$footer("Created with R Shiny, ","2024 January")
   
 )
-#Constants
-not_sel <- "Not Selected"
 
-main_page <- tabPanel(
-  title = "Comparative Statistics",
-  titlePanel("Comparative Statistics"),
-  sidebarLayout(
-    sidebarPanel(
-      title = "Inputs",
-      fileInput("csv_input", "Select CSV File to Import", accept = ".csv"),
-      selectInput("num_var_1", "Numerical Variable d1", choices = c(not_sel)),
-      selectInput("num_var_2", "Numerical Variable 2", choices = c(not_sel)),
-      selectInput("fact_var", "Factor Variable", choices = c(not_sel)),
-      br(),
-      actionButton("run_button", "Run Analysis", icon = icon("play"))
-    ),
-    mainPanel(tabsetPanel(
-      tabPanel(title = "Plot",
-               plotOutput("plot_1")),
-      tabPanel(
-        title = "Statistics",
-        fluidRow(
-          column(width = 4, strong(textOutput("num_var_1_title"))),
-          column(width = 4, strong(textOutput("num_var_2_title"))),
-          column(width = 4, strong(textOutput("fact_var_title")))
-        ),
-        fluidRow(
-          column(width = 4, tableOutput("num_var_1_summary_table")),
-          column(width = 4, tableOutput("num_var_2_summary_table")),
-          column(width = 4, tableOutput("fact_var_summary_table"))
-        ),
-        fluidRow(column(width = 12, strong(
-          "Combined Statistics"
-        ))),
-        fluidRow(column(
-          width = 12, tableOutput("combined_summary_table")
-        ))
-        
-      )
-    ))
-  )
-)
-
-preprocessing_page <- tabPanel(
+preprocessing_page = tabPanel(
   title = "Data Preperation",
   titlePanel("Data Preprocessing"),
   sidebarLayout(
@@ -311,8 +278,7 @@ preprocessing_page <- tabPanel(
   )
 )
 
-
-limma_page <- tabPanel(
+limma_page = tabPanel(
   title = "Differential Expression",
   titlePanel("Limma Analysis"),
   value = "limma",
@@ -360,12 +326,12 @@ limma_page <- tabPanel(
         span(icon("info-circle"), id = "icon1", style = "color: #E95420")
       ), F),
       bsPopover("icon1", NULL, "Treat other classes expect the Class of Interest as controls", placement = "right"),
-      # textInput("contrast_var", "Contrast variable","control", placeholder ="Enter contrast value: control"),
       numericInput("lfc_var", p(
         span("Log fold-change variable"),
         span(icon("info-circle"), id = "icon2", style = "color: #E95420")
       ), "Any"), 
-      bsPopover("icon2", NULL, "The choice is arbitrary. However, lower thresholds might result in more false positives. Usual choices are between 1 and 2. Default is set to Any LFC (Empty).", placement = "right"),
+      bsPopover("icon2", NULL, "The choice is arbitrary. However, lower thresholds might result in more false positives. 
+      Usual choices are between 1 and 2. Default is set to Any LFC (Empty).", placement = "right"),
       numericInput("pvalue_var", p(
         span("P-value variable"),
         span(icon("info-circle"), id = "icon3", style = "color: #E95420")
@@ -386,7 +352,8 @@ limma_page <- tabPanel(
         ),
         selected = "Benjamini-Hochberg"
       ),
-      bsPopover("icon13", NULL, "Adjusted p-value is (highly) recommended. Raw p-value cutoffs yield many false positives and give a general trend, not any statistical significance.", placement = "right"),
+      bsPopover("icon13", NULL, "Adjusted p-value is (highly) recommended. Raw p-value cutoffs yield many false positives and give a general trend, 
+      not any statistical significance.", placement = "right"),
       actionButton("run_limma_button", "Perform Limma", icon = icon("play"), style="background-color: #E95420"),
       hidden(div(id='limma_message', textOutput("limma_text"), style="color:green"))
     ),
@@ -476,7 +443,7 @@ limma_page <- tabPanel(
   )
 )
 
-auto_limma_page <- tabPanel(
+auto_limma_page = tabPanel(
   title = "Automated Combinatory Differential Expression",
   titlePanel("Automated Combinatory Differential Expression Analysis"),
   value = "autolimma",
@@ -542,7 +509,7 @@ auto_limma_page <- tabPanel(
   )
 )
 
-consensus_clustering_page <- tabPanel(
+consensus_clustering_page = tabPanel(
   title = "Consensus Clustering",
   titlePanel("Perform Consensus Clustering"),
   value = "consclustering",
@@ -639,555 +606,7 @@ consensus_clustering_page <- tabPanel(
   )
 )
 
-# pipeline_page <- tabPanel(
-#   title = "Analytics Pipeline",
-#   titlePanel("Automated Analytics Pipeline"),
-#   sidebarLayout(
-#     sidebarPanel(
-#       title = "Inputs",
-#       fileInput("pipeline_data_csv_input", "Data File to Import", accept = ".csv"),
-#       fileInput("pipeline_ant_csv_input", "Annotation File to Import", accept = ".csv"),
-#       selectInput("pipeline_batch_var", "Batch Variable", choices = c(not_sel)),
-#       selectizeInput('pipeline_technical_factors_var', 'Technical Factors', choices = c(not_sel), multiple = TRUE),
-#       actionButton("run_pipeline_button", "Perform Analysis", icon = icon("play"))
-#     ),
-#     mainPanel(
-#       tabPanel(
-#         title = "Data",
-#         tableOutput("pipeline_data"),
-#         tableOutput("pipeline_ant")
-#       ),
-#       tabPanel(
-#         title = "Data",
-#         tableOutput("pipeline_ant")
-#       )
-#     )
-#   )
-# )
-
-pipeline_page <- tabPanel(
-  title = "Analytics Pipeline",
-  titlePanel("Automated Analytics Pipeline"),
-  sidebarLayout(
-    sidebarPanel(
-      title = "Inputs",
-      fileInput("pipeline_data_csv_input", "Data File to Import", accept = ".csv"),
-      fileInput("pipeline_ant_csv_input", "Annotation File to Import", accept = ".csv"),
-      selectInput(
-        "pipeline_biospecimen_id_col_var",
-        "Specimen ID",
-        choices = c(not_sel)
-      ),
-      selectInput(
-        "pipeline_sample_name_col_var",
-        "Sample Name",
-        choices = c(not_sel)
-      ),
-      selectizeInput(
-        'pipeline_technical_factors_var',
-        'Technical Factors',
-        choices = c(not_sel),
-        multiple = TRUE
-      ),
-      selectizeInput(
-        'pipeline_biological_factors_var',
-        'Biological Factors',
-        choices = c(not_sel),
-        multiple = TRUE
-      ),
-      actionButton("run_pipeline_button", "Perform Analysis", icon = icon("play"), style="background-color: #E95420")
-    ),
-    mainPanel(
-      tabsetPanel(
-        tabPanel(
-          title = "Data",
-          fluidRow(column(width = 12, h2("Expression Data"))),
-          fluidRow(column(width = 12, tableOutput("pipeline_data")),),
-          fluidRow(column(width = 12, h2("Sample Annotation"))),
-          fluidRow(column(width = 12, tableOutput("pipeline_ant")))
-        ),
-        tabPanel(
-          title = "Missing values",
-          fluidRow(column(width = 4, h2("Protein-wise")),
-                   column(width = 8, h3(
-                     textOutput('pipeline_total_protein')
-                   )),),
-          fluidRow(column(
-            width = 8, withSpinner(plotOutput("pipeline_missing_protein"), color = "#FF4500")
-          ),
-          column(
-            width = 4,
-            tableOutput("pipeline_missing_protein_summary_table")
-          )),
-          fluidRow(
-            column(5, sliderInput(
-              "protein_slider",
-              h3("Check how many proteins retain?"),
-              min = 0,
-              max = 100,
-              value = 50
-            )),
-            column(3, h3(textOutput(
-              'pipeline_retain_protein'
-            ))),
-            column(
-              3,
-              actionButton(
-                "set_missing_valued_data_button",
-                "Use this threshold",
-                icon = icon("play")
-              )
-            )
-          ),
-          fluidRow(column(width = 4, h2("Sample-wise")),
-                   column(width = 8, h3(
-                     textOutput('pipeline_total_sample')
-                   )),),
-          fluidRow(column(
-            width = 8, withSpinner(plotOutput("pipeline_missing_sample"), color = "#FF4500")
-          ),
-          column(
-            width = 4,
-            tableOutput("pipeline_missing_sample_summary_table")
-          )),
-          fluidRow(column(
-            5, sliderInput(
-              "sample_slider",
-              h3("Check how many samples retain?"),
-              min = 0,
-              max = 100,
-              value = 50
-            )
-          ),
-          column(3, h3(
-            textOutput('pipeline_retain_sample')
-          )))
-        ),
-        tabPanel(
-          title = "Initial Inspection",
-          fluidRow(column(width = 4, h3("Sample Replicates"))),
-          fluidRow(
-            column(width = 4, verbatimTextOutput("pipeline_sample_replicates")),
-            column(
-              width = 4,
-              style = "margin-top: 50px;",
-              actionButton(
-                "perform_unique_replicates_button",
-                "Make unique",
-                icon = icon("play")
-              )
-            ),
-            column(
-              4,
-              downloadButton("downloadNonReplicatedTable", "Download Results")
-            ),
-            column(
-              4,
-              style = "margin-top: 50px;",
-              downloadButton("downloadNonReplicatedAnnotation", "Download Annotations")
-            ),
-          ),
-          fluidRow(column(
-            width = 4, verbatimTextOutput("pipeline_unique_replicates")
-          ),),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_init_protein_corr_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_mean_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_mean_box_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_mean_pca_plot"), color =
-                                      "#FF4500")
-          ))
-        ),
-        tabPanel(
-          title = "Data Normalization",
-          fluidRow(
-            column(
-              4,
-              checkboxGroupInput(
-                "pipeline_norm_method",
-                h3("Select Normalization Methods"),
-                choices = list(
-                  "Median Normalization" = 1,
-                  "Quantile Normalization" = 2
-                ),
-                selected = 1,
-                width = '100%'
-              )
-            ),
-            column(
-              4,
-              style = "margin-top: 70px;",
-              actionButton(
-                "perform_normalization_data_button",
-                "Perform Normalization",
-                icon = icon("play")
-              )
-            ),
-            column(
-              4,
-              style = "margin-top: 70px;",
-              downloadButton("downloadNormTable", "Download Results")
-            )
-          ),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_norm_mean_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_norm_mean_box_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_norm_mean_pca_plot"), color =
-                                      "#FF4500")
-          ))
-        ),
-        tabPanel(
-          title = "Imputation",
-          fluidRow(
-            column(
-              4,
-              checkboxGroupInput(
-                "pipeline_impu_method",
-                h3("Select Data Imputation Methods"),
-                choices = list("KNN", "MissForest", "ADMIN",
-                               "Birnn", "SpectroFM", "RegImpute"),
-                selected = "KNN",
-                width = '100%'
-              )
-            ),
-            column(
-              4,
-              style = "margin-top: 150px;",
-              actionButton(
-                "perform_imputation_data_button",
-                "Perform Imputation",
-                icon = icon("play")
-              )
-            ),
-            column(
-              4,
-              style = "margin-top: 150px;",
-              align = "right",
-              downloadButton("downloadImpuTable", "Download Results")
-            )
-          ),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_impu_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_impu_box_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_impu_pca_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_imput_protein_corr_plot"), color =
-                                      "#FF4500")
-          ))
-        ),
-        tabPanel(
-          title = "Batch Effects",
-          # fluidRow(
-          #   column(width = 4, h3("Sample Replicates"))
-          # ),
-          # fluidRow(
-          #   column(width = 4, verbatimTextOutput("pipeline_sample_replicates")),
-          #   column(width = 4, style = "margin-top: 50px;", actionButton("perform_unique_replicates_button", "Make unique", icon = icon("play"))),
-          #   column(4, downloadButton("downloadBatchCorrTable", "Download Results"))
-          # ),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_pcva_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(
-            # column(4, checkboxGroupInput("pipeline_impu_method", h3("Select Data Imputation Methods"),
-            #                              choices = list("KNN", "MissForest", "ADMIN",
-            #                                             "Birnn", "SpectroFM", "RegImpute"), selected = "KNN",width = '100%')),
-            column(
-              4,
-              selectInput(
-                "pipeline_batch_var",
-                "Batch effect variable",
-                choices = c(not_sel)
-              )
-            ),
-            column(
-              4,
-              selectInput(
-                "batch_corr_method_var",
-                "Batch correction Method",
-                choices = c("ComBat", "MedianCentering", "MeanCentering")
-              ),
-            ),
-            column(
-              4,
-              actionButton(
-                "perform_batchcorr_data_button",
-                "Perform Batch Correction",
-                icon = icon("play")
-              )
-            )
-          ),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_batchcorr_box_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_batchcorr_pca_plot"), color =
-                                      "#FF4500")
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(plotOutput("pipeline_protein_batchcorr_pcva_plot"), color =
-                                      "#FF4500")
-          ))
-        ),
-        tabPanel(
-          title = "Correlation",
-          fluidRow(column(
-            width = 12, withSpinner(
-              plotOutput("pipeline_protein_corr_plot", height = "700"),
-              color = "#FF4500"
-            )
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(
-              plotOutput("pipeline_protein_overall_corr_plot", height = "700"),
-              color = "#FF4500"
-            )
-          )),
-          fluidRow(column(
-            width = 12, withSpinner(
-              plotOutput("pipeline_protein_corr_dist_plot", height = "700"),
-              color = "#FF4500"
-            )
-          )),
-        ),
-        tabPanel(
-          title = "Differential Expression",
-          fluidRow(
-            column(
-              4,
-              selectInput("pipeline_class_var", "Class Variable", choices = c(not_sel))
-            ),
-            column(
-              4,
-              selectInput(
-                "pipeline_class_of_interest_var",
-                "Class of Interest",
-                choices = c(not_sel)
-              )
-            ),
-            column(
-              4,
-              textInput(
-                "pipeline_contrast_var",
-                "Contrast variable",
-                "control",
-                placeholder = "Enter contrast value: control"
-              )
-            ),
-          ),
-          fluidRow(
-            column(
-              4,
-              textInput("pipeline_lfc_var", "Log fold-change variable", "Any")
-            ),
-            column(4, textInput(
-              "pipeline_pvalue_var", "P-value variable", "Any"
-            )),
-            column(
-              4,
-              actionButton(
-                "pipeline_perform_limma_data_button",
-                "Perform Limma",
-                icon = icon("play")
-              )
-            )
-          ),
-          fluidRow(column(
-            8, withSpinner(tableOutput("pipeline_limma_table"), color = "#FF4500")
-          ),
-          column(
-            4,
-            downloadButton("downloadPipeLimmaTable", "Download Results")
-          ), style = "padding-top:20px"),
-        ),
-        tabPanel(
-          title = " Automated Differential Expression",
-          fluidRow(
-            column(
-              4,
-              selectInput(
-                "pipeline_auto_class_var",
-                "Class Variable",
-                choices = c(not_sel)
-              )
-            ),
-            column(
-              4,
-              textInput("pipeline_auto_lfc_var", "Log fold-change variable", "Any")
-            ),
-            column(
-              4,
-              textInput("pipeline_auto_pvalue_var", "P-value variable", "Any")
-            ),
-          ),
-          fluidRow(column(
-            4,
-            actionButton(
-              "pipeline_perform_auto_limma_data_button",
-              "Perform Limma",
-              icon = icon("play")
-            )
-          ),),
-          fluidRow(column(
-            8, withSpinner(DTOutput("pipeline_auto_limma_table"), color = "#FF4500")
-          ),
-          column(
-            4,
-            downloadButton("downloadPipeAutoLimmaTable", "Download Results")
-          )),
-        ),
-        tabPanel(title = "Clustering",
-                 fluidRow(column(
-                   width = 12, withSpinner(plotOutput("pipeline_protein_dendogram"), color =
-                                             "#FF4500")
-                 )),
-                 fluidRow(column(
-                   width = 12, withSpinner(plotOutput("pipeline_protein_heatmap"), color =
-                                             "#FF4500")
-                 )),),
-      )
-    )
-  )
-)
-
-draw_plot_1 <- function(data_input,
-                        num_var_1,
-                        num_var_2,
-                        fact_var) {
-  if (fact_var != not_sel) {
-    data_input[, (fact_var) := as.factor(data_input[, get(fact_var)])]
-  }
-  if (num_var_1 != not_sel &
-      num_var_2 != not_sel & fact_var != not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = num_var_1, y = num_var_2, color = fact_var)) +
-      geom_point()
-  }
-  else if (num_var_1 != not_sel &
-           num_var_2 != not_sel & fact_var == not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = num_var_1, y = num_var_2)) +
-      geom_point()
-  }
-  else if (num_var_1 != not_sel &
-           num_var_2 == not_sel & fact_var != not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = fact_var, y = num_var_1)) +
-      geom_violin()
-  }
-  else if (num_var_1 == not_sel &
-           num_var_2 != not_sel & fact_var != not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = fact_var, y = num_var_2)) +
-      geom_violin()
-  }
-  else if (num_var_1 != not_sel &
-           num_var_2 == not_sel & fact_var == not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = num_var_1)) +
-      geom_histogram()
-  }
-  else if (num_var_1 == not_sel &
-           num_var_2 != not_sel & fact_var == not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = num_var_2)) +
-      geom_histogram()
-  }
-  else if (num_var_1 == not_sel &
-           num_var_2 == not_sel & fact_var != not_sel) {
-    ggplot(data = data_input,
-           aes_string(x = fact_var)) +
-      geom_bar()
-  }
-}
-create_num_var_table <- function(data_input, num_var) {
-  if (num_var != not_sel) {
-    col <- data_input[, get(num_var)]
-    if (length(col) > 5000)
-      col_norm <- sample(col, 5000)
-    else
-      col_norm <- col
-    norm_test <- shapiro.test(col_norm)
-    statistic <-
-      c(
-        "mean",
-        "median",
-        "5th percentile",
-        "95th percentile",
-        "Shapiro statistic",
-        "Shapiro p-value"
-      )
-    value <- c(
-      round(mean(col), 2),
-      round(median(col), 2),
-      round(quantile(col, 0.05), 2),
-      round(quantile(col, 0.95), 2),
-      norm_test$statistic,
-      norm_test$p.value
-    )
-    data.table(statistic, value)
-  }
-}
-
-create_fact_var_table <- function(data_input, fact_var) {
-  if (fact_var != not_sel) {
-    freq_tbl <- data_input[, .N, by = get(fact_var)]
-    freq_tbl <- setnames(freq_tbl, c("factor_value", "count"))
-    freq_tbl
-  }
-}
-
-create_combined_table <-
-  function(data_input,
-           num_var_1,
-           num_var_2,
-           fact_var) {
-    if (fact_var != not_sel) {
-      if (num_var_1 != not_sel & num_var_2 != not_sel) {
-        res_tbl <-
-          data_input[, .(correlation = cor(get(num_var_1), get(num_var_2))), by = fact_var]
-      }
-      else if (num_var_1 != not_sel & num_var_2 == not_sel) {
-        res_tbl <-
-          data_input[, .(mean = mean(get(num_var_1))), by = fact_var]
-      }
-      else if (num_var_1 == not_sel & num_var_2 != not_sel) {
-        res_tbl <-
-          data_input[, .(mean = mean(get(num_var_2))), by = fact_var]
-      }
-    }
-    else if (num_var_1 != not_sel & num_var_2 != not_sel) {
-      res_tbl <- data.table(statistic = c("correlation"),
-                            value = c(cor(data_input[, get(num_var_1)],
-                                          data_input[, get(num_var_2)])))
-    }
-    return(res_tbl)
-  }
+# Generate graphs: Helper functions
 
 create_pca_plots = function(data, ant, parameters, color_list) {
   pcas = list()
@@ -1260,36 +679,70 @@ create_consensus_clust_plots = function(data, ant, parameters, color_list) {
   return(plots)
 }
 
-
-ui <- navbarPage(
+ui = navbarPage(
   title = "FlexStat 1.0",
   theme = shinytheme('united'),
   id = "inTabset",
-  # main_page,
   preprocessing_page,
   limma_page,
   auto_limma_page,
   consensus_clustering_page,
-  # pipeline_page,
   about_page,
 )
 
-server <- function(input, output, session) {
-  #MAX FILE SIZE FOR UPLOAD
-  #options(shiny.maxRequestSize=10*1024^2)
+#############################################################################################
+#############################################################################################
+# Server
+#############################################################################################
+#############################################################################################
+
+server = function(input, output, session) {
+
+  # Constants
+  # MAX FILE SIZE FOR UPLOAD
   options(shiny.maxRequestSize = 64 * 1024 ^ 2)
-  show_template <- reactiveVal(TRUE)
-  show_template2 <- reactiveVal(TRUE)
-  auto_limma_ready <- reactiveVal(FALSE)
-  show_template3 <- reactiveVal(TRUE)
-  preproc_show_template <- reactiveVal(TRUE)
-  
-  data_input <- reactive({
-    req(input$csv_input)
-    fread(input$csv_input$datapath)
+
+  # Reactive values
+  show_template = reactiveVal(TRUE)
+  show_template2 = reactiveVal(TRUE)
+  auto_limma_ready = reactiveVal(FALSE)
+  show_template3 = reactiveVal(TRUE)
+  preproc_show_template = reactiveVal(TRUE)
+
+  # Reactive variables
+  variables = reactiveValues(
+    data_table = NULL,
+    auto_data_table = NULL,
+    pipeline_data = NULL,
+    pipline_ant = NULL,
+    replicates = NULL,
+    pipeline = F,
+    functional_dataset = NULL,
+    fit2C = NULL,
+    results = NULL,
+    original_dataset = NULL,
+    imputed_dataset = NULL,
+    normalized_dataset = NULL
+  )
+   
+  #############################################################################################
+  # Sample data loading
+  #############################################################################################
+
+  output$contents_template = renderTable({
+    read.csv("data/sample_data.csv", row.names = 1)
   })
-  
-  output$conditional_contents_template <- renderUI({
+  output$contents_template2 = renderTable({
+    read.csv("data/sample_data.csv", row.names = 1)
+  })
+  output$contents_template3 = renderTable({
+    read.csv("data/consensus_data.csv")
+  })
+  output$contents_template4 = renderTable({
+    read.csv("data/sample_preproc_data.csv", row.names = 1)
+  }) 
+
+  output$conditional_contents_template = renderUI({
     if (show_template()) {
       tagList(h3(strong("Sample Data")),
               tableOutput("contents_template"))
@@ -1298,7 +751,7 @@ server <- function(input, output, session) {
     }
   })
   
-  output$conditional_contents_template2 <- renderUI({
+  output$conditional_contents_template2 = renderUI({
     if (show_template2()) {
       tagList(h3(strong("Sample Data")),
               tableOutput("contents_template2"))
@@ -1306,7 +759,7 @@ server <- function(input, output, session) {
       NULL
     }
   })
-  output$conditional_contents_template3 <- renderUI({
+  output$conditional_contents_template3 = renderUI({
     if (show_template3()) {
       tagList(h3(strong("Sample Data")),
               tableOutput("contents_template3"))
@@ -1315,7 +768,7 @@ server <- function(input, output, session) {
     }
   })
   
-  output$conditional_contents_template4 <- renderUI({
+  output$conditional_contents_template4 = renderUI({
     if (preproc_show_template()) {
       tagList(h3(strong("Sample Data")),
               tableOutput("contents_template4"))
@@ -1324,7 +777,7 @@ server <- function(input, output, session) {
     }
   })
   
-  output$contents_conditional_h5 <- renderUI({
+  output$contents_conditional_h5 = renderUI({
     if (!show_template()) {
       h3(strong("Original Data"))
     } else{
@@ -1332,7 +785,7 @@ server <- function(input, output, session) {
     }
   })
   
-  output$contents_conditional_h6 <- renderUI({
+  output$contents_conditional_h6 = renderUI({
     if (!preproc_show_template()) {
       h3(strong("Original Data"))
     } else{
@@ -1340,7 +793,7 @@ server <- function(input, output, session) {
     }
   })
   
-  output$contents_conditional_h52 <- renderUI({
+  output$contents_conditional_h52 = renderUI({
     if (!show_template2() & !auto_limma_ready()) {
       tagList(h3(strong("Original Data")),
               withSpinner(tableOutput("contents2"), color = "#FF4500"))
@@ -1349,7 +802,7 @@ server <- function(input, output, session) {
     }
   })
   
-  output$contents_auto_limma <- renderUI({
+  output$contents_auto_limma = renderUI({
     if (auto_limma_ready()) {
       tagList(h3(strong("Auto limma Results")),
               fluidRow(
@@ -1368,115 +821,12 @@ server <- function(input, output, session) {
       NULL
     }
   })
-  
-  observeEvent(data_input(), {
-    choices <- c(not_sel, names(data_input()))
-    updateSelectInput(inputId = "num_var_1", choices = choices)
-    updateSelectInput(inputId = "num_var_2", choices = choices)
-    updateSelectInput(inputId = "fact_var", choices = choices)
-    
-  })
-  
-  observeEvent(input$contrast_other_classes_var, {
-    if (input$contrast_other_classes_var == T) {
-      shinyjs::disable('contrast_var')
-    } else {
-      shinyjs::enable('contrast_var')
-    }
-  }, ignoreNULL = T)
-  
-  num_var_1 <- eventReactive(input$run_button, input$num_var_1)
-  num_var_2 <- eventReactive(input$run_button, input$num_var_2)
-  fact_var <- eventReactive(input$run_button, input$fact_var)
-  
-  # plot
-  
-  plot_1 <- eventReactive(input$run_button, {
-    draw_plot_1(data_input(), num_var_1(), num_var_2(), fact_var())
-  })
-  
-  output$plot_1 <- renderPlot(plot_1())
-  
-  # 1-d summary tables
-  
-  output$num_var_1_title <-
-    renderText(paste("Num Var 1:", num_var_1()))
-  
-  num_var_1_summary_table <- eventReactive(input$run_button, {
-    create_num_var_table(data_input(), num_var_1())
-  })
-  
-  output$num_var_1_summary_table <-
-    renderTable(num_var_1_summary_table(), colnames = FALSE)
-  
-  output$num_var_2_title <-
-    renderText(paste("Num Var 2:", num_var_2()))
-  
-  num_var_2_summary_table <- eventReactive(input$run_button, {
-    create_num_var_table(data_input(), num_var_2())
-  })
-  
-  output$num_var_2_summary_table <-
-    renderTable(num_var_2_summary_table(), colnames = FALSE)
-  
-  output$fact_var_title <-
-    renderText(paste("Factor Var:", fact_var()))
-  
-  fact_var_summary_table <- eventReactive(input$run_button, {
-    create_fact_var_table(data_input(), fact_var())
-  })
-  
-  output$fact_var_summary_table <-
-    renderTable(fact_var_summary_table(), colnames = FALSE)
-  
-  # multi-d summary table
-  
-  combined_summary_table <- eventReactive(input$run_button, {
-    create_combined_table(data_input(), num_var_1(), num_var_2(), fact_var())
-  })
-  
-  output$combined_summary_table <- renderTable(combined_summary_table())
-  output$contents_template <- renderTable({
-    read.csv("sample_data.csv", row.names = 1)
-  })
-  output$contents_template2 <- renderTable({
-    read.csv("sample_data.csv", row.names = 1)
-  })
-  output$pipeline_data <- renderTable({
-    return(head(read.csv("pipeline_data.csv")))
-  })
-  output$contents_template3 <- renderTable({
-    read.csv("consensus_data.csv")
-  })
-  output$contents_template4 <- renderTable({
-    read.csv("sample_preproc_data.csv", row.names = 1)
-  })
-  
-  # limma table
-  
-  limma_data_input <- reactive({
-    req(input$limma_csv_input)
-    fread(input$limma_csv_input$datapath)
-  })
-  
-  observeEvent(limma_data_input(), {
-    char_column_df = data.frame(limma_data_input(), row.names=1)  %>%
-      select_if(is.character)
-    ##print(char_column_df)
-    show_template(FALSE)
-    
-    choices <- c(not_sel, names(char_column_df))
-    updateSelectInput(inputId = "class_var", choices = choices)
-    
-    choices <- c(not_sel, names(char_column_df))
-    updateSelectInput(inputId = "class_of_interest_var", choices = choices)
-    
-    choices2 <- c(sub(" ", "_", names(limma_data_input())))
-    updateSelectizeInput(session, inputId = "remove_cols_var", choices = choices2,
-                         server = TRUE)
-  })
-  
-  preproc_data_input <- reactive({
+
+  #############################################################################################
+  # Data Preprocessing
+  #############################################################################################
+
+  preproc_data_input = reactive({
     req(input$preproc_data_csv_input)
     fread(input$preproc_data_csv_input$datapath)
   })
@@ -1484,16 +834,16 @@ server <- function(input, output, session) {
   observeEvent(preproc_data_input(), {
     char_column_df = data.frame(preproc_data_input(), row.names=1)  %>%
       select_if(is.character)
-    ##print(char_column_df)
+    
     preproc_show_template(FALSE)
     
-    choices <- c(not_sel, names(char_column_df))
+    choices = c(not_sel, names(char_column_df))
     updateSelectInput(inputId = "preproc_class_var", choices = choices)
     
-    choices <- c(not_sel, names(char_column_df))
+    choices = c(not_sel, names(char_column_df))
     updateSelectInput(inputId = "preproc_batch_var", choices = choices)
     
-    choices2 <- c(sub(" ", "_", names(char_column_df)))
+    choices2 = c(sub(" ", "_", names(char_column_df)))
     updateSelectizeInput(session, inputId = "preproc_remove_cols_var", choices = choices2,
                          server = TRUE)
     
@@ -1507,16 +857,16 @@ server <- function(input, output, session) {
       preproc_show_template(TRUE)
       variables$functional_dataset = NULL
       
-      data_df = read.csv("sample_preproc_data.csv", row.names = 1)
+      data_df = read.csv("data/sample_preproc_data.csv", row.names = 1)
       char_column_df = data_df %>% select_if(is.character)
 
-      choices <- c(not_sel, names(char_column_df))
+      choices = c(not_sel, names(char_column_df))
       updateSelectInput(inputId = "preproc_class_var", choices = choices)
       
-      choices <- c(not_sel, names(char_column_df))
+      choices = c(not_sel, names(char_column_df))
       updateSelectInput(inputId = "preproc_batch_var", choices = choices)
       
-      choices2 <- c(sub(" ", "_", names(char_column_df)))
+      choices2 = c(sub(" ", "_", names(char_column_df)))
       updateSelectInput(inputId = "preproc_remove_cols_var", choices = choices2)
       
       updateSelectInput(inputId = "preproc_ir_var", choices = rownames(data_df))
@@ -1557,16 +907,16 @@ server <- function(input, output, session) {
       show_template(TRUE)
       variables$functional_dataset = NULL
       
-      data_df = read.csv("sample_data.csv", row.names = 1)
+      data_df = read.csv("data/sample_data.csv", row.names = 1)
       char_column_df = data_df %>% select_if(is.character)
 
-      choices <- c(not_sel, names(char_column_df))
+      choices = c(not_sel, names(char_column_df))
       updateSelectInput(inputId = "class_var", choices = choices)
       
-      choices <- c(not_sel, names(char_column_df))
+      choices = c(not_sel, names(char_column_df))
       updateSelectInput(inputId = "class_of_interest_var", choices = choices)
       
-      choices2 <- c(sub(" ", "_", names(char_column_df)))
+      choices2 = c(sub(" ", "_", names(char_column_df)))
       updateSelectInput(inputId = "remove_cols_var", choices = choices2)
     } else {
       variables$functional_dataset = NULL
@@ -1574,31 +924,7 @@ server <- function(input, output, session) {
     
   })
   
-  # observeEvent(input$use_sample_data, {
-  #   if (input$use_sample_data) {
-  #     shinyjs::disable("show_transpose_var")
-  #   } else {
-  #     shinyjs::enable("show_transpose_var")
-  #   }
-  # })
-  # 
-  # observeEvent(input$show_log2_var, {
-  #   if (input$show_log2_var) {
-  #     shinyjs::disable("show_log10_var")
-  #   } else{
-  #     shinyjs::enable("show_log10_var")
-  #   }
-  # })
-  # 
-  # observeEvent(input$show_log10_var, {
-  #   if (input$show_log10_var) {
-  #     shinyjs::disable("show_log2_var")
-  #   } else{
-  #     shinyjs::enable("show_log2_var")
-  #   }
-  # })
-  
-  output$contents <- renderTable({
+  output$contents = renderTable({
     if (!show_template()) {
       req(input$limma_csv_input)
       
@@ -1618,7 +944,7 @@ server <- function(input, output, session) {
     
   }, rownames = TRUE)
   
-  output$contents2 <- renderTable({
+  output$contents2 = renderTable({
     req(input$auto_limma_csv_input)
     df = read.csv(
       input$auto_limma_csv_input$datapath,
@@ -1629,7 +955,7 @@ server <- function(input, output, session) {
     return(head(df))
   }, rownames = TRUE)
   
-  output$preproc_contents <- renderTable({
+  output$preproc_contents = renderTable({
     if (!preproc_show_template()) {
       req(input$preproc_data_csv_input)
       
@@ -1644,13 +970,7 @@ server <- function(input, output, session) {
     
   }, rownames = TRUE)
   
-  output$contents_ready <- renderTable({
-    # input$file1 will be NULL initially. After the user selects
-    # and uploads a file, head of that data file by default,
-    # or all rows if selected, will be shown.
-    
-    # if (input$show_transpose_var ||
-    #     input$show_log2_var || input$show_log10_var) {
+  output$contents_ready = renderTable({
     if (!input$use_sample_data) {
       req(input$limma_csv_input)
       data_df = read.csv(
@@ -1660,25 +980,13 @@ server <- function(input, output, session) {
         row.names = 1
       )
     } else{
-      data_df = read.csv("sample_data.csv", row.names = 1)
+      data_df = read.csv("data/sample_data.csv", row.names = 1)
     }
     
     if (!is.null(input$remove_cols_var) &
         !("Not Selected" %in% input$remove_cols_var)) {
       data_df = data_df[,-which(names(data_df) %in% input$remove_cols_var)]
     }
-    # if (input$show_transpose_var) {
-    #   data_df = as.data.frame(t(data_df))
-    #   variables$functional_dataset = data_df
-    # }
-    # if (input$show_log2_var) {
-    #   data_df = as.data.frame(mutate_if(data_df, is.numeric, log2))
-    #   variables$functional_dataset = data_df
-    # }
-    # if (input$show_log10_var) {
-    #   data_df = as.data.frame(mutate_if(data_df, is.numeric, log10))
-    #   variables$functional_dataset = data_df
-    # }
     
     if (input$show_head_var) {
       return(head(data_df))
@@ -1687,10 +995,9 @@ server <- function(input, output, session) {
       return(data_df)
     }
     
-    
   }, rownames = TRUE)
   
-  output$preproc_contents_ready <- renderTable({
+  output$preproc_contents_ready = renderTable({
     if (input$preproc_show_transpose_var ||
         input$preproc_show_log2_var || input$preproc_show_log10_var) {
       if (!input$preproc_use_sample_data) {
@@ -1702,7 +1009,7 @@ server <- function(input, output, session) {
           row.names = 1
         )
       } else{
-        data_df = read.csv("sample_preproc_data.csv", row.names = 1)
+        data_df = read.csv("data/sample_preproc_data.csv", row.names = 1)
       }
       
       if (!is.null(input$preproc_remove_cols_var) &
@@ -1726,7 +1033,7 @@ server <- function(input, output, session) {
     
   }, rownames = TRUE)
   
-  output$downloadTransformedMatrix <- downloadHandler(
+  output$downloadTransformedMatrix = downloadHandler(
     filename = "transformed_data.csv",
     content = function(file) {
       write.csv(variables$functional_dataset, file)
@@ -1740,30 +1047,30 @@ server <- function(input, output, session) {
   preproc_normalization_method_var = eventReactive(input$run_preproc_button, input$preproc_normalization_method_var)
   preproc_ir_var = eventReactive(input$run_preproc_button, input$preproc_ir_var)
   
-  observe(
-    {
-      if(input$preproc_class_var!=not_sel && input$preproc_batch_var!=not_sel)
-      {
+  observe({
+      if(input$preproc_class_var!=not_sel && input$preproc_batch_var!=not_sel){
         enable("run_preproc_button")
-      }
-      else
-      {
+      } else {
         disable("run_preproc_button")
       }
-    })
+  })
   
   observeEvent(input$run_preproc_button, {
     toggle('preproc_message')
-    output$preproc_text <- renderText({"Check the Preprocessed Data Tab"})
+    output$preproc_text = renderText({"Check the Preprocessed Data Tab"})
   })
   
   observeEvent(input$run_limma_button, {
     toggle('limma_message')
-    output$limma_text <- renderText({"Check the Results Tab"})
+    output$limma_text = renderText({"Check the Results Tab"})
   })
   
+  #############################################################################################
+  # Data imputation 
+  #############################################################################################
+
   output$preproc_contents3 = renderDT(server = FALSE, {
-    data <- preproc_table_3()
+    data = preproc_table_3()
     if (!is.null(data$x)) {
       data
     } else {
@@ -1771,7 +1078,8 @@ server <- function(input, output, session) {
     }
   })
   
-  preproc_table_3 <- eventReactive(variables$normalized_dataset, {
+  # Imputed data table
+  preproc_table_3 = eventReactive(variables$normalized_dataset, {
     df = variables$functional_dataset
     
     if(!is.null(df)){
@@ -1779,10 +1087,7 @@ server <- function(input, output, session) {
       char_columns = df %>% select_if(is.character)
       
       df = df[,colnames(df) %in% num_column_df]
-      
       df = as.data.frame(t(df))
-      
-      # df = df[which(rowMeans(is.na(df)) < input$preproc_missing_value_threshold_var), ]
       
       if(input$preproc_imputation_method_var %in% c("K-nearest neighbour",
                                                     "MissForest")){
@@ -1927,9 +1232,12 @@ server <- function(input, output, session) {
     }
     
   })
-  
+
+  #############################################################################################
+  # Data Normalization
+  #############################################################################################
   output$preproc_contents2 = renderDT(server = FALSE, {
-    data <- preproc_table_2()
+    data = preproc_table_2()
     if (!is.null(data$x)) {
       data
     } else {
@@ -1937,8 +1245,7 @@ server <- function(input, output, session) {
     }
   })
   
-  preproc_table_2 <- eventReactive(input$run_preproc_button, {
-    # df = variables$functional_dataset
+  preproc_table_2 = eventReactive(input$run_preproc_button, {
     
     if(is.null(variables$functional_dataset)){ 
       if (!input$preproc_use_sample_data) {
@@ -1950,17 +1257,13 @@ server <- function(input, output, session) {
           row.names = 1
         )
       } else{
-        df = read.csv("sample_preproc_data.csv", row.names = 1)
+        df = read.csv("data/sample_preproc_data.csv", row.names = 1)
       }
     } else{
       df = variables$functional_dataset
     }
     
     variables$original_dataset = df
-    
-    # validate(
-    #   need(!is.null(df), 'No data exists, please upload data or use sample data')
-    # )
     
     if(!is.null(df)){
       
@@ -2001,21 +1304,16 @@ server <- function(input, output, session) {
             d = df[,char_columns[,input$preproc_batch_var]==u]
             d = d[,!colnames(d) %in% c(input$preproc_batch_var)]
             norm_facs = target / colSums(d, na.rm = T)
-            exp1_sl <- sweep(d, 2, norm_facs, FUN = "*")
+            exp1_sl = sweep(d, 2, norm_facs, FUN = "*")
             exp1_sl = as.data.frame(exp1_sl)
             
             exp1_sl = as.data.frame(t(exp1_sl))
             exp1_sl[,input$preproc_batch_var] = u
             
-            # if(nrow(data_sl) == 0){
-            #   data_sl = exp1_sl
-            # } else {
-            #   data_sl = cbind(data_sl, exp1_sl)
-            # }
             data_sl = rbind(data_sl, exp1_sl)
           }
           
-          target2 <- colMeans(data_sl[input$preproc_ir_var,!(names(data_sl) %in% c(input$preproc_batch_var))])
+          target2 = colMeans(data_sl[input$preproc_ir_var,!(names(data_sl) %in% c(input$preproc_batch_var))])
           data_sl_tmm = data.frame()
           
           j = 1
@@ -2026,13 +1324,8 @@ server <- function(input, output, session) {
             
             norm_facs2 = target2 / d[k,]
             norm_facs2 = as.numeric(as.vector(norm_facs2[1,]))
-            exp1_sl <- sweep(d, 2, norm_facs2, FUN = "*")
-            
-            # if(nrow(data_sl_tmm) == 0){
-            #   data_sl_tmm = as.data.frame(exp1_sl)
-            # } else {
-            #   data_sl_tmm = cbind(data_sl_tmm, as.data.frame(exp1_sl))
-            # }
+            exp1_sl = sweep(d, 2, norm_facs2, FUN = "*")
+
             data_sl_tmm = rbind(data_sl_tmm, as.data.frame(exp1_sl))
             j=j+1
           }
@@ -2141,8 +1434,6 @@ server <- function(input, output, session) {
                     main = "Before Normalization - Density Plot", legend=F)
       plotDensities(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,input$preproc_class_var]))), 
                     main = "After Normalization - Density Plot", legend=F)
-      # par(mfrow=c(1,1))
-      # text(0.5,0.5, paste("Colored by ", input$preproc_class_var),cex=6)
     }
     
   })
@@ -2178,9 +1469,21 @@ server <- function(input, output, session) {
     
   })
   
+  #############################################################################################
+  # Limma Analysis
+  #############################################################################################
   
-  
-  limma_data_input <- reactive({
+  class_var = eventReactive(input$run_limma_button, input$class_var)
+  contrast_var = eventReactive(input$run_limma_button, input$contrast_var)
+  lfc_var = eventReactive(input$run_limma_button, input$lfc_var)
+  pvalue_var = eventReactive(input$run_limma_button, input$pvalue_var)
+  contrast_other_classes_var = eventReactive(input$run_limma_button, input$contrast_other_classes_var)
+  class_of_interest_var = eventReactive(input$run_limma_button, input$class_of_interest_var)
+  padjust_method_var = eventReactive(input$run_limma_button, input$padjust_method_var)
+  remove_cols_var = eventReactive(input$run_limma_button,input$remove_cols_var)
+  sort_results_by_var = eventReactive(input$run_limma_button, input$sort_results_by_var)
+
+  limma_data_input = reactive({
     req(input$limma_csv_input)
     fread(input$limma_csv_input$datapath)
   })
@@ -2193,7 +1496,7 @@ server <- function(input, output, session) {
                            head = TRUE,
                            sep = ",")
       } else {
-        data_df = read.csv("sample_data.csv", row.names = 1)
+        data_df = read.csv("data/sample_data.csv", row.names = 1)
       }
       
       n = length(table(data_df[input$class_var]))
@@ -2218,6 +1521,7 @@ server <- function(input, output, session) {
     }
   })
   
+  
   output$print_class_var = renderText({
     if (input$class_var != "Not Selected") {
       if (!input$use_sample_data) {
@@ -2226,7 +1530,7 @@ server <- function(input, output, session) {
                            head = TRUE,
                            sep = ",")
       } else {
-        data_df = read.csv("sample_data.csv", row.names = 1)
+        data_df = read.csv("data/sample_data.csv", row.names = 1)
       }
       
       n = length(table(data_df[input$class_var]))
@@ -2244,58 +1548,45 @@ server <- function(input, output, session) {
       return("Chosen variable is not applicable for limma analysis")
     }
   })
-  
-  output$print_auto_class_var = renderText({
-    if (input$auto_class_var != "Not Selected") {
-      if (!input$auto_use_sample_data) {
-        req(input$auto_limma_csv_input)
-        data_df = read.csv(input$auto_limma_csv_input$datapath,
-                           head = TRUE,
-                           sep = ",")
-      } else {
-        data_df = read.csv("sample_data.csv", row.names = 1)
-      }
-      
-      n = length(table(data_df[input$auto_class_var]))
-      count = 0
-      for(i in (1: n)){
-        if(table(data_df[input$auto_class_var])[i]>1){
-          count = count+1
-        }
-      }
-      validate(
-        need(count!=n,"")
-      )
-      disable("run_auto_limma_button")
-      return("Chosen variable is not applicable for automated limma analysis")
+
+  observeEvent(input$contrast_other_classes_var, {
+    if (input$contrast_other_classes_var == T) {
+      shinyjs::disable('contrast_var')
+    } else {
+      shinyjs::enable('contrast_var')
     }
-  })
-  
-  class_var = eventReactive(input$run_limma_button, input$class_var)
-  contrast_var = eventReactive(input$run_limma_button, input$contrast_var)
-  lfc_var = eventReactive(input$run_limma_button, input$lfc_var)
-  pvalue_var = eventReactive(input$run_limma_button, input$pvalue_var)
-  contrast_other_classes_var = eventReactive(input$run_limma_button, input$contrast_other_classes_var)
-  class_of_interest_var = eventReactive(input$run_limma_button, input$class_of_interest_var)
-  padjust_method_var = eventReactive(input$run_limma_button, input$padjust_method_var)
-  remove_cols_var = eventReactive(input$run_limma_button,input$remove_cols_var)
-  
-  sort_results_by_var = eventReactive(input$run_limma_button, input$sort_results_by_var)
-  
-  #req(input$limma_csv_input)
-  #data_df = read.csv(input$limma_csv_input$datapath, head=TRUE, sep=",")
-  
-  observe(
-    {
-      if(input$class_var!=not_sel&&input$contrast_var!=not_sel&&input$class_of_interest_var!=not_sel)
-      {
+  }, ignoreNULL = T)
+       
+  observe({
+      if(input$class_var!=not_sel&&input$contrast_var!=not_sel&&input$class_of_interest_var!=not_sel){
         enable("run_limma_button")
       }
-      else
-      {
+      else{
         disable("run_limma_button")
       }
-    })
+  })
+    
+  limma_data_input = reactive({
+    req(input$limma_csv_input)
+    fread(input$limma_csv_input$datapath)
+  })
+  
+  observeEvent(limma_data_input(), {
+    char_column_df = data.frame(limma_data_input(), row.names=1)  %>%
+      select_if(is.character)
+
+    show_template(FALSE)
+    
+    choices = c(not_sel, names(char_column_df))
+    updateSelectInput(inputId = "class_var", choices = choices)
+    
+    choices = c(not_sel, names(char_column_df))
+    updateSelectInput(inputId = "class_of_interest_var", choices = choices)
+    
+    choices2 = c(sub(" ", "_", names(limma_data_input())))
+    updateSelectizeInput(session, inputId = "remove_cols_var", choices = choices2,
+                         server = TRUE)
+  })
   
   get_dataset = function() {
     if (!input$use_sample_data) {
@@ -2310,45 +1601,28 @@ server <- function(input, output, session) {
       if (!is.null(input$remove_cols_var)) {
         data_df = data_df[,-which(names(data_df) %in% input$remove_cols_var)]
       }
-      # if (input$show_transpose_var) {
-      #   data_df = as.data.frame(t(data_df))
-      # }
+    
     } else{
-      data_df = read.csv("sample_data.csv", row.names = 1)
+      data_df = read.csv("data/sample_data.csv", row.names = 1)
     }
     
     return(data_df)
   }
   
-  get_auto_dataset = function() {
-    if (!input$auto_use_sample_data) {
-      req(input$auto_limma_csv_input)
-      data_df = read.csv(input$auto_limma_csv_input$datapath,
-                         head = TRUE,
-                         sep = ",", row.names = 1)
-    } else{
-      data_df = read.csv("sample_data2.csv", row.names = 1)
-    }
-    
-    return(data_df)
-  }
   
-  perform_limma_1 <- function(class_var,
+  perform_limma_1 = function(class_var,
                               contrast_var,
                               lfc_var,
                               pvalue_var,
                               contrast_other_classes_var,
                               class_of_interest_var,
                               padjust_method_var = "Benjamini-Hochberg") {
-    # req(input$limma_csv_input)
-    # data_df = read.csv(input$limma_csv_input$datapath, head=TRUE, sep=",")
     if (!is.null(variables$functional_dataset)) {
       data_df = variables$functional_dataset
     } else {
       data_df = get_dataset()
     }
     
-    #data_df[,input$class_var] = as.factor(data_df[,input$class_var])
     data_df[, input$class_var] = gsub(" ", "", data_df[, input$class_var])
     classes = unique(data_df[input$class_var])
     classes = classes[[input$class_var]]
@@ -2359,9 +1633,6 @@ server <- function(input, output, session) {
     source('multiclass_limma.R')
     if (contrast_other_classes_var &
         class_of_interest_var == contrast_var) {
-      # contrast_var_tmp =  classes[!classes %in% contrast_var][1]
-      # contrast_string = paste(class_of_interest_var, paste("-", contrast_var_tmp))
-      # contrast_var = classes[!classes %in% contrast_var][1]
       contrast_var = "control"
     }
     contrast_string = paste(class_of_interest_var, paste("-", contrast_var))
@@ -2394,33 +1665,13 @@ server <- function(input, output, session) {
     
     variables$fit2C = results$fit2C
     results = results$topProteins
-    
     variables$results = results
     
-    # print(results)
     data.table(results)
-    
-    #datatable(results, rownames = FALSE, options = list(rowsGroup = list(0)))
-    
   }
   
-  variables = reactiveValues(
-    data_table = NULL,
-    auto_data_table = NULL,
-    pipeline_data = NULL,
-    pipline_ant = NULL,
-    replicates = NULL,
-    pipeline = F,
-    functional_dataset = NULL,
-    fit2C = NULL,
-    results = NULL,
-    original_dataset = NULL,
-    imputed_dataset = NULL,
-    normalized_dataset = NULL
-  )
-  
-  limma_table_1 <- eventReactive(input$run_limma_button, {
-    start <- Sys.time()
+  limma_table_1 = eventReactive(input$run_limma_button, {
+    start = Sys.time()
     data_table = perform_limma_1(
       class_var(),
       input$contrast_var,
@@ -2432,7 +1683,7 @@ server <- function(input, output, session) {
     )
     data_table = data_table[complete.cases(data_table),]
     variables$data_table = data_table
-    # dtt = datatable(data_table, rownames = FALSE, options = list(rowsGroup = list(0)))
+
     dtt = datatable(
       data_table,
       rownames = FALSE,
@@ -2479,176 +1730,7 @@ server <- function(input, output, session) {
       write.csv(df, file)
     }
   )
-  
-  # limma_table_1 <- eventReactive(input$sortLimmaResults,{
-  #   if(!is.null(variables$data_table)){
-  #     df = variables$data_table
-  #     sort_var = sort_results_by_var()
-  #     df = df[order(sort_var),]
-  #     return(df)
-  #   }
-  # })
-  
-  #Consensus Clustering
-  cluster_csv_input <- reactive({
-    req(input$cluster_csv_input)
-    fread(input$cluster_csv_input$datapath)
-  })
-  
-  observeEvent(cluster_csv_input(), {
-
-    show_template3(FALSE)
-    
-  })
-  
-  get_cluster_dataset = function() {
-    if (!input$cluster_use_sample_data) {
-      req(input$cluster_csv_input)
-      data_df = read.csv(
-        input$cluster_csv_input$datapath,
-        head = TRUE,
-        sep = ",",
-        row.names = 1
-      )
-    } else {
-      data_df = read.csv(
-        "consensus_data.csv",
-        head = TRUE,
-        sep = ",",
-        row.names = 1
-      )
-    }
-    return(data_df)
-  }
-  
-  observeEvent(input$cluster_use_sample_data, {
-    if (input$cluster_use_sample_data) {
-      reset(id = "cluster_csv_input")
-      show_template3(TRUE)
-    }
-  })
-  
-  cluster_k_var = eventReactive(input$run_consclustering_button, input$cluster_k_var)
-  cluster_alg_var = eventReactive(input$run_consclustering_button, input$cluster_alg_var)
-  cluster_distance_var = eventReactive(input$run_consclustering_button,
-                                       input$cluster_distance_var)
-  cluster_inner_linkage_var = eventReactive(input$run_consclustering_button,
-                                            input$cluster_inner_linkage_var)
-  cluster_final_linkage_var = eventReactive(input$run_consclustering_button,
-                                            input$cluster_final_linkage_var)
-  
-  # cons_clust <- eventReactive(input$run_limma_button,{
-  #   source('consensus_clustering.R')
-  #   perform_consensus_clustering(get_cluster_dataset(), dataname,k=cluster_k_var,clusterAlg=cluster_alg_var,
-  #                                distance=cluster_distance_var,
-  #     innerLinkage=cluster_inner_linkage_var,finalLinkage=cluster_final_linkage_var)
-  #   return()
-  # })
-  
-  output$cluster_slider = renderUI({
-    sliderInput(
-      "cluster_k_var",
-      p(
-        span("Maximum No. of Clusters"),
-        span(icon("info-circle"), id = "icon8", style = "color: #E95420")
-      ),
-      min = 2,
-      max = if (!is.null(get_cluster_dataset())) ncol(get_cluster_dataset()) else 15,
-      value = if (!is.null(get_cluster_dataset())) floor(ncol(get_cluster_dataset())/2) else 6,
-      step= 1
-    )
-  })
-  
-  observe(
-    {
-      if(xor(input$cluster_use_sample_data,!is.null(input$cluster_csv_input$datapath)))
-      {
-        enable("run_consclustering_button")
-      }
-      else
-      {
-        disable("run_consclustering_button")
-      }
-    })
-  
-  observeEvent(input$run_consclustering_button, {
-    show_template3(FALSE)
-    start <- Sys.time()
-    print('Started...')
-    source('consensus_clustering.R')
-    data = get_cluster_dataset()
-    data[is.na(data)] = 0
-    ##print(input$cluster_csv_input$name)
-    clust_alg = cluster_alg_var()
-    ca = c("hc", "pam", "km")
-    names(ca) = c(
-      "Hierachical Clustering",
-      "Partition Around Medoids Clustering",
-      "K-means Clustering"
-    )
-    
-    path = perform_consensus_clustering_png(
-      as.matrix(data),
-      gsub("\\..*", "", input$cluster_csv_input$name),
-      k = cluster_k_var(),
-      clusterAlg = ca[[clust_alg]],
-      distance = cluster_distance_var(),
-      innerLinkage = cluster_inner_linkage_var(),
-      finalLinkage = cluster_final_linkage_var()
-    )
-    # output$cluster_path = path
-    # output$cluster_path = renderText({
-    #   paste("Output files are in", path, sep = " ")
-    # })
-    variables$cluster_path = path
-    #print(path)
-    
-    output$cluster_images = renderUI({
-      all_images = list.files(variables$cluster_path,
-                              pattern = "*png",
-                              full.names = TRUE)
-      withSpinner(tagList(
-        downloadButton("clusterDownload", label = "Download Results"),
-        br(),
-        br(),
-        # withSpinner(
-        #   verbatimTextOutput("cluster_path"),
-        #   color = "#FF4500",
-        #   type = 4
-        # ),
-        renderImage(list(
-          src = all_images[1],
-          alt = "Can't show file!",
-          width = 300,
-          height = 300
-        ), deleteFile = FALSE),
-        all_images[-1] %>% map(function(path) {
-          renderImage(list(
-            src = path,
-            alt = "Can't show file!",
-            width = 480,
-            height = 500
-          ), deleteFile = FALSE)
-        })
-      ),color = "#FF4500")
-      
-    })
-                                          
-  output$clusterDownload = downloadHandler(
-    filename = function() {
-      paste0("ConsensusClusterResults_", Sys.Date(), ".zip")
-    },
-    content = function(file) {
-      files = list.files(variables$cluster_path, recursive = TRUE)
-      files = paste(variables$cluster_path, files, sep = "/")
-      return (zip(file ,files ,mode="cherry-pick"))
-    },
-    contentType = "application/zip"
-  )
-      }
-  )
-                        
-                        
+                       
   generate_box_plots = function(top_genes){
     data_df = get_dataset()
     plot_list = list()
@@ -2688,13 +1770,13 @@ server <- function(input, output, session) {
     validate(need(!is.null(variables$data_table) && nrow(variables$data_table) != 0, 'No records to display'))
     bp = NULL
     if (!is.null(variables$data_table) && (nrow(variables$data_table) != 0)) {
-      start <- Sys.time()
+      start = Sys.time()
       top_genes_df = head(variables$data_table, 50)
       top_genes = as.vector(top_genes_df$Gene)
       bp = generate_box_plots(top_genes)
       print(Sys.time() - start)
     } else {
-      img <- rasterGrob(png::readPNG("norecords.png"))
+      img = rasterGrob(png::readPNG("norecords.png"))
       bp = grid.arrange(ggplot(), img, heights = c(1, 1))
       shinyjs::disable("plotUpregulated")
       shinyjs::disable("plotDownregulated")
@@ -2733,16 +1815,14 @@ server <- function(input, output, session) {
       bp = filteredBoxplots()
       output$limma_boxplot = renderPlot(bp$plots, height = 100 * bp$n_genes)
     } else {
-      # output$limma_boxplot = renderPlot(limma_boxplots_1(), height= 5000)
       output$limma_boxplot = renderPlot(limma_boxplots_1(), height = 100 *
                                           min(nrow(variables$data_table), 50))
       
     }
   }, ignoreInit = TRUE)
   
-  #output$limma_table = renderTable(limma_table_1())
   output$limma_table = renderDT(server = FALSE, {
-    data <- limma_table_1()
+    data = limma_table_1()
     if (!is.null(data$x)) {
       data
     } else {
@@ -2756,8 +1836,7 @@ server <- function(input, output, session) {
     }
     return (100)
   }
-  
-  # output$limma_boxplot = renderPlot(limma_boxplots_1(), height= 5000)
+
   output$limma_boxplot = renderPlot({
     validate(need(!is.null(variables$data_table), 'No records to display'))
     limma_boxplots_1()
@@ -2766,10 +1845,6 @@ server <- function(input, output, session) {
   output$limma_volcanoplot = renderPlotly({
     validate(need(nrow(variables$data_table) != 0, 'No records to display'))
     
-    #print(sum(is.na(variables$data_table)))
-    #variables$data_table = variables$data_table[!is.na(variables$data_table)]
-    #print(sum(is.na(variables$data_table)))
-    #start <- Sys.time()
     results6 = variables$data_table
     results6$FC = 2 ^ results6$logFC
     results6$P = 2 ^ results6$P.Value
@@ -2779,7 +1854,7 @@ server <- function(input, output, session) {
     else
       c(-0.5, 0.5)
     effectivep = as.numeric(input$pvalue_var)
-    #p = "P.Value",effect_size = "logFC"
+
     results6_vol = volcanor(
       results6,
       p = "P.Value",
@@ -2795,10 +1870,7 @@ server <- function(input, output, session) {
       highlight_color = "red",
       effect_size_line = effectsize
     ) %>% layout(hoverlabel = list(bgcolor = "white"))
-    #print( Sys.time() - start )
-    
   })
-  
   
   output$volcano_cutoffs = renderUI({
     fit2C = variables$fit2C
@@ -2819,12 +1891,10 @@ server <- function(input, output, session) {
         "log fold change cutoff:",
         min = if (!is.null(fit2C))
           round(min(abs(fit2C$coef), na.rm = T), 2)
-        else
-          0 ,
+        else 0 ,
         max = if (!is.null(fit2C))
           round(max(abs(fit2C$coef), na.rm = T), 2)
-        else
-          1,
+        else 1,
         value = if (!is.null(fit2C)) ((round(min(abs(fit2C$coef), na.rm = T), 2) + round(min(abs(fit2C$coef), na.rm = T), 2))/2) else 0.5
       )
     ))
@@ -2835,21 +1905,17 @@ server <- function(input, output, session) {
     
     if(!is.na(input$lfc_var) && is.na(input$pvalue_var) ){
       results_df = results_df[abs(results_df$logFC) >= input$lfc_var,]
-    }else if(is.na(input$lfc_var) && !is.na(input$pvalue_var) ){
+    } else if(is.na(input$lfc_var) && !is.na(input$pvalue_var) ){
       results_df = results_df[results_df$adj.P.Val <= input$pvalue_var,]
-    }else if(!is.na(input$lfc_var) && !is.na(input$pvalue_var) ){
+    } else if(!is.na(input$lfc_var) && !is.na(input$pvalue_var) ){
       results_df = results_df[(abs(results_df$logFC) >= input$lfc_var)&&
                                 (results_df$adj.P.Val <= input$pvalue_var),]
-    }else {
+    } else {
       results_df = results_df[results_df$adj.P.Val <0.05,]
     }
-    
-    
-    
+   
     url = paste("https://david.ncifcrf.gov/api.jsp?type=UNIPROT_ACCESSION&ids=",
                 paste(rownames(results_df), collapse=","),"&tool=summary")
-    
-    # clipr::write_clip(rownames(results_df), allow_non_interactive = TRUE)  
     
     tags$ul(
       tags$li(tags$h4(tags$b("DAVID Functional Annotation Analysis: ")), tags$h5("Sherman, Brad T., et al. 'DAVID: a web server for functional enrichment analysis and functional annotation of gene lists (2021 update).' Nucleic acids research 50.W1 (2022): W216-W221."),
@@ -2872,24 +1938,23 @@ server <- function(input, output, session) {
     fit2C = variables$fit2C
     
     data = get_dataset()
-    # rownames(data) = data[,1]
-    # data = data[,-1]
+
     char_columns = colnames(data %>% select_if(is.character))
-    data <- t(data)
-    results_df <- data.frame (
+    data = t(data)
+    results_df = data.frame (
       log2FoldChange  = c(fit2C$coef),
       pvalue = c(fit2C$p.value),
       delabel = rownames(data)[!rownames(data) %in% c(char_columns)]
     )
-    rownames(results_df) <-
+    rownames(results_df) =
       rownames(data)[!rownames(data) %in% c(char_columns)]
-    results_df$diffexpressed <- "NO"
-    # if log2Foldchange > 0.6 and pvalue < 0.05, set as "UP"
+    results_df$diffexpressed = "NO"
+
     results_df$diffexpressed[results_df$log2FoldChange > input$lfc_cutoff &
-                               results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] <- "UP"
-    # if log2Foldchange < -0.6 and pvalue < 0.05, set as "DOWN"
+                               results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] = "UP"
+
     results_df$diffexpressed[results_df$log2FoldChange < (-1 * input$lfc_cutoff) &
-                               results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] <- "DOWN"
+                               results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] = "DOWN"
     
     EnhancedVolcano(
       results_df,
@@ -2910,7 +1975,6 @@ server <- function(input, output, session) {
   
   output$limma_heatmap = renderPlot(res = 96, {
     data_df = get_dataset()
-    #data_df[,input$class_var] = as.factor(data_df[,input$class_var])
     data_df[, input$class_var] = gsub(" ", "", data_df[, input$class_var])
     
     classes = unique(data_df[input$class_var])
@@ -3025,7 +2089,6 @@ server <- function(input, output, session) {
     
     pca_type = NULL
     pca_frame = F
-    #convex, t, norm or euclid
     
     if (input$limma_pca_frame == 1) {
       pca_type = "norm"
@@ -3054,19 +2117,7 @@ server <- function(input, output, session) {
     )
     
   })
-  
-  #functional subset limma
-  # limma_table_1 <- eventReactive(input$limma_perform_sub_button,{
-  #   data_table = perform_limma_1(class_var(), input$contrast_var, input$lfc_var,
-  #                                input$pvalue_var, input$contrast_other_classes_var,
-  #                                class_of_interest_var(),
-  #                                padjust_method_var())
-  #   data_table = data_table[complete.cases(data_table), ]
-  #   variables$data_table = data_table
-  #   dtt = datatable(data_table, rownames = FALSE, options = list(rowsGroup = list(0)))
-  #   return(dtt)
-  # })
-  
+    
   output$downloadResults = downloadHandler(
     filename = "limma_results.csv",
     content = function(file) {
@@ -3074,7 +2125,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadPlots <- downloadHandler(
+  output$downloadPlots = downloadHandler(
     filename = "limma_top50_plots.png",
     content = function(file) {
       if (input$plotDownregulated || input$plotUpregulated) {
@@ -3092,8 +2143,24 @@ server <- function(input, output, session) {
     }
   )
   
-  #Auto limma
-  auto_limma_data_input <- reactive({
+  ######################################################################################    
+  # Automated Combinatory Differential Expression
+  ######################################################################################    
+
+  get_auto_dataset = function() {
+    if (!input$auto_use_sample_data) {
+      req(input$auto_limma_csv_input)
+      data_df = read.csv(input$auto_limma_csv_input$datapath,
+                         head = TRUE,
+                         sep = ",", row.names = 1)
+    } else{
+      data_df = read.csv("data/sample_data2.csv", row.names = 1)
+    }
+    
+    return(data_df)
+  }
+
+  auto_limma_data_input = reactive({
     req(input$auto_limma_csv_input)
     fread(input$auto_limma_csv_input$datapath)
   })
@@ -3102,7 +2169,7 @@ server <- function(input, output, session) {
     show_template2(FALSE)
     char_column_df = data.frame(auto_limma_data_input(), row.names=1) %>%
       select_if(is.character)
-    choices <- c(not_sel, names(char_column_df))
+    choices = c(not_sel, names(char_column_df))
     updateSelectInput(inputId = "auto_class_var", choices = choices)
   })
   
@@ -3111,11 +2178,37 @@ server <- function(input, output, session) {
     reset(id = "contents2")
     show_template2(TRUE)
     
-    data_df = read.csv("sample_data2.csv", row.names = 1)
+    data_df = read.csv("data/sample_data2.csv", row.names = 1)
     char_column_df = data_df %>%
       select_if(is.character)
-    choices <- c(not_sel, names(char_column_df))
+    choices = c(not_sel, names(char_column_df))
     updateSelectInput(inputId = "auto_class_var", choices = choices)
+  })
+
+  output$print_auto_class_var = renderText({
+    if (input$auto_class_var != "Not Selected") {
+      if (!input$auto_use_sample_data) {
+        req(input$auto_limma_csv_input)
+        data_df = read.csv(input$auto_limma_csv_input$datapath,
+                           head = TRUE,
+                           sep = ",")
+      } else {
+        data_df = read.csv("data/sample_data.csv", row.names = 1)
+      }
+      
+      n = length(table(data_df[input$auto_class_var]))
+      count = 0
+      for(i in (1: n)){
+        if(table(data_df[input$auto_class_var])[i]>1){
+          count = count+1
+        }
+      }
+      validate(
+        need(count!=n,"")
+      )
+      disable("run_auto_limma_button")
+      return("Chosen variable is not applicable for automated limma analysis")
+    }
   })
   
   auto_class_var = eventReactive(input$run_auto_limma_button, input$auto_class_var)
@@ -3124,30 +2217,19 @@ server <- function(input, output, session) {
   auto_padjust_method_var = eventReactive(input$run_auto_limma_button,
                                           input$auto_padjust_method_var)
   
-  observe(
-    {
-      if(input$auto_class_var!=not_sel)
-      {
+  observe({
+      if(input$auto_class_var!=not_sel){
         enable("run_auto_limma_button")
-      }
-      else
-      {
+      } else {
         disable("run_auto_limma_button")
       }
     })
   
   output$auto_limma_table = renderDT(limma_table2())
   
-  perform_limma_2 <-
-    function(data_df,
-             class_var,
-             lfc_var,
-             pvalue_var,
-             class_group1,
-             class_group2,
-             method = "none",
+  perform_limma_2 =
+    function(data_df, class_var, lfc_var, pvalue_var, class_group1, class_group2, method = "none",
              fdr = "Benjamini-Hochberg") {
-      #data_df = get_auto_dataset()
       
       if (!"Class1" %in% data_df[, class_var]) {
         class_of_interest_var = 'Class1'
@@ -3235,7 +2317,6 @@ server <- function(input, output, session) {
         }
         
       }
-      ##print(results)
       data.table(results)
       
     }
@@ -3244,12 +2325,11 @@ server <- function(input, output, session) {
     if (input$auto_use_sample_data) {
       show_template2(FALSE)
     }
-    start <- Sys.time()
-    ##print(input$auto_pvalue_var)
-    #dd=c('class1','class2','class3','class4')
+    start = Sys.time()
+
     data_df = get_auto_dataset()
     dd = unique(data_df[, auto_class_var()])
-    ##print(dd)
+
     res = rapply(listParts(length(dd)), function(v) dd[v], how = "replace")
     res2 = list()
     index = 1
@@ -3272,7 +2352,9 @@ server <- function(input, output, session) {
     
     comb_list = c()
     
-    #Pairwise comparisons
+    ###########################################  
+    # Pairwise comparisons
+    ###########################################  
     pcomb = combn(dd, 2)
     for (i in 1:ncol(pcomb)) {
       group1 = pcomb[1, i]
@@ -3335,18 +2417,19 @@ server <- function(input, output, session) {
     })
     
     auto_limma_table = auto_limma_table %>% dplyr::select(Combination, everything())
-    
-    #merge cells of column 1)) %>% formatRound(
-    dtable <- datatable(auto_limma_table, rownames = FALSE, options = list(rowsGroup = list(0)))
+
+    dtable = datatable(auto_limma_table, rownames = FALSE, options = list(rowsGroup = list(0)))
     dtable = dtable %>% formatRound(columns = which(sapply(auto_limma_table, is.numeric)), digits = 4)
-    # folder containing dataTables.rowsGroup.js                   
-    path <- getwd() 
-    dep <- htmltools::htmlDependency("RowsGroup", "2.0.0",
+
+    # Folder containing dataTables.rowsGroup.js                   
+    path = getwd() 
+    dep = htmltools::htmlDependency("RowsGroup", "2.0.0",
                                      path, script = "dataTables.rowsGroup.js")
-    dtable$dependencies <- c(dtable$dependencies, list(dep))
-    #dtable
+    dtable$dependencies = c(dtable$dependencies, list(dep))
+
     variables$auto_data_table = auto_limma_table %>%  mutate_if(is.numeric, round, digits=4)
-    print('auto limma time')
+
+    print('auto limma elapsed time')
     print(Sys.time() - start)
     auto_limma_ready(TRUE)
     return(dtable)
@@ -3373,33 +2456,24 @@ server <- function(input, output, session) {
     
     output$downloadAutoTable = downloadHandler(
       filename = "limma_auto_results_top50.xlsx",
-      # content = function(file) {
-      #   write.csv(variables$auto_data_table, file, row.names = FALSE)
-      # }
+
       content = function(file) {
         df = variables$auto_data_table
-        ##print(df)
-        ##print(colnames(df))
         combs_names = unique(df$Combination)
-        # comb_index_names = LETTERS[1:length(combs_names)]
         comb_index_names = generate_letter_combinations(length(combs_names))
         combs_index = data.frame(index = comb_index_names, combination = combs_names)
         
         OUT = createWorkbook()
         
-        #Write index
+        # Write index
         addWorksheet(OUT, "Index")
         writeData(OUT, sheet = "Index", x = combs_index)
         i = 1
         for (c in comb_index_names) {
-          #print(c)
-          length(c)
           addWorksheet(OUT, c)
           writeData(OUT, sheet = c, x = df[df$Combination == combs_names[i], ])
           i = i + 1
         }
-        #write.xlsx(list_of_datasets, file, rowNames=FALSE)
-        #write.csv(variables$auto_data_table, file, row.names = FALSE)
         saveWorkbook(OUT, file)
       }
     )
@@ -3436,8 +2510,10 @@ server <- function(input, output, session) {
         )
         
         comb_list = c()
-        
-        #Pairwise comparisons
+
+        ###########################################  
+        # Pairwise comparisons
+        ###########################################  
         pcomb = combn(dd, 2)
         for (i in 1:ncol(pcomb)) {
           group1 = pcomb[1, i]
@@ -3501,7 +2577,6 @@ server <- function(input, output, session) {
         df = auto_limma_table
         
         combs_names = unique(df$Combination)
-        # comb_index_names = LETTERS[1:length(combs_names)]
         comb_index_names = generate_letter_combinations(length(combs_names))
         combs_index = data.frame(index = comb_index_names, combination = combs_names)
         
@@ -3512,1003 +2587,155 @@ server <- function(input, output, session) {
         writeData(OUT, sheet = "Index", x = combs_index)
         i = 1
         for (c in comb_index_names) {
-          #print(c)
           length(c)
           addWorksheet(OUT, c)
           writeData(OUT, sheet = c, x = df[df$Combination == combs_names[i], ])
           i = i + 1
         }
-        #write.xlsx(list_of_datasets, file, rowNames=FALSE)
-        #write.csv(variables$auto_data_table, file, row.names = FALSE)
         saveWorkbook(OUT, file)
       }
     )
-    
-    #Pipeline
-    pipeline_data_input <- reactive({
-      req(input$pipeline_data_csv_input)
-      fread(input$pipeline_data_csv_input$datapath)
-    })
-    
-    pipeline_ant_input <- reactive({
-      req(input$pipeline_ant_csv_input)
-      fread(input$pipeline_ant_csv_input$datapath)
-    })
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_batch_var", choices = choices)
-    })
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_biospecimen_id_col_var", choices = choices)
-    })
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_sample_name_col_var", choices = choices)
-    })
-    
-    output$pipeline_data <- renderTable({
-      if (!is.null(input$pipeline_data_csv_input)) {
-        req(input$pipeline_data_csv_input)
-        df = read.csv(
-          input$pipeline_data_csv_input$datapath,
-          head = TRUE,
-          sep = ",",
-          check.names = FALSE
-        )
-        return(head(df))
-      } else {
-        return(head(
-          read.csv("pipeline_data.csv", fileEncoding = "UTF-8-BOM")
-        ))
-      }
-    })
-    
-    output$pipeline_ant <- renderTable({
-      if (!is.null(input$pipeline_ant_csv_input)) {
-        req(input$pipeline_ant_csv_input)
-        df = read.csv(
-          input$pipeline_ant_csv_input$datapath,
-          head = TRUE,
-          sep = ",",
-          check.names = FALSE,
-          fileEncoding = "UTF-8-BOM"
-        )
-        return(head(df))
-      } else {
-        return(head(
-          read.csv("pipeline_sample_annotation.csv", fileEncoding = "UTF-8-BOM")
-        ))
-      }
-    })
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_technical_factors_var", choices = choices)
-    })
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_biological_factors_var", choices = choices)
-    })
-    
-    pipeline_biospecimen_id_col_var = eventReactive(input$run_pipeline_button,
-                                                    input$pipeline_biospecimen_id_col_var)
-    pipeline_batch_var = eventReactive(input$run_pipeline_button, input$pipeline_batch_var)
-    pipeline_biological_factors_var = eventReactive(input$run_pipeline_button,
-                                                    input$pipeline_biological_factors_var)
-    pipeline_technical_factors_var = eventReactive(input$run_pipeline_button,
-                                                   input$pipeline_technical_factors_var)
-    pipeline_sample_name_col_var = eventReactive(input$run_pipeline_button,
-                                                 input$pipeline_sample_name_col_var)
-    
-    get_pipeline_dataset = function() {
-      req(input$pipeline_data_csv_input)
+
+  ######################################################################################  
+  # Consensus Clustering
+  ########################################### ########################################### 
+
+  cluster_csv_input = reactive({
+    req(input$cluster_csv_input)
+    fread(input$cluster_csv_input$datapath)
+  })
+  
+  observeEvent(cluster_csv_input(), {
+    show_template3(FALSE)
+  })
+  
+  get_cluster_dataset = function() {
+    if (!input$cluster_use_sample_data) {
+      req(input$cluster_csv_input)
       data_df = read.csv(
-        input$pipeline_data_csv_input$datapath,
+        input$cluster_csv_input$datapath,
         head = TRUE,
         sep = ",",
-        check.names = FALSE
+        row.names = 1
       )
-      variables$pipeline_data = data_df
-      return(data_df)
-    }
-    
-    get_annotation_dataset = function() {
-      req(input$pipeline_ant_csv_input)
+    } else {
       data_df = read.csv(
-        input$pipeline_ant_csv_input$datapath,
+        "data/consensus_data.csv",
         head = TRUE,
         sep = ",",
-        check.names = FALSE,
-        fileEncoding = "UTF-8-BOM"
+        row.names = 1
       )
-      colnames(data_df) = sub(" ", "_", colnames(data_df))
-      data_df$ID = seq(1, nrow(data_df))
-      if (is.null(variables$pipeline_ant)) {
-        variables$pipeline_ant = data_df
-      }
-      return(data_df)
     }
-    
-    output$pipeline_missing_protein = renderPlot({
-      df = get_pipeline_dataset()
-      return(
-        hist(rowSums(is.na(df)), xlab = "Missing count",
-             main = "Protein-wise Missing value Distribution")
-      )
-    })
-    
-    output$pipeline_missing_sample = renderPlot({
-      df = get_pipeline_dataset()
-      return(
-        hist(colSums(is.na(df)), xlab = "Missing count",
-             main = "Sample-wise Missing value Distribution")
-      )
-    })
-    
-    output$pipeline_total_protein = renderText({
-      df = get_pipeline_dataset()
-      paste(nrow(df), ' proteins total')
-    })
-    
-    output$pipeline_total_sample = renderText({
-      df = get_annotation_dataset()
-      paste(nrow(df), ' samples total')
-    })
-    
-    create_protein_missing_table <- function() {
-      df = get_pipeline_dataset()
-      col = rowSums(is.na(df))
-      if (length(col) > 5000)
-        col_norm = sample(col, 5000)
-      else
-        col_norm = col
-      norm_test = shapiro.test(col_norm)
-      statistic = c("min",
-                    "max",
-                    "mean",
-                    "median",
-                    "5th percentile",
-                    "95th percentile")
-      value = c(
-        round(min(col), 2),
-        round(max(col), 2),
-        round(mean(col), 2),
-        round(median(col), 2),
-        round(quantile(col, 0.05), 2),
-        round(quantile(col, 0.95), 2)
-      )
-      data.table(statistic, value)
+    return(data_df)
+  }
+  
+  observeEvent(input$cluster_use_sample_data, {
+    if (input$cluster_use_sample_data) {
+      reset(id = "cluster_csv_input")
+      show_template3(TRUE)
     }
-    
-    output$pipeline_missing_sample_summary_table = renderTable(create_sample_missing_table())
-    
-    create_sample_missing_table <- function() {
-      df = get_pipeline_dataset()
-      col = colSums(is.na(df))
-      if (length(col) > 5000)
-        col_norm = sample(col, 5000)
-      else
-        col_norm = col
-      norm_test = shapiro.test(col_norm)
-      statistic = c("min",
-                    "max",
-                    "mean",
-                    "median",
-                    "5th percentile",
-                    "95th percentile")
-      value = c(
-        round(min(col), 2),
-        round(max(col), 2),
-        round(mean(col), 2),
-        round(median(col), 2),
-        round(quantile(col, 0.05), 2),
-        round(quantile(col, 0.95), 2)
-      )
-      data.table(statistic, value)
-    }
-    
-    output$pipeline_missing_protein_summary_table = renderTable(create_protein_missing_table())
-    
-    output$pipeline_retain_protein = renderText({
-      df = get_pipeline_dataset()
-      mod_df = df[(rowSums(is.na(df)) / ncol(df)) <= (input$protein_slider /
-                                                        100) , ]
-      return(paste(nrow(mod_df), ' proteins'))
-    })
-    
-    output$pipeline_retain_sample = renderText({
-      df = get_pipeline_dataset()
-      mod_df = df[, (colSums(is.na(df)) / nrow(df)) <= (input$sample_slider /
-                                                          100)]
-      samples = ncol(mod_df) - 1
-      if (length(samples) == 0) {
-        samples = 0
-      }
-      return(paste(samples, ' samples'))
-    })
-    
-    observeEvent(input$set_missing_valued_data_button, {
-      df = get_pipeline_dataset()
-      mod_df = df[(rowSums(is.na(df)) / ncol(df)) <= (input$protein_slider /
-                                                        100) , ]
-      rownames(mod_df) = mod_df$Index
-      mod_df = subset(mod_df, select = -c(Index))
-      variables$pipeline_data = mod_df
-    })
-    
-    output$pipeline_protein_mean_plot = renderPlot({
-      df = variables$pipeline_data
-      ant = variables$pipeline_ant
-      # ant[,pipeline_batch_var()] = as.factor(ant[,pipeline_batch_var()])
-      ant[, pipeline_technical_factors_var()[1]] = as.factor(ant[, pipeline_technical_factors_var()[1]])
-      #print(unique(ant[,pipeline_batch_var()]))
-      color_list = sample_annotation_to_colors(
-        ant,
-        factor_columns = c(
-          pipeline_biological_factors_var(),
-          pipeline_technical_factors_var()
-        ),
-        numeric_columns = c('ID')
-      )
-      
-      df2 = as.matrix(df)
-      variables$pipeline_data_matrix = df2
-      variables$pipeline_ant = ant
-      variables$color_list = color_list
-      
-      return(
-        plot_sample_mean(
-          df2,
-          ant,
-          order_col = 'ID',
-          batch_col = pipeline_technical_factors_var()[1],
-          color_by_batch = TRUE,
-          ylimits = c(23, 26),
-          color_scheme = color_list[[pipeline_technical_factors_var()[1]]]
-        )
-      )
-    })
-    
-    output$pipeline_protein_mean_box_plot = renderPlot({
-      df = variables$pipeline_data_matrix
-      ant = variables$pipeline_ant
-      color_list = variables$color_list
-      long_data =  matrix_to_long(df)
-      variables$pipeline_long_data = long_data
-      
-      return(
-        plot_boxplot(
-          long_data,
-          ant,
-          batch_col = pipeline_technical_factors_var()[1],
-          color_scheme = color_list[[pipeline_technical_factors_var()[1]]]
-        )
-      )
-    })
-    
-    output$pipeline_protein_mean_pca_plot = renderPlot(
-      create_pca_plots(
-        as.matrix(variables$pipeline_data),
-        variables$pipeline_ant,
-        c(
-          pipeline_biological_factors_var(),
-          pipeline_technical_factors_var()
-        ),
-        variables$color_list
+  })
+  
+  cluster_k_var = eventReactive(input$run_consclustering_button, input$cluster_k_var)
+  cluster_alg_var = eventReactive(input$run_consclustering_button, input$cluster_alg_var)
+  cluster_distance_var = eventReactive(input$run_consclustering_button,
+                                       input$cluster_distance_var)
+  cluster_inner_linkage_var = eventReactive(input$run_consclustering_button,
+                                            input$cluster_inner_linkage_var)
+  cluster_final_linkage_var = eventReactive(input$run_consclustering_button,
+                                            input$cluster_final_linkage_var)
+  
+  output$cluster_slider = renderUI({
+    sliderInput(
+      "cluster_k_var",
+      p(
+        span("Maximum No. of Clusters"),
+        span(icon("info-circle"), id = "icon8", style = "color: #E95420")
       ),
-      height = 1000
+      min = 2,
+      max = if (!is.null(get_cluster_dataset())) ncol(get_cluster_dataset()) else 15,
+      value = if (!is.null(get_cluster_dataset())) floor(ncol(get_cluster_dataset())/2) else 6,
+      step= 1
     )
-    
-    #Normalization
-    
-    pipeline_norm_method = eventReactive(input$perform_normalization_data_button,
-                                         input$pipeline_norm_method)
-    
-    perform_normalization = eventReactive(input$perform_normalization_data_button, {
-      df = variables$pipeline_data_matrix
-      norm_df = NULL
-      if (1 %in% pipeline_norm_method() &&
-          2 %in% pipeline_norm_method()) {
-        norm_df = normalize_data_dm(df, normalize_func = 'medianCentering')
-        norm_df = normalize_data_dm(norm_df, normalize_func = 'quantile')
-      } else if (1 %in% pipeline_norm_method()) {
-        norm_df = normalize_data_dm(df, normalize_func = 'medianCentering')
+  })
+  
+  observe({
+      if (xor(input$cluster_use_sample_data,!is.null(input$cluster_csv_input$datapath))){
+        enable("run_consclustering_button")
       } else {
-        norm_df = normalize_data_dm(df, normalize_func = 'quantile')
+        disable("run_consclustering_button")
       }
-      
-      variables$pipeline_data_norm = norm_df
-      return(
-        plot_sample_mean(
-          norm_df,
-          variables$pipeline_ant,
-          order_col = 'ID',
-          batch_col = pipeline_technical_factors_var()[1],
-          color_by_batch = TRUE,
-          ylimits = c(19, 36),
-          color_scheme = variables$color_list[[pipeline_technical_factors_var()[1]]]
-        ) +
-          ggtitle("Normalization")
-      )
     })
-    
-    output$pipeline_protein_norm_mean_plot = renderPlot(perform_normalization())
-    
-    perform_normalization_boxplot = eventReactive(input$perform_normalization_data_button, {
-      long_mat = matrix_to_long(variables$pipeline_data_norm)
-      variables$pipeline_data_norm_long = long_mat
-      
-      return(
-        plot_boxplot(
-          long_mat,
-          variables$pipeline_ant,
-          batch_col = pipeline_technical_factors_var()[1],
-          color_scheme = variables$color_list[[pipeline_technical_factors_var()[1]]]
-        ) +
-          ggtitle("Normalization")
-      )
-    })
-    output$pipeline_protein_norm_mean_box_plot = renderPlot(perform_normalization_boxplot())
-    
-    output$pipeline_protein_norm_mean_pca_plot = renderPlot(
-      create_pca_plots(
-        variables$pipeline_data_norm,
-        variables$pipeline_ant,
-        c(
-          pipeline_biological_factors_var(),
-          pipeline_technical_factors_var()
-        ),
-        variables$color_list
-      ),
-      height = 1000
+  
+  observeEvent(input$run_consclustering_button, {
+    show_template3(FALSE)
+    start = Sys.time()
+    print('Started...')
+    source('consensus_clustering.R')
+    data = get_cluster_dataset()
+    data[is.na(data)] = 0
+    ##print(input$cluster_csv_input$name)
+    clust_alg = cluster_alg_var()
+    ca = c("hc", "pam", "km")
+    names(ca) = c(
+      "Hierachical Clustering",
+      "Partition Around Medoids Clustering",
+      "K-means Clustering"
     )
     
-    output$downloadNormTable = downloadHandler(
-      filename = "normalized_results.csv",
-      content = function(file) {
-        write.csv(variables$pipeline_data_norm, file, row.names = FALSE)
-      }
+    path = perform_consensus_clustering_png(
+      as.matrix(data),
+      gsub("\\..*", "", input$cluster_csv_input$name),
+      k = cluster_k_var(),
+      clusterAlg = ca[[clust_alg]],
+      distance = cluster_distance_var(),
+      innerLinkage = cluster_inner_linkage_var(),
+      finalLinkage = cluster_final_linkage_var()
     )
+
+    variables$cluster_path = path
     
-    # Imputation
-    
-    pipeline_impu_method = eventReactive(input$perform_imputation_data_button,
-                                         input$pipeline_impu_method)
-    
-    perform_imputation = eventReactive(input$perform_imputation_data_button, {
-      df = variables$pipeline_data_norm
-      
-      imputed_df = DreamAI(
-        df,
-        k = 10,
-        maxiter_MF = 10,
-        ntree = 100,
-        maxnodes = NULL,
-        maxiter_ADMIN = 30,
-        tol = 10 ^ (-2),
-        gamma_ADMIN = NA,
-        gamma = 50,
-        CV = FALSE,
-        fillmethod = "row_mean",
-        maxiter_RegImpute = 10,
-        conv_nrmse = 1e-6,
-        iter_SpectroFM = 40,
-        method = pipeline_impu_method(),
-        out = "Ensemble"
-      )
-      imputed_df = as.data.frame(imputed_df$Ensemble)
-      
-      variables$pipeline_data_imputed = imputed_df
-      
-      return(
-        create_mean_plot(
-          imputed_df,
-          variables$pipeline_ant,
-          pipeline_technical_factors_var()[1],
-          variables$color_list,
-          "Imputation"
-        )
-      )
-    })
-    
-    output$pipeline_protein_impu_plot = renderPlot(perform_imputation())
-    
-    
-    #create_boxplot(df, ant, batch,color_list, title)
-    perform_boxplot_imputation = eventReactive(input$perform_imputation_data_button,
-                                               {
-                                                 return(
-                                                   create_boxplot(
-                                                     variables$pipeline_data_imputed,
-                                                     variables$pipeline_ant,
-                                                     pipeline_technical_factors_var()[1],
-                                                     variables$color_list,
-                                                     "Imputation"
-                                                   )
-                                                 )
-                                               })
-    
-    output$pipeline_protein_impu_box_plot = renderPlot(perform_boxplot_imputation())
-    
-    perform_pca_imputation = eventReactive(input$perform_imputation_data_button,
-                                           {
-                                             return(
-                                               create_pca_plots(
-                                                 variables$pipeline_data_imputed,
-                                                 variables$pipeline_ant,
-                                                 c(
-                                                   pipeline_biological_factors_var(),
-                                                   pipeline_technical_factors_var()
-                                                 ),
-                                                 variables$color_list
-                                               )
-                                             )
-                                           })
-    output$pipeline_protein_impu_pca_plot = renderPlot(perform_pca_imputation(), height = 1000)
-    
-    output$downloadImpuTable = downloadHandler(
-      filename = "imputed_results.csv",
-      content = function(file) {
-        write.csv(variables$pipeline_data_imputed, file, row.names = FALSE)
-      }
-    )
-    
-    # Replicates
-    
-    output$pipeline_sample_replicates = renderText({
-      rep_str = NULL
-      if (is.null(rep_str)) {
-        df = variables$pipeline_ant
-        replicates = df[duplicated(df[, pipeline_biospecimen_id_col_var()]), ]
-        variables$replicates = replicates$FullRunName
-        rep_str = paste(replicates$FullRunName, collapse = "\n")
-      } else{
-        rep_str = paste(variables$replicates, collapse = "\n")
-      }
-      
-      return(rep_str)
-    })
-    
-    # observeEvent(input$perform_unique_replicates_button, {
-    #   df = variables$pipeline_ant
-    #   init_colnames = df[,pipeline_biospecimen_id_col_var()]
-    #   init_colnames = make.unique(init_colnames)
-    #   df[, pipeline_biospecimen_id_col_var()] = init_colnames
-    #   variables$pipeline_ant = df
-    # })
-    
-    output$pipeline_unique_replicates = eventReactive(input$perform_unique_replicates_button, {
-      df = variables$pipeline_ant
-      init_colnames = df[, pipeline_biospecimen_id_col_var()]
-      init_colnames = make.unique(init_colnames)
-      df[, pipeline_biospecimen_id_col_var()] = init_colnames
-      
-      ordered = df[order(df[, pipeline_biospecimen_id_col_var()]), ]
-      # cols = colnames(variables$pipeline_data_imputed)
-      cols = colnames(variables$pipeline_data)
-      samples = cols[order(cols)]
-      
-      rownames(df) = df[, pipeline_biospecimen_id_col_var()]
-      variables$pipeline_ant = df
-      # variables$pipeline_data_imputed = variables$pipeline_data_imputed[,cols]
-      variables$pipeline_data = variables$pipeline_data[, cols]
-      
-      reps = c(variables$replicates, init_colnames[str_detect(init_colnames, "\\.")])
-      variables$replicated = reps
-      rep_str = paste(reps, collapse = "\n")
-      output$pipeline_sample_replicates = renderText({
-        paste(variables$replicates,
-              collapse = "\n")
-      })
-      return(rep_str)
-    })
-    
-    output$downloadNonReplicatedTable = downloadHandler(
-      filename = "non_replicated_protdata.csv",
-      content = function(file) {
-        write.csv(variables$pipeline_data, file, row.names = FALSE)
-      }
-    )
-    
-    output$downloadNonReplicatedAnnotation = downloadHandler(
-      filename = "non_replicated_sampleannotation.csv",
-      content = function(file) {
-        write.csv(variables$pipeline_ant, file, row.names = FALSE)
-      }
-    )
-    
-    output$pipeline_protein_pcva_plot = renderPlot({
-      if (!is.null(variables$replicates) &&
-          input$perform_unique_replicates_button) {
-        df_nrown = variables$pipeline_data_imputed
-        row.names(df_nrown) = NULL
-        ant_nrown = variables$pipeline_ant
-        row.names(ant_nrown) = NULL
-        
-        pvca_res = prepare_PVCA_df(
-          df_nrown,
-          ant_nrown,
-          technical_factors = pipeline_technical_factors_var(),
-          biological_factors = pipeline_biological_factors_var()
-        )
-        lbs = pvca_res[pvca_res$weights > 0.2, ]$label
-        lbs = lbs[lbs != 'resid']
-        lbs = sapply(lbs, function(x) {
-          gsub("*:.*", "", x)
+    output$cluster_images = renderUI({
+      all_images = list.files(variables$cluster_path,
+                              pattern = "*png",
+                              full.names = TRUE)
+      withSpinner(tagList(
+        downloadButton("clusterDownload", label = "Download Results"),
+        br(),
+        br(),
+
+        renderImage(list(
+          src = all_images[1],
+          alt = "Can't show file!",
+          width = 300,
+          height = 300
+        ), deleteFile = FALSE),
+        all_images[-1] %>% map(function(path) {
+          renderImage(list(
+            src = path,
+            alt = "Can't show file!",
+            width = 480,
+            height = 500
+          ), deleteFile = FALSE)
         })
-        lbs = as.vector(lbs)
-        
-        #pipeline_batch_vars = lbs
-        updateSelectInput(inputId = "pipeline_batch_var", choices = lbs)
-        
-        # plot_PVCA(df_nrown, ant_nrown,
-        #           technical_factors = pipeline_technical_factors_var(),
-        #           biological_factors = pipeline_biological_factors_var())
-        plot_PVCA.df(pvca_res = pvca_res)
-      }
+      ),color = "#FF4500")
+      
     })
-    
-    batch_corr_method_var = eventReactive(input$perform_batchcorr_data_button,
-                                          input$batch_corr_method_var)
-    
-    perform_batchcorr = eventReactive(input$perform_batchcorr_data_button, {
-      df = variables$pipeline_data_imputed
-      df_long = matrix_to_long(df)
-      
-      color_list = sample_annotation_to_colors(
-        variables$pipeline_ant,
-        factor_columns = c(
-          pipeline_batch_var(),
-          pipeline_biological_factors_var(),
-          pipeline_technical_factors_var()
-        ),
-        numeric_columns = c('ID')
-      )
-      
-      variables$color_list = color_list
-      
-      athres = 5
-      pcthres = 1.20
-      bc = correct_batch_effects_df(
-        df_long =  df_long,
-        sample_annotation = variables$pipeline_ant,
-        discrete_func = batch_corr_method_var(),
-        batch_col = pipeline_batch_var(),
-        abs_threshold = athres,
-        pct_threshold = pcthres
-      )
-      bc_mat = long_to_matrix(bc)
-      
-      variables$pipeline_data_batchcorrected = bc_mat
-      
-      # output$pipeline_protein_batchcorr_pca_plot = renderPlot(create_pca_plots(bc_mat,
-      #                                                               variables$pipeline_ant,
-      #                                                               c(pipeline_biological_factors_var(),pipeline_technical_factors_var()),
-      #                                                               variables$color_list))
-      #
-      # output$pipeline_protein_batchcorr_pcva_plot = renderPlot(plot_PVCA(bc_mat, variables$pipeline_ant,
-      #                                                                    technical_factors = pipeline_technical_factors_var(),
-      #                                                                    biological_factors = pipeline_biological_factors_var()))
-      
-      return(
-        create_mean_plot(
-          bc_mat,
-          variables$pipeline_ant,
-          pipeline_batch_var(),
-          variables$color_list,
-          "Batch Correction"
-        )
-      )
-    })
-    
-    output$pipeline_protein_batchcorr_box_plot = renderPlot(perform_batchcorr())
-    
-    perform_batchcorr_pca = eventReactive(input$perform_batchcorr_data_button, {
-      return(
-        create_pca_plots(
-          variables$pipeline_data_batchcorrected,
-          variables$pipeline_ant,
-          c(
-            pipeline_biological_factors_var(),
-            pipeline_technical_factors_var()
-          ),
-          variables$color_list
-        )
-      )
-    })
-    output$pipeline_protein_batchcorr_pca_plot = renderPlot(perform_batchcorr_pca())
-    
-    perform_batchcorr_pcva = eventReactive(input$perform_batchcorr_data_button, {
-      df_nrown = variables$pipeline_data_batchcorrected
-      row.names(df_nrown) = NULL
-      ant_nrown = variables$pipeline_ant
-      row.names(ant_nrown) = NULL
-      return(
-        plot_PVCA(
-          df_nrown,
-          ant_nrown,
-          technical_factors = pipeline_technical_factors_var(),
-          biological_factors = pipeline_biological_factors_var()
-        )
-      )
-    })
-    output$pipeline_protein_batchcorr_pcva_plot = renderPlot(perform_batchcorr_pcva())
-    
-    output$downloadBatchCorrTable = downloadHandler(
-      filename = "batch_corr_results.csv",
-      content = function(file) {
-        write.csv(variables$pipeline_data_batchcorrected, file, row.names = FALSE)
+                                          
+  output$clusterDownload = downloadHandler(
+    filename = function() {
+      paste0("ConsensusClusterResults_", Sys.Date(), ".zip")
+    },
+    content = function(file) {
+      files = list.files(variables$cluster_path, recursive = TRUE)
+      files = paste(variables$cluster_path, files, sep = "/")
+      return (zip(file ,files ,mode="cherry-pick"))
+    },
+    contentType = "application/zip"
+  )
       }
-    )
-    
-    # Correlation
-    
-    output$pipeline_protein_corr_plot = renderPlot({
-      if (!is.null(variables$pipeline_data_batchcorrected)) {
-        plot_sample_corr_heatmap(
-          variables$pipeline_data_batchcorrected,
-          samples_to_plot = variables$replicated,
-          sample_annotation = variables$pipeline_ant[variables$replicated, ],
-          factors_to_plot = c(
-            pipeline_batch_var(),
-            pipeline_biospecimen_id_col_var()
-          ),
-          plot_title = 'Correlation between Replicated Samples',
-          color_list = variables$color_list,
-          cluster_rows = FALSE,
-          cluster_cols = FALSE,
-          fontsize = 8,
-          annotation_names_col = TRUE,
-          annotation_legend = FALSE,
-          show_colnames = T
-        )
-      }
-    }, height = 700)
-    
-    output$pipeline_imput_protein_corr_plot = renderPlot({
-      if (!is.null(variables$pipeline_data_imputed)) {
-        plot_sample_corr_heatmap(
-          variables$pipeline_data_imputed,
-          samples_to_plot = variables$replicated,
-          sample_annotation = variables$pipeline_ant[variables$replicated, ],
-          factors_to_plot = c(
-            pipeline_technical_factors_var()[1],
-            pipeline_biospecimen_id_col_var()
-          ),
-          plot_title = 'Correlation between Replicated Samples After Imputation',
-          color_list = variables$color_list,
-          cluster_rows = FALSE,
-          cluster_cols = FALSE,
-          fontsize = 8,
-          annotation_names_col = TRUE,
-          annotation_legend = FALSE,
-          show_colnames = T
-        )
-      }
-    }, height = 700)
-    
-    output$pipeline_init_protein_corr_plot = renderPlot({
-      if (!is.null(variables$replicated)) {
-        tt = variables$pipeline_ant[variables$replicated, ]
-        #dev.off()
-        plot_sample_corr_heatmap(
-          variables$pipeline_data,
-          samples_to_plot = variables$replicated,
-          sample_annotation = tt,
-          factors_to_plot = c(
-            pipeline_technical_factors_var()[1],
-            pipeline_sample_name_col_var()
-          ),
-          plot_title = 'Correlation between Replicated Samples',
-          color_list = variables$color_list,
-          cluster_rows = FALSE,
-          cluster_cols = FALSE,
-          fontsize = 8,
-          annotation_names_col = TRUE,
-          annotation_legend = FALSE,
-          show_colnames = T
-        )
-      }
-    })
-    
-    output$pipeline_protein_overall_corr_plot = renderPlot({
-      plot_sample_corr_heatmap(
-        variables$pipeline_data_batchcorrected,
-        sample_annotation = variables$pipeline_ant,
-        factors_to_plot = c(pipeline_batch_var(), pipeline_biospecimen_id_col_var()),
-        plot_title = 'Correlation between Replicated Samples',
-        color_list = variables$color_list,
-        cluster_rows = FALSE,
-        cluster_cols = FALSE,
-        fontsize = 8,
-        annotation_names_col = TRUE,
-        annotation_legend = FALSE,
-        show_colnames = T
-      )
-    }, height = 700)
-    
-    output$pipeline_protein_corr_dist_plot = renderPlot({
-      plot_sample_corr_distribution(
-        variables$pipeline_data_batchcorrected,
-        variables$pipeline_ant,
-        repeated_samples = variables$replicated,
-        batch_col = pipeline_batch_var(),
-        biospecimen_id_col = pipeline_sample_name_col_var(),
-        plot_title = 'Correlation of samples (raw)',
-        plot_param = 'batch_replicate'
-      )
-    }, height = 700)
-    
-    # Diff expression
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_class_var", choices = choices)
-    })
-    
-    observeEvent(input$pipeline_class_var, {
-      if (input$pipeline_class_var != "Not Selected") {
-        data_df = variables$pipeline_ant
-        updateSelectInput(session,
-                          inputId = "pipeline_class_of_interest_var",
-                          choices = unique(data_df[input$pipeline_class_var]))
-      }
-    })
-    
-    pipeline_class_var = eventReactive(input$pipeline_perform_limma_data_button,
-                                       input$pipeline_class_var)
-    pipeline_contrast_var = eventReactive(input$pipeline_perform_limma_data_button,
-                                          input$pipeline_contrast_var)
-    pipeline_lfc_var = eventReactive(input$pipeline_perform_limma_data_button,
-                                     input$pipeline_lfc_var)
-    pipeline_pvalue_var = eventReactive(input$pipeline_perform_limma_data_button,
-                                        input$pipeline_pvalue_var)
-    pipeline_class_of_interest_var = eventReactive(
-      input$pipeline_perform_limma_data_button,
-      input$pipeline_class_of_interest_var
-    )
-    
-    perform_limma_pipe <-
-      function(data_df,
-               class_var,
-               contrast_var,
-               lfc_var,
-               pvalue_var,
-               contrast_other_classes_var,
-               class_of_interest_var) {
-        classes = unique(data_df[class_var])
-        classes = classes[[class_var]]
-        
-        source('multiclass_limma.R')
-        contrast_string = paste(class_of_interest_var, paste("-", contrast_var))
-        
-        if (lfc_var == 'Any' && pvalue_var == 'Any') {
-          results = perform_limma(
-            data_df,
-            class_of_interest_var,
-            contrast_var,
-            contrast_string,
-            contrast_other_classes_var,
-            class_var,
-            classes
-          )
-        } else{
-          results = perform_specific_limma(
-            data_df,
-            class_of_interest_var,
-            contrast_var,
-            contrast_string,
-            contrast_other_classes_var,
-            class_var,
-            classes,
-            lfc_var,
-            pvalue_var
-          )
-        }
-        variables$fit2C = results$fit2C
-        results = results$topProteins
-        
-        data.table(results)
-        data.table(results)
-      }
-    
-    limma_table_pipe <-
-      eventReactive(input$pipeline_perform_limma_data_button, {
-        df = as.data.frame(variables$pipeline_data_batchcorrected)
-        
-        df = as.data.frame(t(df))
-        df[, pipeline_class_var()] = variables$pipeline_ant[, pipeline_class_var()]
-        data_table_1 = perform_limma_pipe(
-          df,
-          pipeline_class_var(),
-          input$pipeline_contrast_var,
-          input$pipeline_lfc_var,
-          input$pipeline_pvalue_var,
-          T,
-          pipeline_class_of_interest_var()
-        )
-        variables$pipe_llimma_table = data_table_1
-        #variables$pipe_diffexp = variables$pipeline_data_batchcorrected[data_table_1$P.Value<0.05,]
-        return(data_table_1)
-      })
-    
-    output$pipeline_limma_table = renderTable(limma_table_pipe())
-    
-    output$downloadPipeLimmaTable = downloadHandler(
-      filename = "pipeline_limma_results.csv",
-      content = function(file) {
-        write.csv(variables$pipe_llimma_table, file, row.names = FALSE)
-      }
-    )
-    
-    
-    #Automated Diff Expression
-    
-    observeEvent(pipeline_ant_input(), {
-      choices <- c(not_sel, sub(" ", "_", names(pipeline_ant_input())))
-      updateSelectInput(inputId = "pipeline_auto_class_var", choices = choices)
-    })
-    
-    pipeline_auto_class_var = eventReactive(input$pipeline_perform_auto_limma_data_button,
-                                            input$pipeline_auto_class_var)
-    pipeline_auto_lfc_var = eventReactive(input$pipeline_perform_auto_limma_data_button,
-                                          input$pipeline_auto_lfc_var)
-    pipeline_auto_pvalue_var = eventReactive(input$pipeline_perform_auto_limma_data_button,
-                                             input$pipeline_auto_pvalue_var)
-    
-    limma_auto_table_pipe = eventReactive(input$pipeline_perform_auto_limma_data_button, {
-      data_df = as.data.frame(variables$pipeline_data_batchcorrected)
-      data_df = as.data.frame(t(data_df))
-      data_df[, pipeline_auto_class_var()] = variables$pipeline_ant[, pipeline_auto_class_var()]
-      
-      dd = unique(data_df[, pipeline_auto_class_var()])
-      
-      res = rapply(listParts(length(dd)), function(v)
-        dd[v], how = "replace")
-      res2 = list()
-      index = 1
-      for (j in (1:length(res))) {
-        if (length(res[[j]]) == 2) {
-          res2[[index]] = res[[j]]
-          index = index + 1
-        }
-      }
-      auto_limma_table = data.frame(
-        Combination = character(0),
-        Gene = character(0),
-        logFC = numeric(0),
-        AveExpr = numeric(0),
-        t = numeric(0),
-        P.Value = numeric(0),
-        adj.P.Val = numeric(0),
-        B = numeric(0)
-      )
-      for (i in (1:length(res2))) {
-        group1 = res2[[i]][["1"]]
-        group2 = res2[[i]][["2"]]
-        
-        group1_string = paste(group1, collapse = "+")
-        group2_string = paste(group2, collapse = "+")
-        
-        data_table_2 = perform_limma_2(
-          data_df,
-          pipeline_auto_class_var(),
-          input$pipeline_auto_lfc_var,
-          input$pipeline_auto_pvalue_var,
-          group1,
-          group2
-        )
-        
-        data_table_2$Combination = toString(paste(group1_string, group2_string, sep = " vs "))
-        auto_limma_table = rbind(auto_limma_table, data_table_2)
-      }
-      
-      auto_limma_table = auto_limma_table %>% dplyr::select(Combination, everything())
-      
-      ## merge cells of column 1))
-      dtable <- datatable(auto_limma_table,
-                          rownames = FALSE,
-                          options = list(rowsGroup = list(0)))
-      # folder containing dataTables.rowsGroup.js
-      path <- getwd()
-      dep <-
-        htmltools::htmlDependency("RowsGroup", "2.0.0",
-                                  path, script = "dataTables.rowsGroup.js")
-      dtable$dependencies <- c(dtable$dependencies, list(dep))
-      #dtable
-      variables$pipe_auto_data_table = auto_limma_table
-      return(dtable)
-    })
-    
-    output$pipeline_auto_limma_table = renderDT(limma_auto_table_pipe())
-    
-    output$downloadPipeAutoLimmaTable = downloadHandler(
-      filename = "pipeline_auto_limma_results.csv.xlsx",
-      content = function(file) {
-        df = variables$pipe_auto_data_table
-        combs = unique(df$Combination)
-        OUT = createWorkbook()
-        for (c in combs) {
-          addWorksheet(OUT, c)
-          writeData(OUT, sheet = c, x = df[df$Combination == c, ])
-        }
-        saveWorkbook(OUT, file)
-      }
-    )
-    
-    #Clustering
-    perform_anova = function(merged_combat_df) {
-      shortlisted = c()
-      anova_stat = c()
-      anova_stat_f = c()
-      
-      for (i in 1:(length(colnames(merged_combat_df)) - 1)) {
-        val = colnames(merged_combat_df)
-        # not assuming equal variances)
-        r1 = oneway.test(merged_combat_df[, i] ~ Class,
-                         data = merged_combat_df, var.equal = T)
-        anova_stat = append(anova_stat, r1$p.value)
-        anova_stat_f = append(anova_stat_f, r1$statistic)
-        if (r1$p.value < 0.05) {
-          shortlisted = append(shortlisted, colnames(merged_combat_df)[i])
-        }
-      }
-      anova_stat_df = data.frame(row.names = colnames(merged_combat_df))
-      anova_stat_df = head(anova_stat_df, -1)
-      anova_stat_df$pvalue = anova_stat
-      anova_stat_df$fstat = anova_stat_f
-      
-      selected_df = merged_combat_df[shortlisted, ]
-      #selected_df5=as.data.frame(selected_df5)
-      
-      return(selected_df)
-    }
-    
-    output$pipeline_protein_dendogram = renderPlot({
-      df = as.data.frame(variables$pipeline_data_batchcorrected)
-      df = as.data.frame(t(df))
-      df$Class = variables$pipeline_ant[, pipeline_class_var()]
-      diff = perform_anova(df)
-      variables$pipe_diffexp = diff
-      
-      plot_hierarchical_clustering(
-        diff,
-        sample_annotation = variables$pipeline_ant,
-        color_list = variables$color_list,
-        factors_to_plot = c(pipeline_batch_var(), pipeline_biological_factors_var()),
-        distance = 'euclidean',
-        agglomeration = 'complete',
-        label_samples = FALSE,
-        plot_title = "Clustering"
-      )
-    })
-    
-    output$pipeline_protein_heatmap = renderPlot({
-      plot_heatmap_diagnostic(
-        variables$pipe_diffexp,
-        variables$pipeline_ant,
-        factors_to_plot = c(
-          pipeline_batch_var(),
-          pipeline_biological_factors_var(),
-          pipeline_technical_factors_var()
-        ),
-        cluster_cols = TRUE,
-        color_list = variables$color_list,
-        scale = "row",
-        show_rownames = FALSE,
-        show_colnames = FALSE,
-        plot_title = "Heatmap"
-      )
-    }, height = 1000)
-    
-    
+  )    
 }
-#enableBookmarking("server")
+
 shinyApp(ui = ui, server = server)
 
-#runApp('~/Pipeline/app', display.mode = "showcase")
