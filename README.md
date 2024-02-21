@@ -5,3 +5,6 @@ FlexStat is a user-friendly web-based interface designed to facilitate the extra
 It offers a suite of robust statistical tools, including data statistics computation, data preprocessing, and analytics, tailored to protein subgroups such as proteases, kinases, and transcription factors, all in an automated fashion while generating publication-ready figures.
 
 ![Imgur](https://i.imgur.com/y56ebPF.png)
+
+# Workflow
+![Imgur](https://i.imgur.com/I1xJpYF.png)
