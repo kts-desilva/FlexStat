@@ -35,11 +35,6 @@ library(preprocessCore)
 library(vsn)
 library(ggtree)
 
-# library(BiocManager)
-# options(repos = BiocManager::repositories())
-
-not_sel <- "Not Selected"
-
 about_page <- tabPanel(
   title = "Help",
   titlePanel("Help Page"),
@@ -151,6 +146,8 @@ about_page <- tabPanel(
   tags$footer("Created with R Shiny, ","2024 January")
   
 )
+#Constants
+not_sel <- "Not Selected"
 
 main_page <- tabPanel(
   title = "Comparative Statistics",
