@@ -1,0 +1,13 @@
+name: flexstatv1-pipeline-only
+title:
+username:
+account: jglab
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9064389
+bundleId: 8276105
+url: https://jglab.shinyapps.io/flexstatv1-pipeline-only/
+when: 1708434268.3686
+lastSyncTime: 1708434268.3686
+asMultiple: FALSE
+asStatic: FALSE

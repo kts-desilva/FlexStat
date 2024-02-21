@@ -1,0 +1,624 @@
+﻿Name,Gene Symbol,Family
+pepsin A,PGA3,Aspartyl proteases
+pepsin A,PGA4,Aspartyl proteases
+pepsin A,PGA5,Aspartyl proteases
+pepsin C,PGC,Aspartyl proteases
+beta-secretase 1,BACE1,Aspartyl proteases
+beta-secretase 2,BACE2,Aspartyl proteases
+chymosin,CYMP,Aspartyl proteases
+renin,REN,Aspartyl proteases
+cathepsin D,CTSD,Aspartyl proteases
+cathepsin E,CTSE,Aspartyl proteases
+napsin A,NAPSA,Aspartyl proteases
+napsin B,NAPSB,Aspartyl proteases
+presenilin 2,PSEN2,Aspartyl proteases
+presenilin homolog 1/SPPL3,SPPL3,Aspartyl proteases
+presenilin homolog 2,SPPL2C,Aspartyl proteases
+presenilin homolog 3/SPP,HM13,Aspartyl proteases
+presenilin homolog 4/SPPL2B,SPPL2B,Aspartyl proteases
+presenilin homolog 5,SPPL2A,Aspartyl proteases
+DDI-related protease,ASPRV1,Aspartyl proteases
+DNA-damage inducible protein,DDI1,Aspartyl proteases
+DNA-damage inducible protein 2,DDI2,Aspartyl proteases
+nuclear recept. interacting prot. 2,NRIP2,Aspartyl proteases
+nuclear recept. interacting prot. 3,NRIP3,Aspartyl proteases
+GCDFP15,PIP,Aspartyl proteases
+cathepsin B,CTSB,Cysteine proteases
+cathepsin C,CTSC,Cysteine proteases
+cathepsin F,CTSF,Cysteine proteases
+cathepsin H,CTSH,Cysteine proteases
+cathepsin K,CTSK,Cysteine proteases
+cathepsin L,CTSL,Cysteine proteases
+cathepsin L2,CTSV,Cysteine proteases
+cathepsin O,CTSO,Cysteine proteases
+cathepsin S,CTSS,Cysteine proteases
+cathepsin W,CTSW,Cysteine proteases
+cathepsin Z,CTSZ,Cysteine proteases
+tubulointerstitial nephritis antigen,TINAG,Cysteine proteases
+TINAG related protein,TINAGL1,Cysteine proteases
+bleomycin hydrolase,BLMH,Cysteine proteases
+calpain 1,CAPN1,Cysteine proteases
+calpain 2,CAPN2,Cysteine proteases
+calpain 3,CAPN3,Cysteine proteases
+calpain 5,CAPN5,Cysteine proteases
+calpain 6,CAPN6,Cysteine proteases
+calpain 7,CAPN7,Cysteine proteases
+calpain 7-like,ADGB,Cysteine proteases
+calpain 8,CAPN8,Cysteine proteases
+calpain 9,CAPN9,Cysteine proteases
+calpain 10,CAPN10,Cysteine proteases
+calpain 11,CAPN11,Cysteine proteases
+calpain 12,CAPN12,Cysteine proteases
+calpain 13,CAPN13,Cysteine proteases
+calpain 14,CAPN14,Cysteine proteases
+calpain 15/Solh protein,CAPN15,Cysteine proteases
+ubiquitin C-terminal hydrolase 1,UCHL1,Cysteine proteases
+ubiquitin C-terminal hydrolase 3,UCHL3,Cysteine proteases
+ubiquitin C-term. hydrolase BAP1,BAP1,Cysteine proteases
+ubiquitin C-terminal hydrolase 5,UCHL5,Cysteine proteases
+hGPI8,PIGK,Cysteine proteases
+caspase-1,CASP1,Cysteine proteases
+caspase-2,CASP2,Cysteine proteases
+caspase-3,CASP3,Cysteine proteases
+caspase-4/11,CASP4,Cysteine proteases
+caspase-5,CASP5,Cysteine proteases
+caspase-6,CASP6,Cysteine proteases
+caspase-7,CASP7,Cysteine proteases
+caspase-8,CASP8,Cysteine proteases
+caspase-9,CASP9,Cysteine proteases
+caspase-10,CASP10,Cysteine proteases
+caspase-12,CASP12,Cysteine proteases
+caspase-14,CASP14,Cysteine proteases
+paracaspase,MALT1,Cysteine proteases
+homologue ICEY,CASP1P2,Cysteine proteases
+casper/FLIP,CFLAR,Cysteine proteases
+caspase-14-like,CASP16P,Cysteine proteases
+pyroglutamyl-peptidase I,PGPEP1,Cysteine proteases
+pyroglutamyl-peptidase II,PGPEP1L,Cysteine proteases
+USP1,USP1,Cysteine proteases
+USP2,USP2,Cysteine proteases
+USP3,USP3,Cysteine proteases
+USP4,USP4,Cysteine proteases
+USP5,USP5,Cysteine proteases
+USP6,USP6,Cysteine proteases
+USP7,USP7,Cysteine proteases
+USP8,USP8,Cysteine proteases
+USP9X,USP9X,Cysteine proteases
+USP9Y,USP9Y,Cysteine proteases
+USP10,USP10,Cysteine proteases
+USP11,USP11,Cysteine proteases
+USP12,USP12,Cysteine proteases
+USP13,USP13,Cysteine proteases
+USP14,USP14,Cysteine proteases
+USP15,USP15,Cysteine proteases
+USP16,USP16,Cysteine proteases
+USP17,USP17L9P,Cysteine proteases
+USP17-like,USP17L2,Cysteine proteases
+USP18,USP18,Cysteine proteases
+USP19,USP19,Cysteine proteases
+USP20,USP20,Cysteine proteases
+USP21,USP21,Cysteine proteases
+USP22,USP22,Cysteine proteases
+USP24,USP24,Cysteine proteases
+USP25,USP25,Cysteine proteases
+USP26,USP26,Cysteine proteases
+USP27,USP27X,Cysteine proteases
+USP28,USP28,Cysteine proteases
+USP29,USP29,Cysteine proteases
+USP30,USP30,Cysteine proteases
+USP31,USP31,Cysteine proteases
+NY-REN-60,USP32,Cysteine proteases
+VDU1,USP33,Cysteine proteases
+USP34,USP34,Cysteine proteases
+USP35,USP35,Cysteine proteases
+USP36,USP36,Cysteine proteases
+USP37,USP37,Cysteine proteases
+HP43.8KD,USP38,Cysteine proteases
+SAD1,USP39,Cysteine proteases
+USP40,USP40,Cysteine proteases
+USP41,USP41,Cysteine proteases
+USP42,USP42,Cysteine proteases
+USP43,USP43,Cysteine proteases
+USP44,USP44,Cysteine proteases
+USP45,USP45,Cysteine proteases
+USP46,USP46,Cysteine proteases
+USP47,USP47,Cysteine proteases
+USP48,USP48,Cysteine proteases
+USP49,USP49,Cysteine proteases
+USP50,USP50,Cysteine proteases
+USP51,USP51,Cysteine proteases
+USP52,PAN2,Cysteine proteases
+USP53,USP53,Cysteine proteases
+USP54,USP54,Cysteine proteases
+gamma-glutamyl hydrolase,GGH,Cysteine proteases
+Gln-PRPP amidotransferase,PPAT,Cysteine proteases
+Gln-fructose-6-P transamidase 1,GFPT1,Cysteine proteases
+Gln-fructose-6-P transamidase 2,GFPT2,Cysteine proteases
+Gln-fructose-6-P transamidase 3,GFPT3,Cysteine proteases
+sonic hedgehog protein,SHH,Cysteine proteases
+indian hedgehog protein,IHH,Cysteine proteases
+desert hedgehog protein,DHH,Cysteine proteases
+sentrin/SUMO protease 1,SENP1,Cysteine proteases
+sentrin/SUMO protease 2,SENP2,Cysteine proteases
+sentrin/SUMO protease 3,SENP3,Cysteine proteases
+sentrin/SUMO protease 5,SENP5,Cysteine proteases
+sentrin/SUMO protease 6,SENP6,Cysteine proteases
+sentrin/SUMO protease 7,SENP7,Cysteine proteases
+sentrin/SUMO protease 8,SENP8,Cysteine proteases
+separase,ESPL1,Cysteine proteases
+autophagin-1,ATG4B,Cysteine proteases
+autophagin-2,ATG4A,Cysteine proteases
+autophagin-3,ATG4C,Cysteine proteases
+autophagin-4,ATG4D,Cysteine proteases
+DJ-1,PARK7,Cysteine proteases
+cezanne/OTU domain containing 7B,OTUD7B,Cysteine proteases
+cezanne-2,OTUD7A,Cysteine proteases
+"A20, TNFa-induced protein 3",TNFAIP3,Cysteine proteases
+TRAF-binding protein domain,ZRANB1,Cysteine proteases
+VCP(p97)/p47-interacting protein,VCPIP1,Cysteine proteases
+otubain-1,OTUB1,Cysteine proteases
+otubain-2,OTUB2,Cysteine proteases
+cylindromatosis protein,CYLD,Cysteine proteases
+secernin-1,SCRN1,Cysteine proteases
+secernin-2,SCRN2,Cysteine proteases
+secernin-3,SCRN3,Cysteine proteases
+Ufm-1 specific protease 1,UFSP1,Cysteine proteases
+Ufm-1 specific protease 2,UFSP2,Cysteine proteases
+nasal embryonic LHRH factor,NSMF,Cysteine proteases
+epithelial cell transforming sequence 2 oncogene-like,ECT2L,Cysteine proteases
+OTU domain containing-5,OTUD5,Cysteine proteases
+Hin-1/OTU domain containing 4,OTUD4,Cysteine proteases
+OTU domain containing-3,OTUD3,Cysteine proteases
+OTU domain containing-1,OTUD1,Cysteine proteases
+UDP-N-acetylglucosaminyltransferase subunit,ALG13,Cysteine proteases
+OTU domain containing-6A,OTUD6A,Cysteine proteases
+OTUD2/YOD1,YOD1,Cysteine proteases
+OTU domain containing 6B,OTUD6B,Cysteine proteases
+ataxin-3,ATXN3,Cysteine proteases
+ataxin-3 like,ATXN3L,Cysteine proteases
+josephin-1,JOSD1,Cysteine proteases
+josephin-2,JOSD2,Cysteine proteases
+acid ceramidase,ASAH1,Cysteine proteases
+desumoylating isopeptidase 1,DESI1,Cysteine proteases
+desumoylating isopeptidase 2,DESI2,Cysteine proteases
+ubiquitin specific peptidase like 1,USPL1,Cysteine proteases
+HetF-like,TTC28,Cysteine proteases
+zinc finger CCCH-type containing 12A,ZC3H12A,Cysteine proteases
+zinc finger CCCH-type containing 12B,ZC3H12B,Cysteine proteases
+zinc finger CCCH-type containing 12C,ZC3H12C,Cysteine proteases
+zinc finger CCCH-type containing 12D,ZC3H12D,Cysteine proteases
+NYN domain and retroviral integrase containing,NYNRIN,Cysteine proteases
+KHNYN KH and NYN domain containing,KHNYN,Cysteine proteases
+NEDD4 binding protein 1,N4BP1,Cysteine proteases
+Zinc finger containing ubiquitin peptidase 1,ZUP1,Cysteine proteases
+aminopeptidase A,ENPEP,Metalloproteases
+aminopeptidase B,RNPEP,Metalloproteases
+aminopeptidase MAMS/L-RAP,ERAP2,Metalloproteases
+aminopeptidase N,ANPEP,Metalloproteases
+aminopeptidase PILS,ERAP1,Metalloproteases
+leukotriene A4 hydrolase,LTA4H,Metalloproteases
+TRH-degrading ectoenzyme,TRHDE,Metalloproteases
+cytosol alanyl aminopeptidase,NPEPPS,Metalloproteases
+cytosol alanyl aminopep.-like 1,LOC440434,Metalloproteases
+leucyl-cystinyl aminopeptidase,LNPEP,Metalloproteases
+aminopeptidase B-like 1,RNPEPL1,Metalloproteases
+aminopeptidase O,AOPEP,Metalloproteases
+aminopeptidase Q,LVRN,Metalloproteases
+TBP-associated factor 2,TAF2,Metalloproteases
+angiotensin-converting enzyme 1,ACE,Metalloproteases
+angiotensin-converting enzyme 2,ACE2,Metalloproteases
+angiotensin-converting enzyme 3,ACE3P,Metalloproteases
+thimet oligopeptidase,THOP1,Metalloproteases
+neurolysin,NLN,Metalloproteases
+mitoch. Intermediate peptidase,MIPEP,Metalloproteases
+leishmanolysin-2,LMLN,Metalloproteases
+collagenase 1,MMP1,Metalloproteases
+gelatinase A,MMP2,Metalloproteases
+stromelysin 1,MMP3,Metalloproteases
+matrilysin,MMP7,Metalloproteases
+collagenase 2,MMP8,Metalloproteases
+gelatinase B,MMP9,Metalloproteases
+stromelysin 2,MMP10,Metalloproteases
+stromelysin 3,MMP11,Metalloproteases
+macrophage elastase,MMP12,Metalloproteases
+collagenase 3,MMP13,Metalloproteases
+MT1-MMP,MMP14,Metalloproteases
+MT2-MMP,MMP15,Metalloproteases
+MT3-MMP,MMP16,Metalloproteases
+MT4-MMP,MMP17,Metalloproteases
+MMP19,MMP19,Metalloproteases
+enamelysin,MMP20,Metalloproteases
+MMP21,MMP21,Metalloproteases
+MMP23A,MMP23A,Metalloproteases
+MMP23B,MMP23B,Metalloproteases
+MT5-MMP,MMP24,Metalloproteases
+MT6-MMP,MMP25,Metalloproteases
+matrilysin-2,MMP26,Metalloproteases
+MMP27,MMP27,Metalloproteases
+epilysin,MMP28,Metalloproteases
+meprin alpha subunit,MEP1A,Metalloproteases
+meprin beta subunit,MEP1B,Metalloproteases
+procollagen C-proteinase,BMP1,Metalloproteases
+mammalian tolloid-like 1 protein,TLL1,Metalloproteases
+mammalian tolloid-like 2 protein,TLL2,Metalloproteases
+ovastacin,ASTL,Metalloproteases
+DECYSIN,ADAMDEC1,Metalloproteases
+ADAM1a,ADAM1A,Metalloproteases
+ADAM2/Fertilin-b,ADAM2,Metalloproteases
+ADAM3B,ADAM3B,Metalloproteases
+ADAM4,ADAM4,Metalloproteases
+ADAM4B,ADAM4B,Metalloproteases
+ADAM5,ADAM5,Metalloproteases
+ADAM6,ADAM6,Metalloproteases
+ADAM7,ADAM7,Metalloproteases
+ADAM8,ADAM8,Metalloproteases
+ADAM9,ADAM9,Metalloproteases
+ADAM10,ADAM10,Metalloproteases
+ADAM11,ADAM11,Metalloproteases
+ADAM12,ADAM12,Metalloproteases
+ADAM15,ADAM15,Metalloproteases
+ADAM17,ADAM17,Metalloproteases
+ADAM18,ADAM18,Metalloproteases
+ADAM19,ADAM19,Metalloproteases
+ADAM20,ADAM20,Metalloproteases
+ADAM21,ADAM21,Metalloproteases
+ADAM22,ADAM22,Metalloproteases
+ADAM23,ADAM23,Metalloproteases
+testase 2,ADAM25,Metalloproteases
+ADAM28,ADAM28,Metalloproteases
+ADAM29,ADAM29,Metalloproteases
+ADAM30,ADAM30,Metalloproteases
+ADAM32,ADAM32,Metalloproteases
+ADAM33,ADAM33,Metalloproteases
+ADAMTS1,ADAMTS1,Metalloproteases
+ADAMTS2,ADAMTS2,Metalloproteases
+ADAMTS3,ADAMTS3,Metalloproteases
+ADAMTS4,ADAMTS4,Metalloproteases
+ADAMTS5/11,ADAMTS5,Metalloproteases
+ADAMTS6,ADAMTS6,Metalloproteases
+ADAMTS7,ADAMTS7,Metalloproteases
+ADAMTS8,ADAMTS8,Metalloproteases
+ADAMTS9,ADAMTS9,Metalloproteases
+ADAMTS10,ADAMTS10,Metalloproteases
+ADAMTS12,ADAMTS12,Metalloproteases
+ADAMTS13,ADAMTS13,Metalloproteases
+ADAMTS14,ADAMTS14,Metalloproteases
+ADAMTS15,ADAMTS15,Metalloproteases
+ADAMTS16,ADAMTS16,Metalloproteases
+ADAMTS17,ADAMTS17,Metalloproteases
+ADAMTS18,ADAMTS18,Metalloproteases
+ADAMTS19,ADAMTS19,Metalloproteases
+ADAMTS20,ADAMTS20,Metalloproteases
+neprilysin,MME,Metalloproteases
+neprilysin-2,MMEL1,Metalloproteases
+endothelin-converting enzyme 1,ECE1,Metalloproteases
+endothelin-converting enzyme 2,ECE2,Metalloproteases
+DINE peptidase,ECEL1,Metalloproteases
+Kell blood-group protein,KEL,Metalloproteases
+PHEX endopeptidase,PHEX,Metalloproteases
+carboxypeptidase A1,CPA1,Metalloproteases
+carboxypeptidase A2,CPA2,Metalloproteases
+carboxypeptidase A3,CPA3,Metalloproteases
+carboxypeptidase A4,CPA4,Metalloproteases
+carboxypeptidase A5,CPA5,Metalloproteases
+carboxypeptidase A6,CPA6,Metalloproteases
+carboxypeptidase B,CPB1,Metalloproteases
+carboxypeptidase U,CPB2,Metalloproteases
+carboxypeptidase O,CPO,Metalloproteases
+carboxypeptidase E,CPE,Metalloproteases
+carboxypeptidase N,CPN1,Metalloproteases
+carboxypeptidase M,CPM,Metalloproteases
+carboxypeptidase D,CPD,Metalloproteases
+carboxypeptidase Z,CPZ,Metalloproteases
+carboxypeptidase X1,CPXM1,Metalloproteases
+carboxypeptidase X2,CPXM2,Metalloproteases
+adipocyte-enh. binding protein 1,AEBP1,Metalloproteases
+ATP/GTP binding protein 1,AGTPBP1,Metalloproteases
+ATP/GTP binding protein-like 2,AGBL2,Metalloproteases
+ATP/GTP binding protein-like 3,AGBL3,Metalloproteases
+ATP/GTP binding protein-like 4,AGBL4,Metalloproteases
+ATP/GTP binding protein-like 5,AGBL5,Metalloproteases
+insulysin,IDE,Metalloproteases
+mitoch. Proc. peptidase b-subunit,PMPCB,Metalloproteases
+nardilysin,NRD1,Metalloproteases
+pitrilysin metalloproteinase 1,PITRM1,Metalloproteases
+mitochondrial proc. protease,INPP5E,Metalloproteases
+UCR1,UQCRC1,Metalloproteases
+UCR2,UQCRC2,Metalloproteases
+leucyl aminopeptidase,LAP3,Metalloproteases
+aminopeptidase-like 1,NPEPL1,Metalloproteases
+aspartyl aminopeptidase,DNPEP,Metalloproteases
+membrane dipeptidase,DPEP1,Metalloproteases
+membrane dipeptidase 2,DPEP2,Metalloproteases
+membrane dipeptidase 3,DPEP3,Metalloproteases
+carnosine dipeptidase 2,CNDP2,Metalloproteases
+carnosine dipeptidase 1,CNDP1,Metalloproteases
+PM20D2 peptidase,PM20D2,Metalloproteases
+aminoacylase,ACY1,Metalloproteases
+methionyl aminopeptidase I,METAP1,Metalloproteases
+methionyl aminopeptidase II,METAP2,Metalloproteases
+MAP1D methione aminopeptidase 1D,METAP1D,Metalloproteases
+X-prolyl aminopeptidase 2,XPNPEP2,Metalloproteases
+X-Pro dipeptidase,PEPD,Metalloproteases
+aminopeptidase P1,XPNPEP1,Metalloproteases
+aminopeptidase P homologue,XPNPEP3,Metalloproteases
+proliferation-association protein 1,PA2G4,Metalloproteases
+suppressor of Ty 16 homolog,SUPT16H,Metalloproteases
+glutamate carboxypeptidase II,FOLH1,Metalloproteases
+NAALADASE like1,NAALADL1,Metalloproteases
+NAALADASE II,NAALAD2,Metalloproteases
+NAALADASE like 2,NAALADL2,Metalloproteases
+plasma Glu-carboxypeptidase,CPQ,Metalloproteases
+endoplasmic reticulum metallopeptidase 1,ERMP1,Metalloproteases
+transferrin receptor protein,TFRC,Metalloproteases
+transferrin receptor 2 protein,TFR2,Metalloproteases
+glutaminyl cyclase,QPCT,Metalloproteases
+glutaminyl cyclase 2,QPCTL,Metalloproteases
+dihydroorotase,CAD,Metalloproteases
+dihydropyrimidinase,DPYS,Metalloproteases
+dihydropyrimidinase-rel. prot. 1,CRMP1,Metalloproteases
+dihydropyrimidinase-rel. prot. 2,DPYSL2,Metalloproteases
+dihydropyrimidinase-rel. prot. 3,DPYSL3,Metalloproteases
+dihydropyrimidinase-rel. prot. 4,DPYSL4,Metalloproteases
+dihydropyrimidinase-rel. prot. 5,DPYSL5,Metalloproteases
+YME1-like 1,YME1L1,Metalloproteases
+paraplegin,SPG7,Metalloproteases
+Afg3-like protein 1,AFG3L1P,Metalloproteases
+Afg3-like protein 2,AFG3L2,Metalloproteases
+pappalysin-1,PAPPA,Metalloproteases
+pappalysin-2,PAPPA2,Metalloproteases
+FACE-1/ZMPSTE24,FACE1,Metalloproteases
+OMA1,OMA1,Metalloproteases
+dipeptidyl-peptidase III,DPP3,Metalloproteases
+S2P protease,MBTPS2,Metalloproteases
+archaemetzincin-1,AMZ1,Metalloproteases
+archaemetzincin-2,AMZ2,Metalloproteases
+POH1/PSMD14,PSMD14,Metalloproteases
+CSN5/JAB1,COPS5,Metalloproteases
+COPS6,COPS6,Metalloproteases
+AMSH/STAMBP,STAMBP,Metalloproteases
+AMSH-LP/STAMBPL1,STAMBPL1,Metalloproteases
+"BRCC36/BRCA2-containing complex, sub 3",BRCC3,Metalloproteases
+MYSM1,MYSM1,Metalloproteases
+MPND,MPND,Metalloproteases
+PSMD7,PSMD7,Metalloproteases
+PRPF8,PRPF8,Metalloproteases
+eukar. translation initiation F3SH,EIF3H,Metalloproteases
+eukar. translation initiation F3SF,EIF3F,Metalloproteases
+ATP23 peptidase,XRCC6BP1,Metalloproteases
+FACE-2/RCE1,FACE2,Metalloproteases
+aspartoacylase,ASPA,Metalloproteases
+aspartoacylase-3,ACY3,Metalloproteases
+transthyretin,TTR,Metalloproteases
+SprT-like N-terminal domain,SPRTN,Metalloproteases
+O-sialoglycoprotein endopep.,OSGEP,Metalloproteases
+O-sialoglycoprotein endopep. like 1,OSGEPL1,Metalloproteases
+kallikrein hK1,KLK1,Serine proteases
+kallikrein hK2,KLK2,Serine proteases
+kallikrein hK3,KLK3,Serine proteases
+kallikrein hK4,KLK4,Serine proteases
+kallikrein hK5,KLK5,Serine proteases
+kallikrein hK6,KLK6,Serine proteases
+kallikrein hK7,KLK7,Serine proteases
+kallikrein hK8,KLK8,Serine proteases
+kallikrein hK9,KLK9,Serine proteases
+kallikrein hK10,KLK10,Serine proteases
+kallikrein hK11,KLK11,Serine proteases
+kallikrein hK12,KLK12,Serine proteases
+kallikrein hK13,KLK13,Serine proteases
+kallikrein hK14,KLK14,Serine proteases
+kallikrein hK15,KLK15,Serine proteases
+thrombin,F2,Serine proteases
+coagulation factor VIIa,F7,Serine proteases
+coagulation factor IXa,F9,Serine proteases
+coagulation factor Xa,F10,Serine proteases
+coagulation factor XIa,F11,Serine proteases
+coagulation factor XIIa,F12,Serine proteases
+protein C,PROC,Serine proteases
+protein Z,PROZ,Serine proteases
+plasma kallikrein,KLKB1,Serine proteases
+HGF activator,HGFAC,Serine proteases
+hyaluronan-binding ser-protease,HABP2,Serine proteases
+protein C-like,PAMR1,Serine proteases
+mastin,MASTIN,Serine proteases
+tryptase alpha/beta 1,TPSAB1,Serine proteases
+tryptase beta 2,TPSB2,Serine proteases
+tryptase gamma 1,TPSG1,Serine proteases
+marapsin,PRSS27,Serine proteases
+tryptase homolog 2/EOS,PRSS33,Serine proteases
+tryptase homolog 3,PRSS41,Serine proteases
+testisin,PRSS21,Serine proteases
+brain serine proteinase 2,PRSS22,Serine proteases
+implantation serine protease 2,PRSS29P,Serine proteases
+intestinal serine protease 1,PRSS30P,Serine proteases
+tryptase delta 1,TPSD1,Serine proteases
+prostasin,PRSS8,Serine proteases
+epidermis-specific SP-like,PRSS48,Serine proteases
+marapsin 2,PRSS38,Serine proteases
+testis-specific protein tsp50,PRSS50,Serine proteases
+testis serine protease 2,PRSS42,Serine proteases
+testis serine protease 3,TESSP3,Serine proteases
+testis serine protease 4,TESSP4,Serine proteases
+testis serine protease 5,PRSS45,Serine proteases
+testis serine protease 6,TESSP6,Serine proteases
+TESP2,TESP2,Serine proteases
+TESP3,TESP3,Serine proteases
+granzyme B,GZMB,Serine proteases
+granzyme H,GZMH,Serine proteases
+cathepsin G,CTSG,Serine proteases
+chymase,CMA1,Serine proteases
+granzyme A,GZMA,Serine proteases
+granzyme K,GZMK,Serine proteases
+granzyme M,GZMM,Serine proteases
+proteinase 3,PRTN3,Serine proteases
+neutrophil elastase,ELANE,Serine proteases
+azurocidin,AZU1,Serine proteases
+enteropeptidase,TMPRSS15,Serine proteases
+"protease, serine, 56",PRSS56,Serine proteases
+hepsin,HPN,Serine proteases
+HAT-like 2,HATL2,Serine proteases
+HAT-like 3,HATL3,Serine proteases
+corin,CORIN,Serine proteases
+matriptase,ST14,Serine proteases
+epitheliasin,TMPRSS2,Serine proteases
+transmembrane Ser-protease 3,TMPRSS3,Serine proteases
+transmembrane Ser-protease 4,TMPRSS4,Serine proteases
+spinesin,TMPRSS5,Serine proteases
+matriptase-2,TMPRSS6,Serine proteases
+matriptase-3,TMPRSS7,Serine proteases
+polyserase-I,TMPRSS9,Serine proteases
+TMPRSS11A,TMPRSS11A,Serine proteases
+HAT-like 5,TMPRSS11B,Serine proteases
+airway-trypsin-like protease,TMPRSS11D,Serine proteases
+DESC1 protease,TMPRSS11E,Serine proteases
+HAT-like 4,TMPRSS11F,Serine proteases
+HAT-related protease,TMPRSS12,Serine proteases
+membrane-type mosaic Ser-prot.,TMPRSS13,Serine proteases
+polyserase-2,PRSS36,Serine proteases
+polyserase-3,PRSS53,Serine proteases
+oviductin-like/ovochymase-2,OVCH2,Serine proteases
+ovochymase-like,OVCH1,Serine proteases
+chymotrypsin B,CTRB1,Serine proteases
+chymopasin,CTRL,Serine proteases
+chymotrypsin C,CTRC,Serine proteases
+cationic trypsin,PRSS1,Serine proteases
+trypsin 10,TRY10,Serine proteases
+anionic trypsin (II),PRSS2,Serine proteases
+trypsin C,PRSS3P2,Serine proteases
+trypsin 15,TRY15,Serine proteases
+trypsin X2,PRSS37,Serine proteases
+mesotrypsin,PRSS3,Serine proteases
+pancreatic elastase,CELA1,Serine proteases
+pancreatic elastase II (IIA),CELA2A,Serine proteases
+pancreatic endopeptidase E (A),CELA3A,Serine proteases
+pancreatic endopeptidase E (B),CELA3B,Serine proteases
+pancreatic elastase II form B,CELA2B,Serine proteases
+complement component 2,C2,Serine proteases
+complement factor B,CFB,Serine proteases
+complement C1r-homolog,C1RL,Serine proteases
+complement component C1ra,C1R,Serine proteases
+complement component C1sa,C1S,Serine proteases
+complement factor D,CFD,Serine proteases
+complement factor D-like,PRSS57,Serine proteases
+complement factor I,CFI,Serine proteases
+MASP1/3,MASP1,Serine proteases
+MASP2,MASP2,Serine proteases
+neurotrypsin,PRSS12,Serine proteases
+u-plasminogen activator,PLAU,Serine proteases
+t-plasminogen activator,PLAT,Serine proteases
+plasminogen,PLG,Serine proteases
+hepatocyte growth factor,HGF,Serine proteases
+macrophage-stimulating protein,MST1,Serine proteases
+apolipoprotein (a),LPA,Serine proteases
+acrosin,ACR,Serine proteases
+haptoglobin-1,HP,Serine proteases
+haptoglobin-related protein,HPR,Serine proteases
+osteoblast serine protease,HTRA1,Serine proteases
+HTRA2,HTRA2,Serine proteases
+HTRA3,HTRA3,Serine proteases
+HTRA4,HTRA4,Serine proteases
+umbelical vein proteinase,PRSS23,Serine proteases
+similar to SPUVE,PRSS35,Serine proteases
+plasma-kallikrein-like 2,PRSS55,Serine proteases
+plasma-kallikrein-like 3,KLKBL3,Serine proteases
+plasma-kallikrein-like 4,PRSS54,Serine proteases
+similar to Arabidopsis Ser-prot.,TYSND1,Serine proteases
+Ppnx,PPNX,Serine proteases
+"family with sequence similarity 111, A",FAM111A,Serine proteases
+"family with sequence similarity 111, B",FAM111B,Serine proteases
+site-1 protease,MBTPS1,Serine proteases
+proprotein convertase 9,PCSK9,Serine proteases
+tripeptidyl-peptidase II,TPP2,Serine proteases
+proprotein convertase 1,PCSK1,Serine proteases
+proprotein convertase 2,PCSK2,Serine proteases
+furin,FURIN,Serine proteases
+proprotein convertase 4,PCSK4,Serine proteases
+proprotein convertase 5,PCSK5,Serine proteases
+PACE4 proprotein convertase,PCSK6,Serine proteases
+proprotein convertase 7,PCSK7,Serine proteases
+prolyl oligopeptidase,PREP,Serine proteases
+prolyl oligopeptidase-like,PREPL,Serine proteases
+dipeptidyl-peptidase 4,DPP4,Serine proteases
+dipeptidyl-peptidase 6,DPP6,Serine proteases
+dipeptidyl-peptidase 8,DPP8,Serine proteases
+dipeptidyl-peptidase 9,DPP9,Serine proteases
+dipeptidyl-peptidase 10,DPP10,Serine proteases
+seprase,FAP,Serine proteases
+acylaminoacyl-peptidase,APEH,Serine proteases
+"family with sequence similarity 108, member B1",ABHD17B,Serine proteases
+"family with sequence similarity 108, member A1",ABHD17A,Serine proteases
+"family with sequence similarity 108, member C1",ABHD17C,Serine proteases
+abhydrolase domain containing 13,ABHD13,Serine proteases
+abhydrolase domain containing 12,ABHD12,Serine proteases
+abhydrolase domain containing 12B,ABHD12B,Serine proteases
+lysosomal carboxypeptidase A,CTSA,Serine proteases
+vitellogenic carboxypeptidase-L,CPVL,Serine proteases
+serine carboxypeptidase 1,SCPEP1,Serine proteases
+beta lactamase,LACTB,Serine proteases
+endopeptidase Clp,CLPP,Serine proteases
+PIM1 endopeptidase,LONP1,Serine proteases
+PIM2 endopeptidase,LONP2,Serine proteases
+signalase 18 kDa component,SEC11A,Serine proteases
+signalase 21 kDa component,SEC11C,Serine proteases
+signalase-like 1,FREM1,Serine proteases
+mitoc. inner membrane protease 2,IMMP2L,Serine proteases
+mitochondrial signal peptidase,IMMP1L,Serine proteases
+lysosomal Pro-X C-peptidase,PRCP,Serine proteases
+dipeptidyl-peptidase II,DPP7,Serine proteases
+thymus-specific serine peptidase,PRSS16,Serine proteases
+abhydrolase dom. containing 4,ABHD4,Serine proteases
+epoxide hydrolase,EPHX1,Serine proteases
+mesoderm-specific transcript,MEST,Serine proteases
+epoxyde hydrolase related protein,EPHX4,Serine proteases
+CGI-58,ABHD5,Serine proteases
+retinol binding protein 3,RBP3,Serine proteases
+tripeptidyl-peptidase I,TPP1,Serine proteases
+rhomboid-like protein 1,RHBDL1,Serine proteases
+"rhomboid, veinlet-like 2",RHBDL2,Serine proteases
+"rhomboid, veinlet-like 3",RHBDL3,Serine proteases
+rhomboid domain containing 1,RHBDD1,Serine proteases
+rhomboid 5 homolog 2,RHBDF2,Serine proteases
+rhomboid domain containing 2,RHBDD2,Serine proteases
+presenilins-assoc. rhomboid like,PARL,Serine proteases
+rhomboid 5 homolog 1,RHBDF1,Serine proteases
+"Der1-like domain family, member 1",DERL1,Serine proteases
+"Der1-like domain family, member 2",DERL2,Serine proteases
+"Der1-like domain family, member 3",DERL3,Serine proteases
+nucleoporin 98,NUP98,Serine proteases
+lactotransferrin,LTF,Serine proteases
+PIDD auto-processing protein unit 1,PIDD1,Serine proteases
+"caspase recruitment domain family, member 8",CARD8,Serine proteases
+NLRP1 self-cleaving protein,NLRP1,Serine proteases
+reelin,RELN,Serine proteases
+"heat shock protein 90kDa beta (Grp94), member 1/tumor rejection antigen (gp96)",HSP90B1,Serine proteases
+"heat shock 90kDa protein 1, alpha",HSP90AA1,Serine proteases
+"heat shock 90kDa protein 1, beta",HSP90AB1,Serine proteases
+heat shock protein 75,TRAP1,Serine proteases
+proteasome catalytic subunit 1,PSMB6,Threonine proteases
+proteasome catalytic subunit 2,PSMB7,Threonine proteases
+proteasome catalytic subunit 3,PSMB5,Threonine proteases
+proteasome catalytic subunit 1i,PSMB9,Threonine proteases
+proteasome catalytic subunit 2i,PSMB10,Threonine proteases
+proteasome catalytic subunit 3i,PSMB8,Threonine proteases
+proteasome b subunit LMP7-like,PSMB11,Threonine proteases
+proteasome beta 1 subunit,PSMB1,Threonine proteases
+proteasome beta 2 subunit,PSMB2,Threonine proteases
+proteasome beta 3 subunit,PSMB3,Threonine proteases
+proteasome beta 4 subunit,PSMB4,Threonine proteases
+proteasome alpha 1 subunit,PSMA1,Threonine proteases
+proteasome alpha 2 subunit,PSMA2,Threonine proteases
+proteasome alpha 3 subunit,PSMA3,Threonine proteases
+proteasome alpha 4 subunit,PSMA4,Threonine proteases
+proteasome alpha 5 subunit,PSMA5,Threonine proteases
+proteasome alpha 6 subunit,PSMA6,Threonine proteases
+proteasome alpha 7 subunit,PSMA7,Threonine proteases
+proteasome alpha 8 subunit,PSMA8,Threonine proteases
+glycosylasparaginase,AGA,Threonine proteases
+glycosylasparaginase-2,ASRGL1,Threonine proteases
+taspase,TASP1,Threonine proteases
+gamma-glutamyltransferase 1,GGT1,Threonine proteases
+gamma-glutamyltransferase-like 3,GGT7,Threonine proteases
+gamma-glutamyltransferase 6,GGT6,Threonine proteases
+gamma-glutamyltransferase 2,GGT2,Threonine proteases
+gamma-glutamyltransferase m-3,GGTLC2,Threonine proteases
+gamma-glutamyltransferase 5,GGTLC1,Threonine proteases
