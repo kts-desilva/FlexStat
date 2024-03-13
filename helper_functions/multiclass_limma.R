@@ -1,8 +1,8 @@
 #! /usr/bin/Rscript
 library(limma)
 library(leukemiasEset)
-library("dplyr")
-library("tidyverse")
+library(dplyr)
+library(tidyverse)
 library(tidyverse)
 library(hrbrthemes)
 library(viridis)
@@ -35,7 +35,6 @@ perform_limma = function (ourData,
   #Replace the class names to support binary distinctions is only all classes should be contrasted against each other
   for (i in class_types) {
     if (contrast_other_classes && i != class_type) {
-      #print('tt')
       if (class(ourData[, classvar]) == "factor") {
         ourData[, classvar] = as.character(ourData[, classvar])
       }
@@ -50,7 +49,6 @@ perform_limma = function (ourData,
   design_cols = c(class_type, contrast_type)
   design_cols = design_cols[order(design_cols)]
   colnames(design2) = design_cols
-  #ourData <- subset(ourData, select = -c(classvar))
   ourData = ourData[,-which(names(ourData) == classvar)]
   
   charColumns = ourData %>% select_if(is.character)
@@ -60,7 +58,6 @@ perform_limma = function (ourData,
   
   ourData = data.frame(apply(ourData, 2, function(x)
     as.numeric(as.character(x))))
-  #tt=qr.solve(design2, ourData)
   ourData = t(ourData)
   
   
@@ -112,7 +109,6 @@ perform_limma_top10 = function (ourData,
   #Replace the class names to support binary distinctions is only all classes should be contrasted against each other
   for (i in class_types) {
     if (contrast_other_classes && i != class_type) {
-      print('tt')
       ourData[ourData == i] = contrast_type
     }
   }
@@ -122,7 +118,6 @@ perform_limma_top10 = function (ourData,
   design2 = model.matrix( ~ ourData[, classvar] - 1)
   
   colnames(design2) = c(class_type, contrast_type)
-  #ourData <- subset(ourData, select = -c(classvar))
   ourData = ourData[,-which(names(ourData) == classvar)]
   ourData = data.frame(apply(ourData, 2, function(x)
     as.numeric(as.character(x))))
@@ -132,10 +127,7 @@ perform_limma_top10 = function (ourData,
   
   fit2C = contrasts.fit(fit2, contrast.matrix)
   fit2C = eBayes(fit2C)
-  #topProteins = topTable(fit2C, sort.by = "logFC", number=Inf)
   topProteins = topTable(fit2C, sort.by = "logFC", number = 50, adjust.method = fdr)
-  #topProteins = topTable(fit2C, number=15)
-  #topProteins = topTable(fit2C, number=Inf)
   topProteins$Gene = rownames(topProteins)
   topProteins = topProteins %>% dplyr::select(Gene, everything())
   
@@ -164,7 +156,6 @@ perform_limma_top_all = function (ourData,
   # should be contrasted against each other
   for (i in class_types) {
     if (contrast_other_classes && i != class_type) {
-      print('tt')
       contrast_type = 'control'
       ourData[ourData == i] = contrast_type
     }
@@ -217,7 +208,6 @@ perform_specific_limma = function (ourData,
   #Replace the class names to support binary distinctions is only all classes should be contrasted against each other
   for (i in class_types) {
     if (contrast_other_classes && i != class_type) {
-      print('tt')
       ourData[ourData == i] = contrast_type
     }
   }
@@ -227,7 +217,6 @@ perform_specific_limma = function (ourData,
   design2 = model.matrix( ~ ourData[, classvar] - 1)
   
   colnames(design2) = c(class_type, contrast_type)
-  #ourData <- subset(ourData, select = -c(classvar))
   ourData = ourData[,-which(names(ourData) == classvar)]
   ourData = data.frame(apply(ourData, 2, function(x)
     as.numeric(as.character(x))))
@@ -264,8 +253,7 @@ perform_specific_limma = function (ourData,
   }
   topProteins$Gene = rownames(topProteins)
   topProteins = topProteins %>% select(Gene, everything())
-  
-  # return (topProteins)
+
   return (list("topProteins" = topProteins, "fit2C" = fit2C))
   
 }
@@ -295,7 +283,6 @@ perform_limma_top10_specific = function (ourData,
   #Replace the class names to support binary distinctions is only all classes should be contrasted against each other
   for (i in class_types) {
     if (contrast_other_classes && i != class_type) {
-      print('tt')
       ourData[ourData == i] = contrast_type
     }
   }
@@ -305,7 +292,6 @@ perform_limma_top10_specific = function (ourData,
   design2 = model.matrix( ~ ourData[, classvar] - 1)
   
   colnames(design2) = c(class_type, contrast_type)
-  #ourData <- subset(ourData, select = -c(classvar))
   ourData = ourData[,-which(names(ourData) == classvar)]
   ourData = data.frame(apply(ourData, 2, function(x)
     as.numeric(as.character(x))))
@@ -316,14 +302,6 @@ perform_limma_top10_specific = function (ourData,
   fit2C = contrasts.fit(fit2, contrast.matrix)
   fit2C = eBayes(fit2C)
   topProteins = NULL
-  # topProteins = topTable(
-  #   fit2C,
-  #   sort.by = "logFC",
-  #   number = 50,
-  #   lfc = as.numeric(lfc),
-  #   p.value = as.numeric(pvalue),
-  #   fdr
-  # )
   if (is.numeric(lfc) && is.numeric(pvalue)) {
     topProteins = topTable(
       fit2C,
@@ -382,7 +360,6 @@ perform_limma_top_specific_all = function (ourData,
   #Replace the class names to support binary distinctions is only all classes should be contrasted against each other
   for (i in class_types) {
     if (contrast_other_classes && i != class_type) {
-      print('tt')
       ourData[ourData == i] = contrast_type
     }
   }
@@ -392,7 +369,6 @@ perform_limma_top_specific_all = function (ourData,
   design2 = model.matrix( ~ ourData[, classvar] - 1)
   
   colnames(design2) = c(class_type, contrast_type)
-  #ourData <- subset(ourData, select = -c(classvar))
   ourData = ourData[,-which(names(ourData) == classvar)]
   ourData = data.frame(apply(ourData, 2, function(x)
     as.numeric(as.character(x))))
@@ -403,14 +379,7 @@ perform_limma_top_specific_all = function (ourData,
   fit2C = contrasts.fit(fit2, contrast.matrix)
   fit2C = eBayes(fit2C)
   topProteins = NULL
-  # topProteins = topTable(
-  #   fit2C,
-  #   sort.by = "logFC",
-  #   number = Inf,
-  #   lfc = as.numeric(lfc),
-  #   p.value = as.numeric(pvalue),
-  #   adjust.method = fdr
-  # )
+  
   if (is.numeric(lfc) && is.numeric(pvalue)) {
     topProteins = topTable(
       fit2C,
