@@ -85,7 +85,7 @@ data_limmaUI <- function(id) {
         shinyBS::bsPopover(ns("icon13"), NULL, "Adjusted p-value is (highly) recommended. Raw p-value cutoffs yield many false positives and give a general trend, 
       not any statistical significance.", placement = "right"),
         shiny::actionButton(ns("run_limma_button"), "Perform Limma", icon = icon("play"), style="background-color: #E95420"),
-        shinyjs::hidden(div(id=ns('limma_message'), textOutput("limma_text"), style="color:green"))
+        shinyjs::hidden(div(id=ns('limma_message'), textOutput(ns("limma_text")), style="color:green"))
       ),
       shiny::mainPanel(
         shiny::tabsetPanel(
@@ -133,6 +133,7 @@ data_limmaUI <- function(id) {
                   ns("limma_pca_protein_group_var"),
                   "Protein Functional Group",
                   choices = c(
+                    'None',
                     'Kinases',
                     'Protoeases',
                     'Transcription Factors',
@@ -183,7 +184,7 @@ data_limma_server <- function(id, variables ) {
       # MAX FILE SIZE FOR UPLOAD
       options(shiny.maxRequestSize = 64 * 1024 ^ 2)
       
-      # Reactive values
+      # shiny::reactive values
       show_template = shiny::reactiveVal(TRUE)
       
       ns = NS(id)
@@ -199,32 +200,25 @@ data_limma_server <- function(id, variables ) {
           char_column_df = data_df %>% select_if(is.character)
           
           choices = c(not_sel, names(char_column_df))
-          shiny::updateSelectInput(inputId = "class_var", choices = choices)
+          shiny::shiny::updateSelectInput(inputId = "class_var", choices = choices)
           
           choices = c(not_sel, names(char_column_df))
-          shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
+          shiny::shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
           
           choices2 = c(sub(" ", "_", names(char_column_df)))
-          shiny::updateSelectInput(inputId = "remove_cols_var", choices = choices2)
+          shiny::shiny::updateSelectInput(inputId = "remove_cols_var", choices = choices2)
         } else {
           variables$functional_dataset = NULL
         }
         
       })
       
-      output$contents = renderTable({
+      output$contents = shiny::renderTable({
         if (!show_template()) {
-          req(input$limma_csv_input)
-          
-          df = read.csv(
-            input$limma_csv_input$datapath,
-            head = TRUE,
-            sep = ",",
-            row.names = 1
-          )
+          df = variables$limma_dataset
           
           if (input$show_head_var) {
-            return(head(df))
+            return(df[1:min(nrow(df),10),1:min(ncol(df),10)])
           } else {
             return(df)
           }
@@ -233,15 +227,9 @@ data_limma_server <- function(id, variables ) {
       }, rownames = TRUE)
       
       
-      output$contents_ready = renderTable({
+      output$contents_ready = shiny::renderTable({
         if (!input$use_sample_data) {
-          req(input$limma_csv_input)
-          data_df = read.csv(
-            input$limma_csv_input$datapath,
-            head = TRUE,
-            sep = ",",
-            row.names = 1
-          )
+          data_df = variables$limma_dataset
         } else {
           data_df = read.csv("data/sample_data.csv", row.names = 1)
         }
@@ -259,7 +247,7 @@ data_limma_server <- function(id, variables ) {
         
       }, rownames = TRUE)
       
-      output$conditional_contents_template = renderUI({
+      output$conditional_contents_template = shiny::renderUI({
         if (show_template()) {
           shiny::tagList(h3(strong("Sample Data")),
                          tableOutput(ns("contents_template")))
@@ -268,11 +256,11 @@ data_limma_server <- function(id, variables ) {
         }
       })
       
-      output$contents_template = renderTable({
+      output$contents_template = shiny::renderTable({
         read.csv("data/sample_data.csv", row.names = 1)
       })
       
-      output$contents_conditional_h5 = renderUI({
+      output$contents_conditional_h5 = shiny::renderUI({
         if (!show_template()) {
           shiny::h3(strong("Original Data"))
         } else{
@@ -280,17 +268,17 @@ data_limma_server <- function(id, variables ) {
         }
       })
       
-      class_var = eventReactive(input$run_limma_button, input$class_var)
-      contrast_var = eventReactive(input$run_limma_button, input$contrast_var)
-      lfc_var = eventReactive(input$run_limma_button, input$lfc_var)
-      pvalue_var = eventReactive(input$run_limma_button, input$pvalue_var)
-      contrast_other_classes_var = eventReactive(input$run_limma_button, input$contrast_other_classes_var)
-      class_of_interest_var = eventReactive(input$run_limma_button, input$class_of_interest_var)
-      padjust_method_var = eventReactive(input$run_limma_button, input$padjust_method_var)
-      remove_cols_var = eventReactive(input$run_limma_button,input$remove_cols_var)
-      sort_results_by_var = eventReactive(input$run_limma_button, input$sort_results_by_var)
+      class_var = shiny::eventReactive(input$run_limma_button, input$class_var)
+      contrast_var = shiny::eventReactive(input$run_limma_button, input$contrast_var)
+      lfc_var = shiny::eventReactive(input$run_limma_button, input$lfc_var)
+      pvalue_var = shiny::eventReactive(input$run_limma_button, input$pvalue_var)
+      contrast_other_classes_var = shiny::eventReactive(input$run_limma_button, input$contrast_other_classes_var)
+      class_of_interest_var = shiny::eventReactive(input$run_limma_button, input$class_of_interest_var)
+      padjust_method_var = shiny::eventReactive(input$run_limma_button, input$padjust_method_var)
+      remove_cols_var = shiny::eventReactive(input$run_limma_button,input$remove_cols_var)
+      sort_results_by_var = shiny::eventReactive(input$run_limma_button, input$sort_results_by_var)
       
-      limma_data_input = reactive({
+      limma_data_input = shiny::reactive({
         req(input$limma_csv_input)
         fread(input$limma_csv_input$datapath)
       })
@@ -298,10 +286,7 @@ data_limma_server <- function(id, variables ) {
       shiny::observeEvent(input$class_var, {
         if (input$class_var != "Not Selected") {
           if (!input$use_sample_data) {
-            req(input$limma_csv_input)
-            data_df = read.csv(input$limma_csv_input$datapath,
-                               head = TRUE,
-                               sep = ",")
+            data_df = variables$limma_dataset
           } else {
             data_df = read.csv("data/sample_data.csv", row.names = 1)
           }
@@ -317,10 +302,10 @@ data_limma_server <- function(id, variables ) {
           if(count==n){
             shinyjs::enable('class_of_interest_var')
             shinyjs::enable('contrast_var')
-            updateSelectInput(session,
+            shiny::updateSelectInput(session,
                               inputId = "class_of_interest_var",
                               choices = unique(data_df[input$class_var]))
-            updateSelectInput(session,
+            shiny::updateSelectInput(session,
                               inputId = "contrast_var",
                               choices = unique(data_df[input$class_var]))
           }
@@ -329,13 +314,10 @@ data_limma_server <- function(id, variables ) {
       })
       
       
-      output$print_class_var = renderText({
+      output$print_class_var = shiny::renderText({
         if (input$class_var != "Not Selected") {
           if (!input$use_sample_data) {
-            req(input$limma_csv_input)
-            data_df = read.csv(input$limma_csv_input$datapath,
-                               head = TRUE,
-                               sep = ",")
+            data_df = variables$limma_dataset
           } else {
             data_df = read.csv("data/sample_data.csv", row.names = 1)
           }
@@ -364,7 +346,7 @@ data_limma_server <- function(id, variables ) {
         }
       }, ignoreNULL = T)
       
-      observe({
+      shiny::observe({
         if (input$class_var != not_sel &&
             input$contrast_var != not_sel &&
             input$class_of_interest_var != not_sel) {
@@ -375,22 +357,23 @@ data_limma_server <- function(id, variables ) {
         }
       })
       
-      limma_data_input = reactive({
+      limma_data_input = shiny::reactive({
         req(input$limma_csv_input)
         fread(input$limma_csv_input$datapath)
       })
       
       shiny::observeEvent(limma_data_input(), {
-        char_column_df = data.frame(limma_data_input(), row.names=1)  %>%
-          select_if(is.character)
+        
+        variables$limma_dataset= data.frame(limma_data_input(), row.names=1)
+        char_column_df = variables$limma_dataset %>% select_if(is.character)
         
         show_template(FALSE)
         
         choices = c(not_sel, names(char_column_df))
-        shiny::updateSelectInput(inputId = "class_var", choices = choices)
+        shiny::shiny::updateSelectInput(inputId = "class_var", choices = choices)
         
         choices = c(not_sel, names(char_column_df))
-        shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
+        shiny::shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
         
         choices2 = c(sub(" ", "_", names(limma_data_input())))
         shiny::updateSelectizeInput(session, inputId = "remove_cols_var", choices = choices2,
@@ -399,18 +382,12 @@ data_limma_server <- function(id, variables ) {
       
       shiny::observeEvent(input$run_limma_button, {
         shinyjs::toggle('limma_message')
-        output$limma_text = renderText({"Check the Results Tab"})
+        output$limma_text = shiny::renderText({"Check the Results Tab"})
       })
       
       get_dataset = function() {
         if (!input$use_sample_data) {
-          req(input$limma_csv_input)
-          data_df = read.csv(
-            input$limma_csv_input$datapath,
-            head = TRUE,
-            sep = ",",
-            row.names = 1
-          )
+          data_df = variables$limma_dataset  
           
           if (!is.null(input$remove_cols_var)) {
             data_df = data_df[,-which(names(data_df) %in% input$remove_cols_var)]
@@ -480,7 +457,7 @@ data_limma_server <- function(id, variables ) {
         data.table(results)
       }
       
-      limma_table_1 = eventReactive(input$run_limma_button, {
+      limma_table_1 = shiny::eventReactive(input$run_limma_button, {
         start = Sys.time()
         data_table = perform_limma_1(
           class_var(),
@@ -530,7 +507,7 @@ data_limma_server <- function(id, variables ) {
         return(dtt)
       })
       
-      output$download = downloadHandler(
+      output$download = shiny::downloadHandler(
         filename = "limma_filtered_protein_matrix.csv",
         content = function(file) {
           filtered = variables$data_table[input$limma_table_rows_current, 'Gene']
@@ -576,7 +553,7 @@ data_limma_server <- function(id, variables ) {
         return(gga)
       }
       
-      limma_boxplots_1 = eventReactive(input$run_limma_button, {
+      limma_boxplots_1 = shiny::eventReactive(input$run_limma_button, {
         shiny::validate(need(!is.null(variables$data_table) && nrow(variables$data_table) != 0, 'No records to display'))
         bp = NULL
         if (!is.null(variables$data_table) && (nrow(variables$data_table) != 0)) {
@@ -681,7 +658,7 @@ data_limma_server <- function(id, variables ) {
         ) %>% layout(hoverlabel = list(bgcolor = "white"))
       })
       
-      output$volcano_cutoffs = shiny::renderUI({
+      output$volcano_cutoffs = shiny::shiny::renderUI({
         fit2C = variables$fit2C
         fluidRow(column(
           width = 4,
@@ -709,7 +686,7 @@ data_limma_server <- function(id, variables ) {
         ))
       })
       
-      output$func_annot_analysis = shiny::renderUI({
+      output$func_annot_analysis = shiny::shiny::renderUI({
         results_df = variables$results
         
         if(!is.na(input$lfc_var) && is.na(input$pvalue_var) ){
@@ -746,23 +723,18 @@ data_limma_server <- function(id, variables ) {
         fit2C = variables$fit2C
         
         data = get_dataset()
-        
-        char_columns = colnames(data %>% select_if(is.character))
-        data = t(data)
-        results_df = data.frame (
+        data <- t(data)
+        results_df <- data.frame (
           log2FoldChange  = c(fit2C$coef),
           pvalue = c(fit2C$p.value),
-          delabel = rownames(data)[!rownames(data) %in% c(char_columns)]
+          delabel = rownames(fit2C)
         )
-        rownames(results_df) =
-          rownames(data)[!rownames(data) %in% c(char_columns)]
-        results_df$diffexpressed = "NO"
-        
+        rownames(results_df) <- rownames(fit2C)
+        results_df$diffexpressed <- "NO"
         results_df$diffexpressed[results_df$log2FoldChange > input$lfc_cutoff &
-                                   results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] = "UP"
-        
+                                   results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] <- "UP"
         results_df$diffexpressed[results_df$log2FoldChange < (-1 * input$lfc_cutoff) &
-                                   results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] = "DOWN"
+                                   results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] <- "DOWN"
         
         EnhancedVolcano::EnhancedVolcano(
           results_df,
@@ -851,49 +823,57 @@ data_limma_server <- function(id, variables ) {
             fileEncoding = "UTF-8-BOM"
           )
           return(data_df)
-        }
+        } else if (marker_type == "Hydrolases") {
+          return(data.frame())
+        } else if (marker_type == "Phosphatases") {
+          return(data.frame())
+        } 
       }
       
       output$limma_pca = shiny::renderPlot(res = 96, {
         shiny::validate(need(nrow(variables$data_table) != 0, 'No records to display'))
         
         data_df = get_dataset()
-        #data_df[,input$class_var] = as.factor(data_df[,input$class_var])
         data_df[, input$class_var] = gsub(" ", "", data_df[, input$class_var])
         
         classes = unique(data_df[input$class_var])
         
-        charColumns = data_df %>% select_if(is.character)
-        data_df_int = data_df[,-which(names(data_df) %in%  colnames(charColumns))]
+        if(is.null(variables$fit2C)){
+          charColumns = data_df %>% select_if(is.character)
+          data_df_int = data_df[,-which(names(data_df) %in%  colnames(charColumns))]
+        } else {
+          data_df_int = data_df[,rownames(variables$fit2C)]
+        }
+        
         data_df[, input$class_var] = as.factor(data_df[, input$class_var])
         
         variables$functional_dataset = data_df
         
         markers = get_markers(input$limma_pca_protein_group_var)
         
-        output$limma_pca_protein_group_num = renderText(
-          paste(
-            "Number of proteins identified as",
-            input$limma_pca_protein_group_var,
-            nrow(markers),
-            sep = " "
+        if(!is.null(markers)){
+          
+          if (length(intersect(colnames(data_df_int), markers$Gene)) > 0) {
+            data_df_int = data_df_int %>% select(any_of(c(markers$Gene)))
+          } else if (length(intersect(colnames(data_df_int), markers$UniprotID)) >
+                     0) {
+            data_df_int = data_df_int %>% select(any_of(c(markers$UniprotID)))
+          } else if (length(intersect(colnames(data_df_int), markers$Uniprot_Gene)) >
+                     0) {
+            data_df_int = data_df_int %>% select(any_of(c(markers$Uniprot_Gene)))
+          } else {
+            data_df_int = data.frame()
+          }
+          
+          output$limma_pca_protein_group_num = shiny::renderText(
+            paste(
+              "Number of proteins identified as",
+              input$limma_pca_protein_group_var,
+              ncol(data_df_int),
+              sep = " "
+            )
           )
-        )
-        
-        if (length(intersect(colnames(data_df_int), markers$Gene)) > 0) {
-          data_df_int = data_df_int %>% select(any_of(c(markers$Gene)))
-        } else if (length(intersect(colnames(data_df_int), markers$UniprotID)) >
-                   0) {
-          data_df_int = data_df_int %>% select(any_of(c(markers$UniprotID)))
-        } else if (length(intersect(colnames(data_df_int), markers$Uniprot_Gene)) >
-                   0) {
-          data_df_int = data_df_int %>% select(any_of(c(markers$Uniprot_Gene)))
-        } else {
-          data_df_int = data.frame()
         }
-        
-        print(dim(data_df_int))
-        print(length(data_df[, input$class_var]))
         
         pca_type = NULL
         pca_frame = F
@@ -920,18 +900,19 @@ data_limma_server <- function(id, variables ) {
           label = input$limma_pca_label,
           frame = pca_frame,
           frame.type = pca_type,
-          main = paste("PCA of", input$limma_pca_protein_group_var, sep =" ")
+          main = if(input$limma_pca_protein_group_var == "None") "PCA" else
+            paste("PCA of", input$limma_pca_protein_group_var, sep =" ")
         )
       })
       
-      output$downloadResults = downloadHandler(
+      output$downloadResults = shiny::downloadHandler(
         filename = "limma_results.csv",
         content = function(file) {
           write.csv(variables$data_table, file, row.names = FALSE)
         }
       )
       
-      output$downloadPlots = downloadHandler(
+      output$downloadPlots = shiny::downloadHandler(
         filename = "limma_top50_plots.png",
         content = function(file) {
           if (input$plotDownregulated || input$plotUpregulated) {
@@ -944,7 +925,6 @@ data_limma_server <- function(id, variables ) {
                 height = 100 * nrow(variables$data_table))
             print(limma_boxplots_1())
           }
-          
           dev.off()
         }
       )

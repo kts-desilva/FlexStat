@@ -24,7 +24,7 @@ data_clusteringUI <- function(id) {
         shiny::fluidRow(
           column(
             width = 4,
-            checkboxInput(ns("cluster_use_sample_data"), "Use Sample Data", F)
+            shiny::checkboxInput(ns("cluster_use_sample_data"), "Use Sample Data", F)
           ),
           offset = 0,
           style = 'padding:0px;'
@@ -114,7 +114,7 @@ data_clustering_server <- function(id, variables) {
       ns <- NS(id)
       show_template3 = shiny::reactiveVal(TRUE)
       
-      output$conditional_contents_template3 = shiny::renderUI({
+      output$conditional_contents_template3 = shiny::shiny::renderUI({
         if (show_template3()) {
           tagList(h3(strong("Sample Data")),
                   tableOutput(ns("contents_template3")))
@@ -163,17 +163,17 @@ data_clustering_server <- function(id, variables) {
         }
       })
       
-      cluster_k_var = eventReactive(input$run_consclustering_button, input$cluster_k_var)
-      cluster_alg_var = eventReactive(input$run_consclustering_button, input$cluster_alg_var)
-      cluster_distance_var = eventReactive(input$run_consclustering_button,
+      cluster_k_var = shiny::eventReactive(input$run_consclustering_button, input$cluster_k_var)
+      cluster_alg_var = shiny::eventReactive(input$run_consclustering_button, input$cluster_alg_var)
+      cluster_distance_var = shiny::eventReactive(input$run_consclustering_button,
                                            input$cluster_distance_var)
-      cluster_inner_linkage_var = eventReactive(input$run_consclustering_button,
+      cluster_inner_linkage_var = shiny::eventReactive(input$run_consclustering_button,
                                                 input$cluster_inner_linkage_var)
-      cluster_final_linkage_var = eventReactive(input$run_consclustering_button,
+      cluster_final_linkage_var = shiny::eventReactive(input$run_consclustering_button,
                                                 input$cluster_final_linkage_var)
       
-      output$cluster_slider = shiny::renderUI({
-        sliderInput(
+      output$cluster_slider = shiny::shiny::renderUI({
+        shiny::sliderInput(
           ns("cluster_k_var"),
           p(
             span("Maximum No. of Clusters"),
@@ -222,7 +222,7 @@ data_clustering_server <- function(id, variables) {
         print('done..')
         variables$cluster_path = path
         
-        output$cluster_images = renderUI({
+        output$cluster_images = shiny::renderUI({
           all_images = list.files(variables$cluster_path,
                                   pattern = "*png",
                                   full.names = TRUE)
@@ -249,14 +249,14 @@ data_clustering_server <- function(id, variables) {
           
         })
         
-        output$clusterDownload = downloadHandler(
+        output$clusterDownload = shiny::downloadHandler(
           filename = function() {
             paste0("ConsensusClusterResults_", Sys.Date(), ".zip")
           },
           content = function(file) {
             files = list.files(variables$cluster_path, recursive = TRUE)
             files = paste(variables$cluster_path, files, sep = "/")
-            return (zip(file ,files ,mode="cherry-pick"))
+            return (zip::zip(file ,files ,mode="cherry-pick"))
           },
           contentType = "application/zip"
         )

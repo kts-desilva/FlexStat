@@ -446,7 +446,7 @@ data_auto_limma_server <- function(id, variables ) {
         return(results)
       }
       
-      output$downloadAutoTable = downloadHandler(
+      output$downloadAutoTable = shiny::downloadHandler(
         filename = "limma_auto_results_top50.xlsx",
         
         content = function(file) {
@@ -470,7 +470,7 @@ data_auto_limma_server <- function(id, variables ) {
         }
       )
       
-      output$downloadAutoTableAll = downloadHandler(
+      output$downloadAutoTableAll = shiny::downloadHandler(
         filename = "limma_auto_results_all.xlsx",
         content = function(file) {
           shinybusy::show_modal_spinner(text = HTML("The results are being generated.<br> Please wait..."))

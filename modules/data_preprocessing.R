@@ -87,7 +87,7 @@ data_preprocessingUI <- function(id) {
       ),
       actionButton(ns("run_preproc_button"), "Preprocess Data", icon = icon("play"), 
                    style="background-color: #E95420"),
-      hidden(div(id=ns('preproc_message'), textOutput("preproc_text"), style="color:green"))
+      hidden(div(id=ns('preproc_message'), textOutput(ns("preproc_text")), style="color:green"))
     ),
     mainPanel(
       tabsetPanel(
@@ -123,11 +123,11 @@ data_preprocessing_server <- function(id, variables ) {
       options(shiny.maxRequestSize = 64 * 1024 ^ 2)
 
       # Reactive values
-      preproc_show_template = reactiveVal(TRUE)
+      preproc_show_template = shiny::reactiveVal(TRUE)
       
       ns <- NS(id)
       
-      output$conditional_contents_template4 = renderUI({
+      output$conditional_contents_template4 = shiny::renderUI({
         if (preproc_show_template()) {
           tagList(h3(strong("Sample Data")),
                   tableOutput(ns("contents_template4")))
@@ -136,11 +136,11 @@ data_preprocessing_server <- function(id, variables ) {
         }
       })
       
-      output$contents_template4 = renderTable({
+      output$contents_template4 = shiny::renderTable({
         read.csv("data/sample_preproc_data.csv", row.names = 1)
       }) 
       
-      output$contents_conditional_h6 = renderUI({
+      output$contents_conditional_h6 = shiny::renderUI({
         if (!preproc_show_template()) {
           h3(strong("Original Data"))
         } else{
@@ -148,12 +148,12 @@ data_preprocessing_server <- function(id, variables ) {
         }
       })
       
-      preproc_data_input = reactive({
+      preproc_data_input = shiny::reactive({
         req(input$preproc_data_csv_input)
         fread(input$preproc_data_csv_input$datapath)
       })
       
-      observeEvent(preproc_data_input(), {
+      shiny::observeEvent(preproc_data_input(), {
         char_column_df = data.frame(preproc_data_input(), row.names=1)  %>%
           select_if(is.character)
         
@@ -172,7 +172,7 @@ data_preprocessing_server <- function(id, variables ) {
         updateSelectInput(inputId = "preproc_ir_var", choices = (preproc_data_input()[,1]))
       })
       
-      observeEvent(input$preproc_use_sample_data, {
+      shiny::observeEvent(input$preproc_use_sample_data, {
         if (input$preproc_use_sample_data) {
           reset(id = "preproc_data_csv_input")
           reset(id = "preproc_contents")
@@ -198,7 +198,7 @@ data_preprocessing_server <- function(id, variables ) {
         
       })
       
-      observeEvent(input$preproc_use_sample_data, {
+      shiny::observeEvent(input$preproc_use_sample_data, {
         if (input$preproc_use_sample_data) {
           shinyjs::disable("preproc_show_transpose_var")
         } else {
@@ -206,7 +206,7 @@ data_preprocessing_server <- function(id, variables ) {
         }
       })
       
-      observeEvent(input$preproc_show_log2_var, {
+      shiny::observeEvent(input$preproc_show_log2_var, {
         if (input$preproc_show_log2_var) {
           shinyjs::disable("preproc_show_log10_var")
         } else{
@@ -214,7 +214,7 @@ data_preprocessing_server <- function(id, variables ) {
         }
       })
       
-      observeEvent(input$preproc_show_log10_var, {
+      shiny::observeEvent(input$preproc_show_log10_var, {
         if (input$preproc_show_log10_var) {
           shinyjs::disable("preproc_show_log2_var")
         } else{
@@ -222,7 +222,7 @@ data_preprocessing_server <- function(id, variables ) {
         }
       })
       
-      output$preproc_contents = renderTable({
+      output$preproc_contents = shiny::renderTable({
         if (!preproc_show_template()) {
           req(input$preproc_data_csv_input)
           
@@ -237,14 +237,14 @@ data_preprocessing_server <- function(id, variables ) {
         
       }, rownames = TRUE)
       
-      preproc_class_var = eventReactive(input$run_preproc_button, input$preproc_class_var)
-      preproc_batch_var = eventReactive(input$run_preproc_button, input$preproc_batch_var)
-      preproc_missing_value_threshold_var = eventReactive(input$run_preproc_button, input$preproc_missing_value_threshold_var)
-      preproc_imputation_method_var = eventReactive(input$run_preproc_button, input$preproc_imputation_method_var)
-      preproc_normalization_method_var = eventReactive(input$run_preproc_button, input$preproc_normalization_method_var)
-      preproc_ir_var = eventReactive(input$run_preproc_button, input$preproc_ir_var)
+      preproc_class_var = shiny::eventReactive(input$run_preproc_button, input$preproc_class_var)
+      preproc_batch_var = shiny::eventReactive(input$run_preproc_button, input$preproc_batch_var)
+      preproc_missing_value_threshold_var = shiny::eventReactive(input$run_preproc_button, input$preproc_missing_value_threshold_var)
+      preproc_imputation_method_var = shiny::eventReactive(input$run_preproc_button, input$preproc_imputation_method_var)
+      preproc_normalization_method_var = shiny::eventReactive(input$run_preproc_button, input$preproc_normalization_method_var)
+      preproc_ir_var = shiny::eventReactive(input$run_preproc_button, input$preproc_ir_var)
       
-      observe({
+      shiny::observe({
         if(input$preproc_class_var!=not_sel && input$preproc_batch_var!=not_sel){
           shinyjs::enable("run_preproc_button")
         } else {
@@ -252,8 +252,8 @@ data_preprocessing_server <- function(id, variables ) {
         }
       })
       
-      observeEvent(input$run_preproc_button, {
-        toggle(ns('preproc_message'))
+      shiny::observeEvent(input$run_preproc_button, {
+        shinyjs::toggle('preproc_message')
         output$preproc_text = renderText({"Check the Preprocessed Data Tab"})
         
       })

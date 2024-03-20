@@ -1,6 +1,5 @@
 #! /usr/bin/Rscript
 library(limma)
-library(leukemiasEset)
 library(dplyr)
 library(tidyverse)
 library(tidyverse)

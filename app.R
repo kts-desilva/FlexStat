@@ -101,7 +101,8 @@ server = function(input, output, session) {
     results = NULL,
     original_dataset = NULL,
     imputed_dataset = NULL,
-    normalized_dataset = NULL
+    normalized_dataset = NULL,
+    limma_dataset = NULL
   )
   
   data_preprocessing_server("data_preprocessing", variables)
