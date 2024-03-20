@@ -8,3 +8,43 @@ It offers a suite of robust statistical tools, including data statistics computa
 
 # Workflow
 ![Imgur](https://i.imgur.com/I1xJpYF.png)
+
+# Prerequisites to run locally
+Install the additional packages below
+1. [jdcbioinfo](https://github.com/jdreyf/jdcbioinfo/)
+```
+remotes::install_github(repo="jdreyf/jdcbioinfo", build_opts = c("--no-resave-data", "--no-manual"))
+```
+2. [DREAMAI](https://github.com/WangLab-MSSM/DreamAI/tree/master)
+```
+require("cluster")
+require("survival")
+require("randomForest")
+require("missForest")
+require("glmnet")
+require("Rcpp")
+require("foreach")
+require("itertools")
+require("iterators")
+require("Matrix")
+require("devtools")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+install.packages("BiocManager")
+BiocManager::install("impute", version = "3.8")
+require("impute")
+
+require("remotes")
+install_github("WangLab-MSSM/DreamAI/Code")
+```
+4. [EnhancedVolcano]()
+```
+  if (!requireNamespace('BiocManager', quietly = TRUE))
+    install.packages('BiocManager')
+
+  BiocManager::install('EnhancedVolcano')
+```
+
+# How to run the app locally
+```
+runApp()
+```
