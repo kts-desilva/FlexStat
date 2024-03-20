@@ -17,22 +17,6 @@ remotes::install_github(repo="jdreyf/jdcbioinfo", build_opts = c("--no-resave-da
 ```
 2. [DREAMAI](https://github.com/WangLab-MSSM/DreamAI/tree/master)
 ```
-require("cluster")
-require("survival")
-require("randomForest")
-require("missForest")
-require("glmnet")
-require("Rcpp")
-require("foreach")
-require("itertools")
-require("iterators")
-require("Matrix")
-require("devtools")
-if (!requireNamespace("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
-BiocManager::install("impute", version = "3.8")
-require("impute")
-
 require("remotes")
 install_github("WangLab-MSSM/DreamAI/Code")
 ```
