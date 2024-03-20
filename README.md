@@ -44,7 +44,7 @@ install_github("WangLab-MSSM/DreamAI/Code")
   BiocManager::install('EnhancedVolcano')
 ```
 
-# How to run the app locally
+# How to run the app
 ```
 runApp()
 ```
