@@ -20,14 +20,14 @@ remotes::install_github(repo="jdreyf/jdcbioinfo", build_opts = c("--no-resave-da
 require("remotes")
 install_github("WangLab-MSSM/DreamAI/Code")
 ```
-4. [EnhancedVolcano]()
+4. [EnhancedVolcano](https://bioconductor.org/packages/devel/bioc/vignettes/EnhancedVolcano/inst/doc/EnhancedVolcano.html)
 ```
   if (!requireNamespace('BiocManager', quietly = TRUE))
     install.packages('BiocManager')
 
   BiocManager::install('EnhancedVolcano')
 ```
-5. [ConsensusClusterPlus] (https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html)
+5. [ConsensusClusterPlus](https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html)
    ```
    BiocManager::install("ConsensusClusterPlus")
    ```
