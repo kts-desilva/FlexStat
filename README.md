@@ -27,6 +27,10 @@ install_github("WangLab-MSSM/DreamAI/Code")
 
   BiocManager::install('EnhancedVolcano')
 ```
+5. ConsensusClusterPlus (https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html)
+   ```
+   BiocManager::install("ConsensusClusterPlus")
+   ```
 
 # How to run the app
 ```
