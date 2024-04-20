@@ -135,7 +135,7 @@ data_limmaUI <- function(id) {
                   choices = c(
                     'None',
                     'Kinases',
-                    'Protoeases',
+                    'Proteases',
                     'Transcription Factors',
                     'Hydrolases',
                     'Phosphatases'
@@ -799,7 +799,7 @@ data_limma_server <- function(id, variables ) {
       })
       
       get_markers = function(marker_type) {
-        if (marker_type == "Protoeases") {
+        if (marker_type == "Proteases") {
           data_df = read.csv(
             "./functional_groups/proteases_ug.csv",
             head = TRUE,
