@@ -41,6 +41,8 @@ source('modules/limma_analysis.R')
 source('modules/auto_limma_analysis.R')
 source('modules/information.R')
 
+#Author: JG Lab
+#Year: 2023
 about_page = tabPanel(
   title = "Help",
   titlePanel("Help Page"),
