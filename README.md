@@ -9,29 +9,6 @@ It offers a suite of robust statistical tools, including data statistics computa
 # Workflow
 ![Imgur](https://i.imgur.com/I1xJpYF.png)
 
-# Prerequisites to run locally
-Install the additional packages below
-1. [jdcbioinfo](https://github.com/jdreyf/jdcbioinfo/)
-```
-remotes::install_github(repo="jdreyf/jdcbioinfo", build_opts = c("--no-resave-data", "--no-manual"))
-```
-2. [DREAMAI](https://github.com/WangLab-MSSM/DreamAI/tree/master)
-```
-require("remotes")
-install_github("WangLab-MSSM/DreamAI/Code")
-```
-4. [EnhancedVolcano](https://bioconductor.org/packages/devel/bioc/vignettes/EnhancedVolcano/inst/doc/EnhancedVolcano.html)
-```
-  if (!requireNamespace('BiocManager', quietly = TRUE))
-    install.packages('BiocManager')
-
-  BiocManager::install('EnhancedVolcano')
-```
-5. [ConsensusClusterPlus](https://bioconductor.org/packages/release/bioc/html/ConsensusClusterPlus.html)
-   ```
-   BiocManager::install("ConsensusClusterPlus")
-   ```
-
 # How to run the app
 ```
 runApp()
