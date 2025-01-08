@@ -106,7 +106,13 @@ data_preprocessingUI <- function(id) {
           data_imputationUI(ns("data_imputation"))
         ),
         data_normalization_qcUI(ns("data_normalization_qc")),
-        data_imputation_qcUI(ns("data_imputation_qc"))
+        data_imputation_qcUI(ns("data_imputation_qc")),
+        tabPanel(
+          title = "Generate Report",
+          br(),
+          h3(strong("Download Report")),
+          downloadButton(ns("preproc_pdf_download"),"Generate and Download QC Plots as PDF")
+        )
       )
     )
   )
@@ -275,6 +281,42 @@ data_preprocessing_server <- function(id, variables ) {
       # Data imputation module
       data_imputation_server("data_imputation", variables, input$preproc_imputation_method_var)
       data_imputation_qc_server("data_imputation_qc",input$preproc_class_var, variables)
+      
+      
+      #Generate PDF
+      
+      generate_preproc_file = function(tempFile){
+        pdf(tempFile, width=17,height=7,pointsize=12,paper = "a4r")
+        
+        print(variables$preproc_boxplot_2)
+        print(variables$preproc_density_2)
+        print(variables$preproc_pca_2)
+        
+        print(variables$preproc_boxplot_1)
+        print(variables$preproc_density_1)
+        print(variables$preproc_pca_1)
+        
+        par(mfrow=c(1,1))
+        plot.new()
+        text(.5, .1,"For more information, De Silva, S., Alli-Shaik, A., & Gunaratne, J. (2024). 
+    FlexStat: combinatory differentially expressed protein extraction. Bioinformatics Advances, 4(1), 
+    vbae056.https://doi.org/10.1093/bioadv/vbae056 ",
+             font=2, cex=1)
+        
+        dev.off()
+        
+      }
+      
+      output$preproc_pdf_download = downloadHandler(
+        filename = function() {
+          paste("preproc_qc_plots", Sys.Date(), ".pdf", sep = "")
+        },
+        content = function(file) {
+          tempFile <- tempfile(fileext = ".pdf")
+          generate_preproc_file(tempFile)
+          file.copy(tempFile, file)
+        }
+      )
       
       
   })

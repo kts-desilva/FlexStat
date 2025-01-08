@@ -114,7 +114,7 @@ data_clustering_server <- function(id, variables) {
       ns <- NS(id)
       show_template3 = shiny::reactiveVal(TRUE)
       
-      output$conditional_contents_template3 = shiny::shiny::renderUI({
+      output$conditional_contents_template3 = shiny::renderUI({
         if (show_template3()) {
           tagList(h3(strong("Sample Data")),
                   tableOutput(ns("contents_template3")))
@@ -172,7 +172,7 @@ data_clustering_server <- function(id, variables) {
       cluster_final_linkage_var = shiny::eventReactive(input$run_consclustering_button,
                                                 input$cluster_final_linkage_var)
       
-      output$cluster_slider = shiny::shiny::renderUI({
+      output$cluster_slider = shiny::renderUI({
         shiny::sliderInput(
           ns("cluster_k_var"),
           p(

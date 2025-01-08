@@ -26,7 +26,7 @@ data_transformation_server <- function(id, preproc_show_transpose_var, preproc_s
     ## Below is the module function
     function(input, output, session) {
       output$downloadTransformedMatrix = downloadHandler(
-        filename = "transformed_data.csv",
+        filename = paste(variables$input_file_name, "transformed_data.csv", sep="_"),
         content = function(file) {
           write.csv(variables$functional_dataset, file)
         }

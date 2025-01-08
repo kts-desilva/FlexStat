@@ -103,7 +103,7 @@ data_imputation_server <- function(id, variables, preproc_imputation_method_var)
               list(
                 extend = "csv",
                 text = "Download Imputed Data",
-                filename = "preprocessed_imputed_data",
+                filename = paste(variables$input_file_name, "preprocessed_imputed_data", sep="_"),
                 exportOptions = list(modifier = list(
                   order = "index",
                   page = "all",
@@ -131,83 +131,100 @@ data_imputation_qc_server <- function(id, preproc_class_var, variables) {
         paste("Colored by ", preproc_class_var)
       })
       
-      
       output$preproc_boxplot = renderPlot({
         validate(need(!is.null(variables$imputed_dataset), 'Boxplot: No data exists, please upload data or use sample data'))
-        preproc_boxplot_1()
+        preproc_boxplot_1()()
       })
       
       preproc_boxplot_1 = eventReactive(variables$normalized_dataset, {
-        df = variables$imputed_dataset
-        
-        if(!is.null(df)){
-          num_column_df = df %>% select_if(is.numeric)
-          char_columns = df %>% select_if(is.character)
+        function(){
+          df = variables$imputed_dataset
           
-          ori_df = variables$normalized_dataset
-          
-          num_column_df2 = ori_df %>% select_if(is.numeric)
-          char_columns2 = ori_df %>% select_if(is.character)
-          
-          par(mfrow=c(1,2))
-          
-          boxplot(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
-                  notch = F, main = "Before Imputation",
-                  xlab = 'Sample', ylab = 'log2 of Intensity')
-          
-          boxplot(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
-                  notch = F, main = "After Imputation",
-                  xlab = 'Sample', ylab = 'log2 of Intensity')
+          if(!is.null(df)){
+            num_column_df = df %>% select_if(is.numeric)
+            char_columns = df %>% select_if(is.character)
+            
+            ori_df = variables$normalized_dataset
+            
+            num_column_df2 = ori_df %>% select_if(is.numeric)
+            char_columns2 = ori_df %>% select_if(is.character)
+            
+            par(mfrow=c(1,2))
+            
+            boxplot(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
+                    notch = F, main = "Before Imputation",
+                    xlab = 'Sample', ylab = 'log2 of Intensity')
+            
+            boxplot(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
+                    notch = F, main = "After Imputation",
+                    xlab = 'Sample', ylab = 'log2 of Intensity')
+            variables$preproc_boxplot_1 = recordPlot()
+          }
         }
         
       })
       
       output$preproc_density = renderPlot({
         validate(need(!is.null(variables$imputed_dataset), 'Density Plot: No data exists, please upload data or use sample data'))
-        preproc_density_1()
+        preproc_density_1()()
       })
       
       preproc_density_1 = eventReactive(variables$normalized_dataset, {
-        df = variables$imputed_dataset
         
-        if(!is.null(df)){
-          num_column_df = df %>% select_if(is.numeric)
-          char_columns = df %>% select_if(is.character)
+        function(){
+          df = variables$imputed_dataset
           
-          ori_df = variables$normalized_dataset
+          if(!is.null(df)){
+            num_column_df = df %>% select_if(is.numeric)
+            char_columns = df %>% select_if(is.character)
+            
+            ori_df = variables$normalized_dataset
+            
+            num_column_df2 = ori_df %>% select_if(is.numeric)
+            char_columns2 = ori_df %>% select_if(is.character)
+            
+            par(mfrow=c(1,2))
+            plotDensities(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
+                          main = "Before Imputation - Density Plot", legend=F)
+            plotDensities(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
+                          main = "After Imputation - Density Plot", legend=F)
+            #sub = paste("Colored by ", input$preproc_class_var)
+            variables$preproc_density_1 = recordPlot()
+          }
           
-          num_column_df2 = ori_df %>% select_if(is.numeric)
-          char_columns2 = ori_df %>% select_if(is.character)
-          
-          par(mfrow=c(1,2))
-          plotDensities(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
-                        main = "Before Imputation - Density Plot", legend=F)
-          plotDensities(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
-                        main = "After Imputation - Density Plot", legend=F)
         }
         
       })
       
+      output$preproc_normalization_colors = renderText({
+        paste("Colored by ", preproc_class_var)
+      })
+      
       output$preproc_pca = renderPlot({
         validate(need(!is.null(variables$imputed_dataset), 'PCA Plot: No data exists, please upload data or use sample data'))
-        preproc_pca_1()
+        preproc_pca_1()()
       })
       
       preproc_pca_1 = eventReactive(variables$normalized_dataset, {
-        df = variables$imputed_dataset
-        
-        if(!is.null(df)){
-          num_column_df = df %>% select_if(is.numeric)
-          char_columns = df %>% select_if(is.character)
+        function(){
+          df = variables$imputed_dataset
           
-          ori_df = variables$normalized_dataset
+          if(!is.null(df)){
+            num_column_df = df %>% select_if(is.numeric)
+            char_columns = df %>% select_if(is.character)
+            
+            ori_df = variables$normalized_dataset
+            
+            num_column_df2 = ori_df %>% select_if(is.numeric)
+            char_columns2 = ori_df %>% select_if(is.character)
+            
+            par(mfrow=c(1,2))
+            plotMDS(t(num_column_df2), labels= NULL, pch= 15,col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), main = "Before Imputation - Principal Component Analysis")
+            plotMDS(t(num_column_df), labels= NULL, pch= 15,col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), main = "After Imputation - Principal Component Analysis")
+            
+            variables$preproc_pca_1 = recordPlot()
+          }
           
-          num_column_df2 = ori_df %>% select_if(is.numeric)
-          char_columns2 = ori_df %>% select_if(is.character)
-          
-          par(mfrow=c(1,2))
-          plotMDS(t(num_column_df2), labels= NULL, pch= 15,col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), main = "Before Imputation - Principal Component Analysis")
-          plotMDS(t(num_column_df), labels= NULL, pch= 15,col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), main = "After Imputation - Principal Component Analysis")
         }
         
       })

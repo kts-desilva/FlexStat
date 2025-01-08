@@ -168,6 +168,12 @@ data_limmaUI <- function(id) {
             title = "Functional Annotation Analysis",
             h3("Perform functional annotation analysis on DEP proteins."),
             withSpinner(uiOutput(ns("func_annot_analysis")), color ="#FF4500")
+          ),
+          shiny::tabPanel(
+            title = "Generate Report",
+            br(),
+            h3(strong("Download Report")),
+            downloadButton(ns("limma_pdf_download"),"Generate and Download Plots as PDF")
           )
         )
       )
@@ -200,13 +206,13 @@ data_limma_server <- function(id, variables ) {
           char_column_df = data_df %>% select_if(is.character)
           
           choices = c(not_sel, names(char_column_df))
-          shiny::shiny::updateSelectInput(inputId = "class_var", choices = choices)
+          shiny::updateSelectInput(inputId = "class_var", choices = choices)
           
           choices = c(not_sel, names(char_column_df))
-          shiny::shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
+          shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
           
           choices2 = c(sub(" ", "_", names(char_column_df)))
-          shiny::shiny::updateSelectInput(inputId = "remove_cols_var", choices = choices2)
+          shiny::updateSelectInput(inputId = "remove_cols_var", choices = choices2)
         } else {
           variables$functional_dataset = NULL
         }
@@ -367,13 +373,15 @@ data_limma_server <- function(id, variables ) {
         variables$limma_dataset= data.frame(limma_data_input(), row.names=1)
         char_column_df = variables$limma_dataset %>% select_if(is.character)
         
+        variables$input_file_name = sub(".csv$", "", basename(input$limma_csv_input$name))
+        
         show_template(FALSE)
         
         choices = c(not_sel, names(char_column_df))
-        shiny::shiny::updateSelectInput(inputId = "class_var", choices = choices)
+        shiny::updateSelectInput(inputId = "class_var", choices = choices)
         
         choices = c(not_sel, names(char_column_df))
-        shiny::shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
+        shiny::updateSelectInput(inputId = "class_of_interest_var", choices = choices)
         
         choices2 = c(sub(" ", "_", names(limma_data_input())))
         shiny::updateSelectizeInput(session, inputId = "remove_cols_var", choices = choices2,
@@ -482,13 +490,13 @@ data_limma_server <- function(id, variables ) {
               list(
                 extend = "csv",
                 text = "Download Current Page",
-                filename = "limma_results_current_page",
+                filename = paste(variables$input_file_name, "limma_results_current_page", sep="_"),
                 exportOptions = list(modifier = list(page = "current"))
               ),
               list(
                 extend = "csv",
                 text = "Download Full Results",
-                filename = "limma_results_all",
+                filename = paste(variables$input_file_name, "limma_results_all", sep="_"),
                 exportOptions = list(modifier = list(
                   order = "index",
                   page = "all",
@@ -550,6 +558,7 @@ data_limma_server <- function(id, variables ) {
           common.legend = TRUE,
           legend = "bottom"
         )
+        variables$top_box_plots = plot_list
         return(gga)
       }
       
@@ -658,7 +667,7 @@ data_limma_server <- function(id, variables ) {
         ) %>% layout(hoverlabel = list(bgcolor = "white"))
       })
       
-      output$volcano_cutoffs = shiny::shiny::renderUI({
+      output$volcano_cutoffs = shiny::renderUI({
         fit2C = variables$fit2C
         fluidRow(column(
           width = 4,
@@ -686,7 +695,7 @@ data_limma_server <- function(id, variables ) {
         ))
       })
       
-      output$func_annot_analysis = shiny::shiny::renderUI({
+      output$func_annot_analysis = shiny::renderUI({
         results_df = variables$results
         
         if(!is.na(input$lfc_var) && is.na(input$pvalue_var) ){
@@ -736,7 +745,7 @@ data_limma_server <- function(id, variables ) {
         results_df$diffexpressed[results_df$log2FoldChange < (-1 * input$lfc_cutoff) &
                                    results_df$pvalue < 10 ** (-1 * input$pvalue_cutoff)] <- "DOWN"
         
-        EnhancedVolcano::EnhancedVolcano(
+        vp = EnhancedVolcano::EnhancedVolcano(
           results_df,
           lab = rownames(results_df),
           x = 'log2FoldChange',
@@ -750,7 +759,8 @@ data_limma_server <- function(id, variables ) {
           xlim = c(-1 * (max(fit2C$coef) + 0.5), 1 * (max(fit2C$coef) +
                                                         0.5)),
         )
-        
+        variables$volcano_plot = vp
+        return(vp)
       })
       
       output$limma_heatmap = shiny::renderPlot(res = 96, {
@@ -795,7 +805,7 @@ data_limma_server <- function(id, variables ) {
           lwd = 5,
           cex = .7
         )
-        
+        variables$heatmap = recordPlot()
       })
       
       get_markers = function(marker_type) {
@@ -893,7 +903,7 @@ data_limma_server <- function(id, variables ) {
             ncol(data_df_int) > 1,
           'No records to display'
         ))
-        ggplot2::autoplot(
+        pca = ggplot2::autoplot(
           prcomp((data_df_int), center = TRUE),
           data_df,
           colour = input$class_var,
@@ -903,10 +913,13 @@ data_limma_server <- function(id, variables ) {
           main = if(input$limma_pca_protein_group_var == "None") "PCA" else
             paste("PCA of", input$limma_pca_protein_group_var, sep =" ")
         )
+        pca = pca + theme(text=element_text(size=input$limma_pca_font_size))
+        variables$pca = pca
+        return(pca)
       })
       
       output$downloadResults = shiny::downloadHandler(
-        filename = "limma_results.csv",
+        filename = paste(variables$input_file_name, "limma_results.csv", sep="_"),
         content = function(file) {
           write.csv(variables$data_table, file, row.names = FALSE)
         }
@@ -928,4 +941,53 @@ data_limma_server <- function(id, variables ) {
           dev.off()
         }
       )
+      
+      output$limma_pdf_download = downloadHandler(
+        filename = function() {
+          paste("limma_plots", Sys.Date(), ".pdf", sep = "")
+        },
+        content = function(file) {
+          tempFile <- tempfile(fileext = ".pdf")
+          generate_limma_file(tempFile)
+          file.copy(tempFile, file)
+        }
+      )
+      
+      generate_limma_file = function(tempFile){
+        plots_per_page = 4
+        
+        plot_list =  variables$top_box_plots  #generate_top_box_plots
+        n_pages <- ceiling(length(plot_list) / plots_per_page)
+        
+        pdf(tempFile, width=17,height=7,pointsize=12,paper = "a4r")
+        
+        for (i in seq_len(n_pages)) {
+          start_idx <- (i - 1) * plots_per_page + 1
+          end_idx <- min(i * plots_per_page, length(plot_list))
+          plot_subset <- plot_list[start_idx:end_idx]
+          
+          # Arrange the plots using ggarrange
+          arranged_plot <- ggarrange(plotlist = plot_subset, ncol = 2, nrow = 2)
+          
+          # Print the arranged plot to the PDF
+          print(arranged_plot)
+        }
+        
+        # generate_heatmap()
+        print(variables$heatmap)
+        # print(generate_volcanoplot())
+        # print(generate_pca())
+        print(variables$volcano_plot)
+        print(variables$pca)
+        
+        par(mfrow=c(1,1))
+        plot.new()
+        text(.5, .1,"For more information, De Silva, S., Alli-Shaik, A., & Gunaratne, J. (2024). 
+    FlexStat: combinatory differentially expressed protein extraction. Bioinformatics Advances, 4(1), 
+    vbae056.https://doi.org/10.1093/bioadv/vbae056 ",
+             font=2, cex=1)
+        
+        dev.off()
+      }
+      
     })}

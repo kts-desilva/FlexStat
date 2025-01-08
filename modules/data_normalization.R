@@ -169,7 +169,7 @@ data_normalization_server <- function(id, run_preproc_button, preproc_use_sample
               list(
                 extend = "csv",
                 text = "Download Normalized Data",
-                filename = "preprocessed_imputed_normalized_data",
+                filename = paste(variables$input_file_name, "preprocessed_imputed_normalized_data", sep="_"),
                 exportOptions = list(modifier = list(
                   order = "index",
                   page = "all",
@@ -201,92 +201,106 @@ data_normalization_qc_server <- function(id, preproc_class_var,run_preproc_butto
       
       output$preproc_boxplot2 = renderPlot({
         validate(need(!is.null(variables$normalized_dataset), 'Boxplot: No data exists, please upload data or use sample data'))
-        preproc_boxplot_2()
+        preproc_boxplot_2()()
       })
       
       preproc_boxplot_2 = eventReactive(run_preproc_button, {
-        df = variables$normalized_dataset
         
-        if(!is.null(df)){
-          df = df[order(df[,preproc_class_var]),]
+        function(){
+          df = variables$normalized_dataset
           
-          num_column_df = df %>% select_if(is.numeric)
-          char_columns = df %>% select_if(is.character)
-          
-          ori_df = variables$original_dataset
-          ori_df = ori_df[order(ori_df[,preproc_class_var]),]
-          
-          num_column_df2 = ori_df %>% select_if(is.numeric)
-          char_columns2 = ori_df %>% select_if(is.character)
-          
-          par(mfrow=c(1,2))
-          
-          boxplot(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
-                  notch = F, main = "Before Normalization",
-                  xlab = 'Sample', ylab = 'log2 of Intensity')
-          
-          boxplot(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
-                  notch = F, main = "After Normalization",
-                  xlab = 'Sample', ylab = 'log2 of Intensity')
+          if(!is.null(df)){
+            df = df[order(df[,preproc_class_var]),]
+            
+            num_column_df = df %>% select_if(is.numeric)
+            char_columns = df %>% select_if(is.character)
+            
+            ori_df = variables$original_dataset
+            ori_df = ori_df[order(ori_df[,preproc_class_var]),]
+            
+            num_column_df2 = ori_df %>% select_if(is.numeric)
+            char_columns2 = ori_df %>% select_if(is.character)
+            
+            par(mfrow=c(1,2))
+            
+            boxplot(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
+                    notch = F, main = "Before Normalization",
+                    xlab = 'Sample', ylab = 'log2 of Intensity')
+            
+            boxplot(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
+                    notch = F, main = "After Normalization",
+                    xlab = 'Sample', ylab = 'log2 of Intensity')
+            variables$preproc_boxplot_2 = recordPlot()
+          }
         }
         
       })
+      
       
       output$preproc_density2 = renderPlot({
         validate(need(!is.null(variables$normalized_dataset), 'Density Plot: No data exists, please upload data or use sample data'))
-        preproc_density_2()
+        preproc_density_2()()
       })
       
       preproc_density_2 = eventReactive(run_preproc_button, {
-        df = variables$normalized_dataset
+        function(){
+          df = variables$normalized_dataset
+          
+          if(!is.null(df)){
+            df = df[order(df[,preproc_class_var]),]
+            
+            num_column_df = df %>% select_if(is.numeric)
+            char_columns = df %>% select_if(is.character)
+            
+            ori_df = variables$original_dataset
+            ori_df = ori_df[order(ori_df[,preproc_class_var]),]
+            
+            num_column_df2 = ori_df %>% select_if(is.numeric)
+            char_columns2 = ori_df %>% select_if(is.character)
+            
+            par(mfrow=c(1,2))
+            plotDensities(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
+                          main = "Before Normalization - Density Plot", legend=F)
+            plotDensities(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
+                          main = "After Normalization - Density Plot", legend=F)
+            variables$preproc_density_2 = recordPlot()
+        }
         
-        if(!is.null(df)){
-          df = df[order(df[,preproc_class_var]),]
-          
-          num_column_df = df %>% select_if(is.numeric)
-          char_columns = df %>% select_if(is.character)
-          
-          ori_df = variables$original_dataset
-          ori_df = ori_df[order(ori_df[,preproc_class_var]),]
-          
-          num_column_df2 = ori_df %>% select_if(is.numeric)
-          char_columns2 = ori_df %>% select_if(is.character)
-          
-          par(mfrow=c(1,2))
-          plotDensities(t(num_column_df2), col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), 
-                        main = "Before Normalization - Density Plot", legend=F)
-          plotDensities(t(num_column_df), col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), 
-                        main = "After Normalization - Density Plot", legend=F)
         }
         
       })
-
+      
       output$preproc_pca2 = renderPlot({
         validate(need(!is.null(variables$normalized_dataset), 'PCA Plot: No data exists, please upload data or use sample data'))
-        preproc_pca_2()
+        preproc_pca_2()()
       })
       
       preproc_pca_2 = eventReactive(run_preproc_button, {
-        df = variables$normalized_dataset
-        
-        if(!is.null(df)){
-          df = df[order(df[,preproc_class_var]),]
+        function(){
+          df = variables$normalized_dataset
           
-          num_column_df = df %>% select_if(is.numeric)
-          char_columns = df %>% select_if(is.character)
-          
-          ori_df = variables$original_dataset
-          ori_df = ori_df[order(ori_df[,preproc_class_var]),]
-          
-          num_column_df2 = ori_df %>% select_if(is.numeric)
-          char_columns2 = ori_df %>% select_if(is.character)
-          
-          par(mfrow=c(1,2))
-          plotMDS(t(num_column_df2), labels= NULL,pch= 15, col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), main = "Before Normalization - Principal Component Analysis")
-          plotMDS(t(num_column_df), labels= NULL,pch= 15, col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), main = "After Normalization - Principal Component Analysis")
+          if(!is.null(df)){
+            df = df[order(df[,preproc_class_var]),]
+            
+            num_column_df = df %>% select_if(is.numeric)
+            char_columns = df %>% select_if(is.character)
+            
+            ori_df = variables$original_dataset
+            ori_df = ori_df[order(ori_df[,preproc_class_var]),]
+            
+            num_column_df2 = ori_df %>% select_if(is.numeric)
+            char_columns2 = ori_df %>% select_if(is.character)
+            
+            par(mfrow=c(1,2))
+            plotMDS(t(num_column_df2), labels= NULL,pch= 15, col = as.character(as.numeric(as.factor(char_columns2[,preproc_class_var]))), main = "Before Normalization - Principal Component Analysis")
+            plotMDS(t(num_column_df), labels= NULL,pch= 15, col = as.character(as.numeric(as.factor(char_columns[,preproc_class_var]))), main = "After Normalization - Principal Component Analysis")
+            variables$preproc_pca_2 = recordPlot()
+          }
         }
         
+        
       })
+      
       
     })
   }
